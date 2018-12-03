@@ -1,4 +1,4 @@
-var hourDevider=6;
+var hourDevider=2;
 
 if (typeof DayPilot === 'undefined') {
     var DayPilot = {};
@@ -294,7 +294,7 @@ if (typeof DayPilot === 'undefined') {
         })();
         this.ie9 = (navigator && navigator.userAgent && navigator.userAgent.indexOf("MSIE 9") !== -1);
         this.cleanSelection = this.clearSelection;
-        this.callBack2 = function($r, $s, $t) {
+        this.callBack2 = function($r, $s, startEnd) {
             if (this.callbackTimeout) {
                 window.clearTimeout(this.callbackTimeout);
             };
@@ -303,10 +303,12 @@ if (typeof DayPilot === 'undefined') {
             }, 100);
             var $u = {};
             $u.action = $r;
-            $u.parameters = $t;
+            $u.parameters = startEnd;
             $u.data = $s;
             $u.header = this.getCallBackHeader();
             var $v = "JSON" + DayPilot.JSON.stringify($u);
+            //here possible com endpoint
+            console.log("possible com end point: "+$v);
             if (this.backendUrl) {
                 DayPilot.request(this.backendUrl, this.callBackResponse, $v, this.ajaxError);
             }
@@ -341,6 +343,7 @@ if (typeof DayPilot === 'undefined') {
         this.callBackResponse = function($x) {
             $b.updateView($x.responseText);
         };
+        //here collect information about appoinment
         this.getCallBackHeader = function() {
             var h = {};
             h.control = "dpc";
@@ -474,7 +477,7 @@ if (typeof DayPilot === 'undefined') {
                 $q = $q.d;
             };
             $I.setTime(Date.UTC($q.getUTCFullYear(), $q.getUTCMonth(), $q.getUTCDate()));
-            var $O = $q.getTime() - ($I.getTime() + $q.getUTCHours() * 3600 * 1000 + Math.floor($q.getUTCMinutes() / 30) * 30 * 60 * 1000);
+            var $O = $q.getTime() - ($I.getTime() + $q.getUTCHours() * 3600 * 1000 + Math.floor($q.getUTCMinutes() / 5) * 5 * 60 * 1000);
             var length = end.getTime() - $q.getTime();
             var $P = this.columns[$j];
             var $Q = $P.Start.getTime();
@@ -491,26 +494,28 @@ if (typeof DayPilot === 'undefined') {
                     break;
             }
         };
-        this.timeRangeSelectedCallBack = function($q, end, $S, $s) {
+        //here time range
+        this.timeRangeSelectedCallBack = function(start, end, $S, $s) {
+            console.log("time range selected "+start+" - "+end)
             var $T = {};
-            $T.start = $q;
+            $T.start = start;
             $T.end = end;
             $T.resource = $S;
             this.callBack2('TimeRangeSelected', $s, $T);
         };
-        this.timeRangeSelectedDispatch = function($q, end, $o) {
-            if (!$q.isDayPilotDate) {
-                $q = new DayPilot.Date($q);
+        this.timeRangeSelectedDispatch = function(start, end, $o) {
+            if (!start.isDayPilotDate) {
+                start = new DayPilot.Date(start);
             };
             if (!end.isDayPilotDate) {
                 end = new DayPilot.Date(end);
             };
             switch ($b.timeRangeSelectedHandling) {
                 case 'CallBack':
-                    $b.timeRangeSelectedCallBack($q, end, $o);
+                    $b.timeRangeSelectedCallBack(start, end, $o);
                     break;
                 case 'JavaScript':
-                    $b.onTimeRangeSelected($q, end, $o);
+                    $b.onTimeRangeSelected(start, end, $o);
                     break;
             }
         };
@@ -576,17 +581,19 @@ if (typeof DayPilot === 'undefined') {
             };
             $b.activateSelection();
         };
+        //here selection
         this.getSelection = function() {
             var $q = DayPilotCalendar.topSelectedCell.start;
             var end = DayPilotCalendar.bottomSelectedCell.end;
+            console.log("selection: "+end)
             var $Z = DayPilotCalendar.topSelectedCell.resource;
             return new DayPilot.Selection($q, end, $Z, $b);
         };
         this.mouseup = function(ev) {
             if (DayPilotCalendar.selecting && DayPilotCalendar.topSelectedCell !== null) {
                 DayPilotCalendar.selecting = false;
-                var $00 = $b.getSelection();
-                $b.timeRangeSelectedDispatch($00.start, $00.end, $00.resource);
+                var startEnd = $b.getSelection();
+                $b.timeRangeSelectedDispatch(startEnd.start, startEnd.end, startEnd.resource);
                 if ($b.timeRangeSelectedHandling !== "Hold" && $b.timeRangeSelectedHandling !== "HoldForever") {
                     $a();
                 }
@@ -976,7 +983,7 @@ if (typeof DayPilot === 'undefined') {
         };
         //here row header hour values
         this.createHourRow = function($0q, i) {
-            //here houre is divided by 4 parts
+            //here houre is divided by hourDevider
             var $g = (this.cellHeight * hourDevider);
             var r = $0q.insertRow(-1);
             r.style.height = $g + "px";

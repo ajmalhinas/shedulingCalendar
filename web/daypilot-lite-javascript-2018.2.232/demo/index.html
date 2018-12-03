@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>DayPilot Lite for JavaScript</title>
+    <!-- demo stylesheet -->
+    <link type="text/css" rel="stylesheet" href="helpers/demo.css?v=2018.2.232" />
+    <link type="text/css" rel="stylesheet" href="helpers/media/layout.css?v=2018.2.232" />    
+    <link type="text/css" rel="stylesheet" href="helpers/media/elements.css?v=2018.2.232" />   
+    
+</head>
+<body>
+
+<div id="header">
+			<div class="bg-help">
+				<div class="inBox">
+					<h1 id="logo"><a href='http://javascript.daypilot.org/'>DayPilot Lite for JavaScript</a> &raquo; <a href='http://javascript.daypilot.org/demo/lite/'>Demo</a></h1>
+					<p id="claim">Open-Source AJAX Calendar/Scheduling Widgets for JavaScript/jQuery/HTML5.</p>
+					<hr class="hidden" />
+				</div>
+			</div>
+		</div>
+		
+    <div id="download">
+            <div style="float:left; width: 130px;"><a href="http://javascript.daypilot.org/download/" class="css3button"><span>Download</span></a></div>
+            <div style="margin-left: 130px;">
+                <div><a href="http://javascript.daypilot.org/download/">Download</a> DayPilot Lite (open-source).</div>
+                <div>See also the advanced features of <a href="http://javascript.daypilot.org/demo/">DayPilot Pro</a> (commercial).</div>
+            </div>
+        
+    </div>
+
+    <div id="main">
+        <div id="tabs">
+            <!-- tabs -->
+<div>
+<a class='tab selected' href='index.html'><span style="width: 100px; text-align:center;">Home</span></a>
+<a class='tab' href='calendar/index.html'><span style="width: 100px; text-align:center;">Calendar</span></a>
+<a class='tab' href='month/index.html'><span style="width: 100px; text-align:center;">Month</span></a>
+<a class='tab' href='scheduler/index.html'><span style="width: 100px; text-align:center;">Scheduler</span></a>
+</div>
+<div class="header"><div class="bg-help"></div></div>
+
+            <!-- /tabs -->
+        </div>
+        
+        <div id="container" >
+	        <div id="left" class="menu">
+		    	            <div>
+	    		            </div>
+            </div>
+	        <div id="content">
+	            <div>
+
+
+    <table class="table-front">
+        <tr>
+            <td>
+                <a href="calendar/index.html"><img src="helpers/media/layout/home/calendar-270x150.png" alt="JavaScript Event Calendar" /></a><br />
+                <br />
+                <a href="calendar/index.html"><b>JavaScript Event Calendar</b> Demo</a><br />
+                Outlook-like day/week view. Customizable columns.
+            </td>
+            <td>
+                <a href="month/index.html"><img src="helpers/media/layout/home/month-270x150.png" alt="JavaScript Monthly Calendar" /></a><br />
+                <br />
+                <a href="month/index.html"><b>JavaScript Monthly Calendar</b> Demo</a><br />
+                Outlook-like month view.
+            </td>
+            <td>
+                <a href="scheduler/index.html"><img src="helpers/media/layout/home/scheduler-270x150.png" alt="JavaScript Scheduler"/></a><br />
+                <br />
+                <a href="scheduler/index.html"><b>JavaScript Scheduler</b> Demo</a><br />
+                A time line for multiple resources.
+            </td>
+        </tr>
+    </table>
+                        
+        <!-- bottom -->
+                </div>
+	        </div>
+        </div>
+    </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    var url = window.location.href;
+    var filename = url.substring(url.lastIndexOf('/')+1);
+    if (filename === "") filename = "index.html";
+    $(".menu a[href='" + filename + "']").addClass("selected");
+});
+        
+</script>
+	<!-- /bottom -->
+
+</body>
+</html>
+

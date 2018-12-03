@@ -1,4 +1,4 @@
-var hourDevider=4;
+var hourDevider=6;
 
 if (typeof DayPilot === 'undefined') {
     var DayPilot = {};

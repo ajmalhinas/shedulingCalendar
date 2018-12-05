@@ -975,8 +975,8 @@ if (typeof DayPilot === 'undefined') {
             var c = r.insertCell(-1);
             c.style.padding = '0px';
             c.style.border = '0px none';
-            var $0r = 24;
-            for (var i = 0; i < $0r; i++) {
+            var hoursInDay = 24;
+            for (var i = 0; i < hoursInDay; i++) {
                 this.createHourRow($0q, i);
             };
             return $0q;
@@ -1661,6 +1661,7 @@ if (typeof DayPilot === 'undefined') {
             this.afterRender(null, false);
         };
     };
+    //here seems not used
     DayPilotCalendar.Cell = function($q, end, $o) {
         this.start = $q;
         this.end = end;

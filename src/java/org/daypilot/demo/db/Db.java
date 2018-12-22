@@ -42,8 +42,17 @@ import org.daypilot.date.DateTime;
 import org.daypilot.json.JSONException;
 
 public class Db {
-
-	
+        public static String ConnectionURL = "jdbc:mysql://localhost:3306/qlab?zeroDateTimeBehavior=convertToNull" ;
+        public static String ConnectionDBName = "qlab" ;
+        public static String ConnectionClassName = "com.mysql.jdbc.Driver" ;
+        public static String ConnectionUser = "root" ;
+        public static String ConnectionPassword = "" ;
+        
+        
+	public static Connection InitiateConnection(HttpServletRequest request) throws SQLException, JSONException, ClassNotFoundException {
+            Class.forName(ConnectionClassName);
+		return DriverManager.getConnection(getConnectionString(request), ConnectionUser , ConnectionPassword);
+        }
 	/**
 	 * @param from
 	 * @param to
@@ -53,18 +62,18 @@ public class Db {
 	 * @throws ClassNotFoundException
 	 */
 	public static Table getEvents(HttpServletRequest request, Date from, Date to) throws SQLException, JSONException, ClassNotFoundException {
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-
-		PreparedStatement st = c.prepareStatement("SELECT event_id, event_name, event_start, event_end FROM EVENTS WHERE NOT ((event_end <= ?) OR (event_start >= ?));");
-		st.setTimestamp(1, new Timestamp(from.getTime()), Calendar.getInstance(DateTime.UTC));
-		st.setTimestamp(2, new Timestamp(to.getTime()), Calendar.getInstance(DateTime.UTC));
-		ResultSet rs = st.executeQuery();
-		Table table = TableLoader.load(rs);
-		
-		rs.close();
-		st.close();
-		c.close();
+                Table table;
+            try (Connection c = InitiateConnection(request)) {
+                
+                PreparedStatement st = c.prepareStatement("SELECT event_id, event_name, event_start, event_end FROM EVENTS WHERE NOT ((event_end <= ?) OR (event_start >= ?));");
+                st.setTimestamp(1, new Timestamp(from.getTime()), Calendar.getInstance(DateTime.UTC));
+                st.setTimestamp(2, new Timestamp(to.getTime()), Calendar.getInstance(DateTime.UTC));
+                ResultSet rs = st.executeQuery();
+                table = TableLoader.load(rs);
+                rs.close();
+                st.close();
+                c.close();
+            }
 		
 		return table; 
 	}
@@ -77,13 +86,12 @@ public class Db {
 	
 
 	public static void createTable(HttpServletRequest request) throws SQLException, ClassNotFoundException {
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-		Statement st = c.createStatement();
-		st.execute("CREATE TABLE EVENTS (event_id VARCHAR(200), event_name VARCHAR(200), event_start TIMESTAMP, event_end TIMESTAMP);");
-		st.close();
-
-		c.close();
+            try (Connection c = InitiateConnection(request)) {
+                Statement st = c.createStatement();
+                st.execute("CREATE TABLE EVENTS (event_id VARCHAR(200), event_name VARCHAR(200), event_start TIMESTAMP, event_end TIMESTAMP);");
+                st.close();
+                c.close();
+            }
 		
 		createSampleEvents(request);
 	}
@@ -98,46 +106,45 @@ public class Db {
 	public static String insertEvent(HttpServletRequest request, String name, Date start, Date end) throws ClassNotFoundException, SQLException {
 		String id = UUID.randomUUID().toString();
 		
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-		PreparedStatement st = c.prepareStatement("INSERT INTO EVENTS (event_id, event_name, event_start, event_end) VALUES (?, ?, ?, ?);");
-		st.setString(1, id);
-		st.setString(2, name);
-		st.setTimestamp(3, new Timestamp(start.getTime()), Calendar.getInstance(DateTime.UTC));
-		st.setTimestamp(4, new Timestamp(end.getTime()), Calendar.getInstance(DateTime.UTC));
-		st.execute();
-		st.close();
-		c.close();
+            try (Connection c = InitiateConnection(request)) {
+                PreparedStatement st = c.prepareStatement("INSERT INTO EVENTS (event_id, event_name, event_start, event_end) VALUES (?, ?, ?, ?);");
+                st.setString(1, id);
+                st.setString(2, name);
+                st.setTimestamp(3, new Timestamp(start.getTime()), Calendar.getInstance(DateTime.UTC));
+                st.setTimestamp(4, new Timestamp(end.getTime()), Calendar.getInstance(DateTime.UTC));
+                st.execute();
+                st.close();
+                c.close();
+            }
 		
 		return id;
 	}
 	
 	public static void deleteEvent(HttpServletRequest request, String id) throws ClassNotFoundException, SQLException {
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-		PreparedStatement st = c.prepareStatement("DELETE FROM events WHERE event_id = ?;");
-		st.setString(1, id);
-		st.execute();
-		st.close();
-		c.close();
+            try (Connection c = InitiateConnection(request)) {
+                PreparedStatement st = c.prepareStatement("DELETE FROM events WHERE event_id = ?;");
+                st.setString(1, id);
+                st.execute();
+                st.close();
+                c.close();
+            }
 	}
 
 
 	public static boolean tableExists(HttpServletRequest request, String name) throws SQLException, JSONException, ClassNotFoundException {
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-		Statement st = c.createStatement();
-		ResultSet rs = st.executeQuery("SELECT count(*) FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE table_name = '" + name.toUpperCase() + "'");
-
-		boolean result = false;
-		if (rs.next()) {
-			int count = rs.getInt(1);
-			result = count == 1;
-		}
-		
-		rs.close();
-		st.close();
-		c.close();
+                boolean result;
+            try (Connection c = InitiateConnection(request)) {
+                Statement st = c.createStatement();
+                ResultSet rs = st.executeQuery("SELECT count(*) FROM INFORMATION_SCHEMA.TABLES WHERE  TABLE_SCHEMA = '"+ConnectionDBName+ "' AND table_name = '" + name.toUpperCase() + "'");
+                result = false;
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    result = count == 1;
+                }
+                rs.close();
+                st.close();
+                c.close();
+            }
 		
 		return result;
 	}
@@ -145,28 +152,28 @@ public class Db {
 
 	public static void moveEvent(HttpServletRequest request, String id, Timestamp start,
 			Timestamp end) throws ClassNotFoundException, SQLException {
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-		PreparedStatement st = c.prepareStatement("UPDATE EVENTS SET event_start = ?, event_end = ? WHERE event_id = ?;");
-		st.setTimestamp(1, start, Calendar.getInstance(DateTime.UTC));
-		st.setTimestamp(2, end, Calendar.getInstance(DateTime.UTC));
-		st.setString(3, id);
-		st.execute();
-		st.close();
-		c.close();
+            try (Connection c = InitiateConnection(request)) {
+                PreparedStatement st = c.prepareStatement("UPDATE EVENTS SET event_start = ?, event_end = ? WHERE event_id = ?;");
+                st.setTimestamp(1, start, Calendar.getInstance(DateTime.UTC));
+                st.setTimestamp(2, end, Calendar.getInstance(DateTime.UTC));
+                st.setString(3, id);
+                st.execute();
+                st.close();
+                c.close();
+            }
 	}
 
 	public static void resizeEvent(HttpServletRequest request, String id, Timestamp start,
 			Timestamp end) throws ClassNotFoundException, SQLException {
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-		PreparedStatement st = c.prepareStatement("UPDATE EVENTS SET event_start = ?, event_end = ? WHERE event_id = ?;");
-		st.setTimestamp(1, start, Calendar.getInstance(DateTime.UTC));
-		st.setTimestamp(2, end, Calendar.getInstance(DateTime.UTC));
-		st.setString(3, id);
-		st.execute();
-		st.close();
-		c.close();
+            try (Connection c = InitiateConnection(request)) {
+                PreparedStatement st = c.prepareStatement("UPDATE EVENTS SET event_start = ?, event_end = ? WHERE event_id = ?;");
+                st.setTimestamp(1, start, Calendar.getInstance(DateTime.UTC));
+                st.setTimestamp(2, end, Calendar.getInstance(DateTime.UTC));
+                st.setString(3, id);
+                st.execute();
+                st.close();
+                c.close();
+            }
 	}
 	
 	private static String getConnectionString(HttpServletRequest request) {
@@ -185,12 +192,15 @@ public class Db {
 			}
 			
 			String cs;
-			if (path == null) {
-				cs = "jdbc:hsqldb:mem:daypilot";
-			}
-			else {
-				cs = "jdbc:hsqldb:file:" + path + "/" + session.getId();
-			}
+			//if (path == null) {
+				//cs = "jdbc:hsqldb:mem:daypilot";
+                                
+			//}
+			//else {
+				//cs = "jdbc:hsqldb:file:" + path + "/" + session.getId();
+			//}
+                        
+                        cs = ConnectionURL;
 			
 			session.setAttribute("cs", cs);
 			
@@ -202,29 +212,29 @@ public class Db {
 
 	public static void updateEventText(HttpServletRequest request,
 			String value, String newText) throws SQLException, ClassNotFoundException {
-		Class.forName("org.hsqldb.jdbcDriver" );
-		Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-		PreparedStatement st = c.prepareStatement("UPDATE EVENTS SET event_name = ? WHERE event_id = ?;");
-		st.setString(1, newText);
-		st.setString(2, value);
-		st.execute();
-		st.close();
-		c.close();
+		
+            try (Connection c = InitiateConnection(request)) {
+                PreparedStatement st = c.prepareStatement("UPDATE EVENTS SET event_name = ? WHERE event_id = ?;");
+                st.setString(1, newText);
+                st.setString(2, value);
+                st.execute();
+                st.close();
+                c.close();
+            }
 	}
 
 	public static Row getEvent(HttpServletRequest request, String id) {
 		try {
-			Class.forName("org.hsqldb.jdbcDriver" );
-			Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
-	
-			PreparedStatement st = c.prepareStatement("SELECT event_id, event_name, event_start, event_end FROM EVENTS WHERE event_id = ?;");
-			st.setString(1, id);
-			ResultSet rs = st.executeQuery();
-			Table table = TableLoader.load(rs);
-			
-			rs.close();
-			st.close();
-			c.close();
+                        Table table;
+                    try (Connection c = InitiateConnection(request)) {
+                        PreparedStatement st = c.prepareStatement("SELECT event_id, event_name, event_start, event_end FROM EVENTS WHERE event_id = ?;");
+                        st.setString(1, id);
+                        ResultSet rs = st.executeQuery();
+                        table = TableLoader.load(rs);
+                        rs.close();
+                        st.close();
+                        c.close();
+                    }
 	
 			if (table.size() > 0) {
 				return table.get(0);
@@ -240,8 +250,7 @@ public class Db {
 			Timestamp start, Timestamp end, String resource) {
 
 		try {
-			Class.forName("org.hsqldb.jdbcDriver" );
-			Connection c = DriverManager.getConnection(getConnectionString(request), "sa", "");
+			Connection c = InitiateConnection(request);
 			PreparedStatement st = c.prepareStatement("UPDATE EVENTS SET event_start = ?, event_end = ?, event_name = ? WHERE event_id = ?;");
 			st.setTimestamp(1, start, Calendar.getInstance(DateTime.UTC));
 			st.setTimestamp(2, end, Calendar.getInstance(DateTime.UTC));

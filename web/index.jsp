@@ -14,6 +14,37 @@
 
 <h2>AJAX Event Calendar for Java and jQuery</h2>
 
+<ul>
+    <li><a target="_blank" href="${pageContext.request.contextPath}/CellHeight.jsp">CellHeight</a></li>
+        <li><a target="_blank" href="${pageContext.request.contextPath}/DayView.jsp">DayView</a></li>
+
+            <li><a target="_blank" href="${pageContext.request.contextPath}/EventCreating.jsp">EventCreating</a></li>
+
+                <li><a target="_blank" href="${pageContext.request.contextPath}/EventMoving.jsp">EventMoving</a></li>
+
+                    <li><a target="_blank" href="${pageContext.request.contextPath}/EventResizing.jsp">EventResizing</a></li>
+
+                        <li><a target="_blank" href="${pageContext.request.contextPath}/Hours24.jsp">Hours24</a></li>
+
+                            <li><a target="_blank" href="${pageContext.request.contextPath}/Index2.jsp">Index2</a></li>
+
+                                <li><a target="_blank" href="${pageContext.request.contextPath}/JQuery.jsp">JQuery</a></li>
+
+                                    <li><a target="_blank" href="${pageContext.request.contextPath}/NoEventHeader.jsp">NoEventHeader</a></li>
+
+                                        <li><a target="_blank" href="${pageContext.request.contextPath}/ThemeBlue.jsp">ThemeBlue</a></li>
+
+                                            <li><a target="_blank" href="${pageContext.request.contextPath}/ThemeGreen.jsp">ThemeGreen</a></li>
+
+                                                <li><a target="_blank" href="${pageContext.request.contextPath}/ThemeLight.jsp">ThemeLight</a></li>
+
+                                                    <li><a target="_blank" href="${pageContext.request.contextPath}/ThemeRed.jsp">ThemeRed</a></li>
+
+                                                        <li><a target="_blank" href="${pageContext.request.contextPath}/WeekView.jsp">WeekView</a></li>
+                                                        <li><a target="_blank" href="${pageContext.request.contextPath}/WorkWeekView.jsp">WorkWeekView</a></li>
+
+</ul>
+
 <div style="margin: 10px 0px 10px 0px"><a href="http://code.daypilot.org/87544/ajax-event-calendar-for-java-and-jquery-open-source">Tutorial</a></div>
 
 <div id="dpc"></div>
@@ -23,7 +54,7 @@
 $(document).ready(function() {
 	var dpc = $("#dpc").daypilotCalendar({
 		backendUrl : '${pageContext.request.contextPath}/dpc',
-		viewType : "Day",
+		viewType : "Week",
 		heightSpec : 'Full',
 		timeRangeSelectedHandling : 'CallBack',
 		eventMoveHandling : 'CallBack',

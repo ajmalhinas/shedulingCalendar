@@ -1,4 +1,5 @@
 var hourDevider=2;
+var eventBackColor="#FFA07A";
 
 if (typeof DayPilot === 'undefined') {
     var DayPilot = {};

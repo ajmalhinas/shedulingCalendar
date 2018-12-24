@@ -52,9 +52,9 @@ and open the template in the editor.
                 // view
                 dp.startDate = "2013-03-25";  // or just dp.startDate = "2013-03-25";
                 dp.viewType = "Week";
-
+                dp.initScrollPos = 0; 
                 dp.durationBarVisible = true;
-
+                dp.eventDeleteHandling = 'Update';
                 // event creating
                 dp.onTimeRangeSelected = function (args) {
                     var name = prompt("New event name:", "Event");

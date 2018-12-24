@@ -1618,13 +1618,16 @@ if (typeof DayPilot.Global === 'undefined') {
 
                         for (var k = 0; k < line.length; k++) {
                             var e = line[k];
-
-                            e.part.width = 100 / block.lines.length;
-                            e.part.left = e.part.width * j;
+                            // commented for enable ovelap without with change
+                           // e.part.width = 100 / block.lines.length;
+                           // e.part.left = e.part.width * j;
+                            e.part.width = 100;
+                            e.part.left = e.part.width * 0;
 
                             var isLastBlock = (j === block.lines.length - 1);
                             if (!isLastBlock) {
-                                e.part.width = e.part.width * 1.5;
+                                //e.part.width = e.part.width * 1.5;
+                                
                             }
 
                             this._drawEvent(e);

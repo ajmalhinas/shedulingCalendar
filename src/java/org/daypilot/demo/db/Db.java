@@ -43,7 +43,7 @@ import org.daypilot.json.JSONException;
 public class Db {
 
 //        public static String ConnectionURL = "jdbc:mysql://localhost:3306/qlab?zeroDateTimeBehavior=convertToNull" ;
-    public static String ConnectionURL = "jdbc:mysql://localhost:3306/qlab?useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull";
+    public static String ConnectionURL = "jdbc:mysql://localhost:3306/qlab?useLegacyDatetimeCode=false&zeroDateTimeBehavior=convertToNull";
     public static String ConnectionDBName = "qlab";
     public static String ConnectionClassName = "com.mysql.cj.jdbc.Driver";
     public static String ConnectionUser = "root";

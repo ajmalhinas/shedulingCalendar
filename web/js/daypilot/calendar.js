@@ -1,4 +1,3 @@
-var hourDevider=2;
 
 if (typeof DayPilot === 'undefined') {
     var DayPilot = {};
@@ -236,6 +235,7 @@ if (typeof DayPilot === 'undefined') {
         this.hourNameBackColor = "#F3F3F9";
         this.hourNameBorderColor = "#DEDFDE";
         this.hourWidth = 45;
+        this.hourDivider = 2;
         this.initScrollPos = 0;
         this.loadingLabelText = "Loading...";
         this.loadingLabelVisible = true;
@@ -407,7 +407,7 @@ if (typeof DayPilot === 'undefined') {
             }
         };
         this.rowCount = function() {
-            return 24*hourDevider;
+            return 24*this.hourDivider;
         };
         this.eventClickCallBack = function(e, $s) {
             this.callBack2('EventClick', $s, e);
@@ -984,7 +984,7 @@ if (typeof DayPilot === 'undefined') {
         //here row header hour values
         this.createHourRow = function($0q, i) {
             //here houre is divided by hourDevider
-            var $g = (this.cellHeight * hourDevider);
+            var $g = (this.cellHeight * this.hourDivider);
             var r = $0q.insertRow(-1);
             r.style.height = $g + "px";
             var c = r.insertCell(-1);

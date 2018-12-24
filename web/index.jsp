@@ -42,6 +42,8 @@
 
                                                         <li><a target="_blank" href="${pageContext.request.contextPath}/WeekView.jsp">WeekView</a></li>
                                                         <li><a target="_blank" href="${pageContext.request.contextPath}/WorkWeekView.jsp">WorkWeekView</a></li>
+                                                        <li><a target="_blank" href="${pageContext.request.contextPath}/HourDivider.jsp">HourDivider</a></li>
+
 
 </ul>
 

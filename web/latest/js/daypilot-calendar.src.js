@@ -19,8 +19,8 @@
  This product includes DayPilot (http://www.daypilot.org) developed by Annpoint, s.r.o.
  */
 
-var slotDurationInMin = 5;
-var slotsInAHour = 60 / slotDurationInMin;
+
+
 
 
 if (typeof DayPilot === 'undefined') {
@@ -295,6 +295,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.heightSpec = 'BusinessHours';
         this.hideUntilInit = true;
         this.hourWidth = 45;
+        this.slotDurationInMin = 5;
         this.initScrollPos = 'Auto';
         this.loadingLabelText = "Loading...";
         this.loadingLabelVisible = true;
@@ -310,7 +311,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.theme = null;
         this.timeFormat = 'Auto';
         this.visible = true;
-
+        this.OverlappingSameWidth = false; // overlapping same event with same width
         this.timeRangeSelectedHandling = 'Enabled';
         this.eventClickHandling = 'Enabled';
         this.eventResizeHandling = 'Update';
@@ -615,6 +616,7 @@ if (typeof DayPilot.Global === 'undefined') {
         };
 
         this._rowCount = function () {
+            var slotsInAHour = 60 / this.slotDurationInMin;
             return 24 * slotsInAHour;
         };
 
@@ -781,7 +783,7 @@ if (typeof DayPilot.Global === 'undefined') {
             if (border === 'top') {
                 var day = start.getDatePart();
                 var step = Math.floor((shadowTop - _startOffset) / calendar.cellHeight);
-                var minutes = step * slotDurationInMin;
+                var minutes = step * this.slotDurationInMin;
                 var ts = minutes * 60 * 1000;
 
                 newStart = day.addTime(ts);
@@ -790,7 +792,7 @@ if (typeof DayPilot.Global === 'undefined') {
             } else if (border === 'bottom') {
                 var day = end.getDatePart();
                 var step = Math.floor((shadowTop + shadowHeight - _startOffset) / calendar.cellHeight);
-                var minutes = step * slotDurationInMin;
+                var minutes = step * this.slotDurationInMin;
                 var ts = minutes * 60 * 1000;
 
                 newStart = start;
@@ -883,7 +885,7 @@ if (typeof DayPilot.Global === 'undefined') {
             var _startOffset = 1;
             var step = Math.floor((shadowTop - _startOffset) / calendar.cellHeight);
 
-            var boxStart = step * slotDurationInMin * 60 * 1000;
+            var boxStart = step * this.slotDurationInMin * 60 * 1000;
             var start = e.start();
             var end = e.end();
             var day = new Date();
@@ -893,7 +895,7 @@ if (typeof DayPilot.Global === 'undefined') {
             }
             day.setTime(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
 
-            var startOffset = start.getTime() - (day.getTime() + start.getUTCHours() * 3600 * 1000 + Math.floor(start.getUTCMinutes() / slotDurationInMin) * slotDurationInMin * 60 * 1000);
+            var startOffset = start.getTime() - (day.getTime() + start.getUTCHours() * 3600 * 1000 + Math.floor(start.getUTCMinutes() / this.slotDurationInMin) * this.slotDurationInMin * 60 * 1000);
             var length = end.getTime() - start.getTime();
 
             var newColumn = this.columns[newColumnIndex];
@@ -1619,16 +1621,22 @@ if (typeof DayPilot.Global === 'undefined') {
                         for (var k = 0; k < line.length; k++) {
                             var e = line[k];
                             // commented for enable ovelap without with change
-                           // e.part.width = 100 / block.lines.length;
-                           // e.part.left = e.part.width * j;
-                            e.part.width = 100;
-                            e.part.left = e.part.width * 0;
+                            if(this.OverlappingSameWidth){
+                                e.part.width = 100;
+                                e.part.left = e.part.width * 0;
+                            }else{
+                                  e.part.width = 100 / block.lines.length;
+                                  e.part.left = e.part.width * j;
+                                  var isLastBlock = (j === block.lines.length - 1);
+                                    if (!isLastBlock) {
+                                        e.part.width = e.part.width * 1.5;
 
-                            var isLastBlock = (j === block.lines.length - 1);
-                            if (!isLastBlock) {
-                                //e.part.width = e.part.width * 1.5;
-                                
+                                    }
                             }
+                          
+                            
+
+                            
 
                             this._drawEvent(e);
                         }
@@ -1887,6 +1895,7 @@ if (typeof DayPilot.Global === 'undefined') {
         };
 
         this._createHourRow = function (table, i) {
+            var slotsInAHour = 60 / this.slotDurationInMin;
             var height = (this.cellHeight * slotsInAHour);
 
             var r = table.insertRow(-1);
@@ -2186,7 +2195,7 @@ if (typeof DayPilot.Global === 'undefined') {
             var dates = [];
 
             var table = this.nav.main;
-            var step = slotDurationInMin * 60 * 1000;
+            var step = this.slotDurationInMin * 60 * 1000;
             var rowCount = this._rowCount();
 
             var columns = calendar.columns;
@@ -3110,7 +3119,7 @@ if (typeof DayPilot.Global === 'undefined') {
 
             startTicks = start.getTime();
 
-            var boxTicks = slotDurationInMin * 60 * 1000;
+            var boxTicks = this.slotDurationInMin * 60 * 1000;
             var topTicks = ticks - startTicks;
             var boxOffsetTicks = topTicks % boxTicks;
 
@@ -3133,7 +3142,7 @@ if (typeof DayPilot.Global === 'undefined') {
         };
 
         this._ticksToPixels = function (ticks) {
-            return Math.floor((this.cellHeight * ticks) / (1000 * 60 * slotDurationInMin));
+            return Math.floor((this.cellHeight * ticks) / (1000 * 60 * this.slotDurationInMin));
         };
 
         this._prepareVariables = function () {

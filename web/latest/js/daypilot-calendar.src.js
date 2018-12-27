@@ -1558,7 +1558,7 @@ if (typeof DayPilot.Global === 'undefined') {
                 div.appendChild(bar);
             }
 
-            if (calendar.eventDeleteHandling !== "Disabled") {
+            if (calendar.eventDeleteHandling !== "Disabled" && !data.deleteDisabled) {
                 var del = document.createElement("div");
                 del.style.position = "absolute";
                 del.style.right = "2px";

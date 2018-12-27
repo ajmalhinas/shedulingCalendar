@@ -125,13 +125,18 @@ and open the template in the editor.
             args.data.backColor = "#E06666";
         }
     };
+
     dp.init();
     
      var e = new DayPilot.Event({
                     start: new DayPilot.Date("2018-12-26T12:00:00"),
                    end: new DayPilot.Date("2018-12-26T14:00:00").addHours(3),
                    id: DayPilot.guid(),
-                    text: "Special event"
+                    text: "Special event",
+                    cssClass: 'booked',
+                    resizeDisabled : true,
+                    moveDisabled : true
+                    
                 });
                 dp.events.add(e);
 

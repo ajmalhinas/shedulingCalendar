@@ -1420,7 +1420,7 @@ if (typeof DayPilot.Global === 'undefined') {
                     div.deleteIcon.style.display = "none";
                 }
             };
-
+            
             div.onmousemove = function (ev) {
                 // const
                 var resizeMargin = 5;
@@ -1439,6 +1439,7 @@ if (typeof DayPilot.Global === 'undefined') {
                 if (DayPilotCalendar.resizing || DayPilotCalendar.moving) {
                     return;
                 }
+               
 
                 if (div.deleteIcon) {
                     div.deleteIcon.style.display = "";
@@ -1446,17 +1447,17 @@ if (typeof DayPilot.Global === 'undefined') {
 
                 var isLastPart = this.isLast;
 
-                if (offset.y <= moveMargin && calendar.eventResizeHandling !== 'Disabled') {
+                if (offset.y <= moveMargin && calendar.eventResizeHandling !== 'Disabled' && !data.resizeDisabled ) {
                     this.style.cursor = "n-resize";
                     this.dpBorder = 'top';
-                } else if (this.offsetHeight - offset.y <= resizeMargin && calendar.eventResizeHandling !== 'Disabled') {
+                } else if (this.offsetHeight - offset.y <= resizeMargin && calendar.eventResizeHandling !== 'Disabled' && !data.resizeDisabled ) {
                     if (isLastPart) {
                         this.style.cursor = "s-resize";
                         this.dpBorder = 'bottom';
                     } else {
                         this.style.cursor = 'not-allowed';
                     }
-                } else if (!DayPilotCalendar.resizing && !DayPilotCalendar.moving) {
+                } else if (!DayPilotCalendar.resizing && !DayPilotCalendar.moving ) {
                     if (calendar.eventClickHandling !== 'Disabled') {
                         this.style.cursor = 'pointer';
                     } else {
@@ -1470,7 +1471,7 @@ if (typeof DayPilot.Global === 'undefined') {
                 ev = ev || window.event;
                 var button = ev.which || ev.button;
 
-                if ((this.style.cursor === 'n-resize' || this.style.cursor === 's-resize') && button === 1) {
+                if ((this.style.cursor === 'n-resize' || this.style.cursor === 's-resize') && button === 1 && !data.resizeDisabled) {
                     // set
                     DayPilotCalendar.resizing = this;
                     DayPilotCalendar.originalMouse = DayPilot.mc(ev);
@@ -1479,7 +1480,7 @@ if (typeof DayPilot.Global === 'undefined') {
 
                     calendar.nav.top.style.cursor = this.style.cursor;
 
-                } else if (button === 1 && calendar.eventMoveHandling !== 'Disabled') {
+                } else if (button === 1 && calendar.eventMoveHandling !== 'Disabled'&& !data.moveDisabled ) {
                     DayPilotCalendar.moving = this;
                     DayPilotCalendar.moving.event = this.event;
                     var helper = DayPilotCalendar.moving.helper = {};

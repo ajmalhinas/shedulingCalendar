@@ -1412,8 +1412,11 @@ if (typeof DayPilot.Global === 'undefined') {
 
             div.isFirst = e.part.start.getTime() === e.start().getTime();
             div.isLast = e.part.end.getTime() === e.end().getTime();
-
-            div.onclick = this._eventClickDispatch;
+            
+            if(!data.clickDisabled){
+                div.onclick = this._eventClickDispatch;
+            }
+            
 
             div.onmouseout = function (ev) {
                 if (div.deleteIcon) {

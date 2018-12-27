@@ -57,7 +57,11 @@ and open the template in the editor.
                 dp.eventDeleteHandling = 'Update';
                 dp.slotDurationInMin = 30;
                 dp.cellHeight = 40;
+                dp.heightSpec = 'BusinessHoursNoScroll';
+	dp.businessBeginsHour = 8;
+	dp.businessEndsHour = 17;
                 // event creating
+                //dp.timeRangeSelectedHandling = 'JavaScript';
                 dp.onTimeRangeSelected = function (args) {
                     var name = prompt("New event name:", "Event");
                     if (!name)
@@ -68,6 +72,7 @@ and open the template in the editor.
                         id: DayPilot.guid(),
                         text: name
                     });
+                    
                     dp.events.add(e);
                     dp.clearSelection();
                 };

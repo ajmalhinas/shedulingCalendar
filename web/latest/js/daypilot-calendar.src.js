@@ -604,6 +604,7 @@ if (typeof DayPilot.Global === 'undefined') {
         };
 
         this._durationHours = function () {
+            
             return 24;
         };
 
@@ -616,8 +617,11 @@ if (typeof DayPilot.Global === 'undefined') {
         };
 
         this._rowCount = function () {
+            var count = (this.heightSpec == 'BusinessHoursNoScroll' ? this._businessHoursSpan() : 24);
+            
+            
             var slotsInAHour = 60 / this.slotDurationInMin;
-            return 24 * slotsInAHour;
+            return (count) * slotsInAHour;
         };
 
         this._api2 = function () {
@@ -1018,8 +1022,10 @@ if (typeof DayPilot.Global === 'undefined') {
                 if (typeof calendar.onTimeRangeSelected === 'function') {
                     calendar._angular.apply(function () {
                         calendar.onTimeRangeSelected(args);
+                        
                     });
                 }
+                
             } else {
                 switch (calendar.timeRangeSelectedHandling) {
                     case 'PostBack':
@@ -1283,11 +1289,11 @@ if (typeof DayPilot.Global === 'undefined') {
                     break;
             }
 
-            /*
+            
              if (this.heightSpec === 'BusinessHoursNoScroll') {
              start = start.addHours(this.businessBeginsHour);
              }
-             */
+             
 
             for (var i = 0; i < days; i++) {
 
@@ -1889,8 +1895,10 @@ if (typeof DayPilot.Global === 'undefined') {
                 c.style.border = '0px none';
             }
 
-            var hours = 24;
-            for (var i = 0; i < hours; i++) {
+           // var hours = 24;
+            var bhour = (this.heightSpec == 'BusinessHoursNoScroll' ? this.businessBeginsHour : 0);
+            var ehour = (this.heightSpec == 'BusinessHoursNoScroll' ? this.businessEndsHour : 24);
+            for (var i = bhour; i < ehour; i++) {
                 this._createHourRow(table, i);
             }
 
@@ -2938,7 +2946,8 @@ if (typeof DayPilot.Global === 'undefined') {
             }
 
             var length = events.length;
-            var duration = 24 * 60 * 60 * 1000;
+            
+            var duration =(this.heightSpec == 'BusinessHoursNoScroll' ? this._businessHoursSpan() : 24) * 60 * 60 * 1000;
 
             this.cache.pixels = {};
 

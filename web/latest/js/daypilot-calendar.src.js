@@ -256,7 +256,7 @@ if (typeof DayPilot.Global === 'undefined') {
 
         var calendar = this;
         this.uniqueID = null;
-
+        this.rtl = false;
         this.v = '2018.2.232-lite';
         this.id = id;
         this.clientName = id;
@@ -1297,18 +1297,29 @@ if (typeof DayPilot.Global === 'undefined') {
              start = start.addHours(this.businessBeginsHour);
              }
              
+            if(!calendar.rtl){
+                for (var i = 0; i < days; i++) {
+                    var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().datePattern;
 
-            for (var i = 0; i < days; i++) {
+                    var column = {};
+                    column.Start = start.addDays(i);
+                    column.Name = column.Start.toString(format, resolved.locale());
+                    column.InnerHTML = column.Name;
+                    columns.push(column);
+                }
+            }else{
+                for (var i = days-1; i >= 0; i--) {
+                    var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().datePattern;
 
-                var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().datePattern;
-
-                var column = {};
-                column.Start = start.addDays(i);
-                column.Name = column.Start.toString(format, resolved.locale());
-                column.InnerHTML = column.Name;
-
-                columns.push(column);
+                    var column = {};
+                    column.Start = start.addDays(i);
+                    column.Name = column.Start.toString(format, resolved.locale());
+                    column.InnerHTML = column.Name;
+                    columns.push(column);
+                }
+                
             }
+            
 
             return columns;
         };
@@ -1851,6 +1862,8 @@ if (typeof DayPilot.Global === 'undefined') {
                     c.style.overflow = 'visible';
                     if (!calendar.rtl) {
                         c.style.textAlign = 'left';
+                    }else{
+                        c.style.textAlign = 'right';
                     }
 
                     // withpct
@@ -2371,6 +2384,8 @@ if (typeof DayPilot.Global === 'undefined') {
                         c.style.overflow = 'visible';
                         if (!calendar.rtl) {
                             c.style.textAlign = 'left';
+                        }else{
+                            c.style.textAlign = 'right';
                         }
 
                         // withpct

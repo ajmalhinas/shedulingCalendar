@@ -291,10 +291,11 @@ if (typeof DayPilot.Global === 'undefined') {
         this.eventHeaderVisible = true;
         this.eventsLoadMethod = "GET";
         this.headerHeight = 20;
+        this.headerCellType = 'Hourly', // headet cell hourly divided or minuteswise
         this.height = 300;
         this.heightSpec = 'BusinessHours';
         this.hideUntilInit = true;
-        this.hourWidth = 45;
+        this.hourWidth = 70;
         this.slotDurationInMin = 5;
         this.initScrollPos = 'Auto';
         this.loadingLabelText = "Loading...";
@@ -1900,9 +1901,20 @@ if (typeof DayPilot.Global === 'undefined') {
            // var hours = 24;
             var bhour = (this.heightSpec == 'BusinessHoursNoScroll' ? this.businessBeginsHour : 0);
             var ehour = (this.heightSpec == 'BusinessHoursNoScroll' ? this.businessEndsHour : 24);
-            for (var i = bhour; i < ehour; i++) {
-                this._createHourRow(table, i);
+            if (this.headerCellType === 'MiniuteWise') {
+                 for (var i = bhour; i < ehour; i++) {
+                
+                    for (var minut = 0; minut < 60; minut+=this.slotDurationInMin) {
+                        this._createMinuteRow(table, i, minut );
+                    }
+                }
+            }else{
+                for (var i = bhour; i < ehour; i++) {
+                    this._createHourRow(table, i);
+                 } 
             }
+           
+            
 
             return table;
 
@@ -1972,6 +1984,110 @@ if (typeof DayPilot.Global === 'undefined') {
             }
 
             text.innerHTML = hour;
+
+            var span = document.createElement("span");
+            span.unselectable = "on";
+            if (!this._cssOnly) {
+                span.style.fontSize = "10px";
+                span.style.verticalAlign = "super";
+            } else {
+                span.className = this._prefixCssClass("_rowheader_minutes");
+            }
+
+            //here minutes
+            var sup;
+            if (timeFormat === "Clock12Hours") {
+                if (am) {
+                    sup = "AMM";
+                } else {
+                    sup = "PMm";
+                }
+            } else {
+                sup = "00";
+            }
+
+            if (!this._cssOnly) {
+                span.innerHTML = "&nbsp;" + sup;
+            } else {
+                span.innerHTML = sup;
+            }
+
+            text.appendChild(span);
+
+            block.appendChild(text);
+
+            frame.appendChild(block);
+
+            c.appendChild(frame);
+        };
+        this._createMinuteRow = function (table, i, minut) {
+            //var slotsInAHour = 60 / this.slotDurationInMin;
+            var height = (this.cellHeight);
+
+            var r = table.insertRow(-1);
+            r.style.height = height + "px";
+
+            var c = r.insertCell(-1);
+            c.valign = "bottom";
+            c.unselectable = "on";
+            if (!this._cssOnly) {
+                /*c.style.backgroundColor = this.hourNameBackColor;*/
+            }
+            c.style.cursor = "default";
+            c.style.padding = '0px';
+            c.style.border = '0px none';
+
+            var frame = document.createElement("div");
+            frame.style.position = "relative";
+            if (this._cssOnly) {
+                frame.className = this._prefixCssClass("_rowheader");
+            }
+            frame.style.width = this.hourWidth + "px";
+            frame.style.height = (height) + "px";
+            frame.style.overflow = 'hidden';
+            frame.unselectable = 'on';
+
+            var block = document.createElement("div");
+            //block.style.display = "block";
+            if (this._cssOnly) {
+                block.className = this._prefixCssClass("_rowheader_inner");
+            } else {
+                /*
+                 block.style.borderBottom = "1px solid " + this.hourNameBorderColor;
+                 block.style.textAlign = "right";
+                 */
+            }
+            block.style.height = (height - 1) + "px";
+            block.unselectable = "on";
+
+            var text = document.createElement("div");
+            /*
+             if (!this._cssOnly) {
+             text.style.padding = "2px";
+             text.style.fontFamily = this.hourFontFamily;
+             text.style.fontSize = this.hourFontSize;
+             text.style.color = this.hourFontColor;
+             }
+             */
+            text.unselectable = "on";
+
+            var start = this.startDate.addHours(i).addMinutes(minut);
+            var hour = start.getHours();
+
+            var am = hour < 12;
+            var timeFormat = resolved.timeFormat();
+            if (timeFormat === "Clock12Hours") {
+                hour = hour % 12;
+                if (hour === 0) {
+                    hour = 12;
+                }
+            }
+            
+            if (minut === 0) {
+                minut = '00';
+            }
+
+            text.innerHTML = hour+':'+minut;
 
             var span = document.createElement("span");
             span.unselectable = "on";

@@ -788,16 +788,17 @@ if (typeof DayPilot.Global === 'undefined') {
                 var day = start.getDatePart();
                 var step = Math.floor((shadowTop - _startOffset) / calendar.cellHeight);
                 var minutes = step * this.slotDurationInMin;
-                var ts = minutes * 60 * 1000;
+                var ts = minutes * 60 * 1000 + (this.heightSpec == 'BusinessHoursNoScroll' ? this.businessBeginsHour*60*60*1000 : 0);
 
                 newStart = day.addTime(ts);
                 newEnd = e.end();
+                
 
             } else if (border === 'bottom') {
                 var day = end.getDatePart();
                 var step = Math.floor((shadowTop + shadowHeight - _startOffset) / calendar.cellHeight);
                 var minutes = step * this.slotDurationInMin;
-                var ts = minutes * 60 * 1000;
+                var ts = minutes * 60 * 1000+ (this.heightSpec == 'BusinessHoursNoScroll' ? this.businessBeginsHour*60*60*1000 : 0);
 
                 newStart = start;
                 newEnd = day.addTime(ts);
@@ -810,6 +811,7 @@ if (typeof DayPilot.Global === 'undefined') {
                 args.e = e;
                 args.newStart = newStart;
                 args.newEnd = newEnd;
+                
                 args.preventDefault = function () {
                     this.preventDefault.value = true;
                 };
@@ -911,7 +913,7 @@ if (typeof DayPilot.Global === 'undefined') {
             var newStart = new DayPilot.Date(newStartUTC);
 
             var newEnd = newStart.addTime(length);
-
+//alert(newEnd)
 
             if (calendar._api2()) {
                 // API v2

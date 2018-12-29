@@ -312,7 +312,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.theme = null;
         this.timeFormat = 'Auto';
         this.visible = true;
-        this.OverlappingSameWidth = false; // overlapping same event with same width
+        this.overlappingSameWidth = false; // overlapping same event with same width
         this.timeRangeSelectedHandling = 'Enabled';
         this.eventClickHandling = 'Enabled';
         this.eventResizeHandling = 'Update';
@@ -1634,7 +1634,7 @@ if (typeof DayPilot.Global === 'undefined') {
                         for (var k = 0; k < line.length; k++) {
                             var e = line[k];
                             // commented for enable ovelap without with change
-                            if(this.OverlappingSameWidth){
+                            if(this.overlappingSameWidth){
                                 e.part.width = 100;
                                 e.part.left = e.part.width * 0;
                             }else{
@@ -1998,9 +1998,9 @@ if (typeof DayPilot.Global === 'undefined') {
             var sup;
             if (timeFormat === "Clock12Hours") {
                 if (am) {
-                    sup = "AMM";
+                    sup = "AM";
                 } else {
-                    sup = "PMm";
+                    sup = "PM";
                 }
             } else {
                 sup = "00";
@@ -2102,9 +2102,9 @@ if (typeof DayPilot.Global === 'undefined') {
             var sup;
             if (timeFormat === "Clock12Hours") {
                 if (am) {
-                    sup = "AMM";
+                    sup = "AM";
                 } else {
-                    sup = "PMm";
+                    sup = "PM";
                 }
             } else {
                 sup = "00";
@@ -2654,7 +2654,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this._isBusinessCell = function (start, end) {
             if (this.businessBeginsHour < this.businessEndsHour)
             {
-                return !(start.getHours() < this.businessBeginsHour || start.getHours() >= this.businessEndsHour || start.getDayOfWeek() === 6 || start.getDayOfWeek() === 0);
+                return !(start.getHours() < this.businessBeginsHour || start.getHours() >= this.businessEndsHour); // || start.getDayOfWeek() === 6 || start.getDayOfWeek() === 0
             }
 
             if (start.getHours() >= this.businessBeginsHour)

@@ -1586,7 +1586,12 @@ if (typeof DayPilot.Global === 'undefined') {
             if (calendar.eventDeleteHandling !== "Disabled" && !data.deleteDisabled) {
                 var del = document.createElement("div");
                 del.style.position = "absolute";
-                del.style.right = "2px";
+                if (!calendar.rtl){
+                    del.style.right = "2px";
+                }else{
+                    del.style.left = "2px";
+                }
+                
                 del.style.top = "2px";
                 del.style.width = "17px";
                 del.style.height = "17px";

@@ -290,7 +290,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.eventHeaderHeight = 14;
         this.eventHeaderVisible = true;
         this.eventsLoadMethod = "GET";
-        this.headerHeight = 20;
+        this.headerHeight = 40;
         this.headerCellType = 'Hourly', // headet cell hourly divided or minuteswise
         this.height = 300;
         this.heightSpec = 'BusinessHours';
@@ -1304,7 +1304,8 @@ if (typeof DayPilot.Global === 'undefined') {
                     var column = {};
                     column.Start = start.addDays(i);
                     column.Name = column.Start.toString(format, resolved.locale());
-                    column.InnerHTML = column.Name;
+                    var dayname = column.Start.toString("dddd", resolved.locale());
+                    column.InnerHTML = column.Name+'<br>'+dayname;
                     columns.push(column);
                 }
             }else{
@@ -1314,7 +1315,8 @@ if (typeof DayPilot.Global === 'undefined') {
                     var column = {};
                     column.Start = start.addDays(i);
                     column.Name = column.Start.toString(format, resolved.locale());
-                    column.InnerHTML = column.Name;
+                    var dayname = column.Start.toString("dddd", resolved.locale());
+                    column.InnerHTML = column.Name+'<br>'+dayname;
                     columns.push(column);
                 }
                 

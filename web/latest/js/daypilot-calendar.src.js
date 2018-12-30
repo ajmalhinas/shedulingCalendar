@@ -286,7 +286,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.cornerBackColor = "#F3F3F9";
         this._cssOnly = true;
         this.days = 1;
-        this.durationBarVisible = true;
+        this.durationBarVisible = false;
         this.eventHeaderHeight = 14;
         this.eventHeaderVisible = true;
         this.eventsLoadMethod = "GET";

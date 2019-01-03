@@ -4,7 +4,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Multi-page template</title>
+	<title>Step 1</title>
+        
+        
 	<link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
 	<link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
 	<link rel="shortcut icon" href="JMobile/favicon.ico">
@@ -54,7 +56,7 @@
 <div data-role="page" id="one">
 <div data-role="navbar" data-grid="d">
     <ul>
-    <li class="nav-rows"><a  href="#one" class="ui-btn-active">CHANNEL</a></li>
+    <li class="nav-rows"><a  href="index.html" class="ui-btn-active">CHANNEL</a></li>
     <li class="nav-rows"><a href="#">OFFERS</a></li>
     <li class="nav-rows"><a href="#">NEWS</a></li>
     <li class="nav-rows"><a  href="#">CAREERS</a></li>
@@ -116,7 +118,7 @@
             
 
 		
-		<p><a href="#two" class="ui-btn ui-shadow ui-corner-all">NEXT</a></p>
+		<p><a href="step2.html" class="ui-btn ui-shadow ui-corner-all">NEXT</a></p>
 		<!--<p><a href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-transition="pop">Show page "popup" (as a dialog)</a></p> -->
 	</div><!-- /content -->
 
@@ -147,6 +149,8 @@
                 <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="2">
             </div>
 	</div><!-- /content -->
+        
+        <div id="dp"></div>
 
 	<div data-role="footer">
 		<h4>Page Footer</h4>
@@ -216,6 +220,8 @@
             .end()
             .prependTo( destination );
     });
+
+
 </script>
 </body>
 </html>

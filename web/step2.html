@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Step 2</title>
+        
+        <!-- head -->
+        <!-- demo stylesheet -->
+        <link type="text/css" rel="stylesheet" href="latest/helpers/demo.css?v=2018.2.232" />    
+        <link type="text/css" rel="stylesheet" href="latest/helpers/media/layout.css?v=2018.2.232" />    
+        <link type="text/css" rel="stylesheet" href="latest/helpers/media/elements.css?v=2018.2.232" />   
+
+        <!-- helper libraries -->
+        <script src="latest/helpers/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+        <!-- daypilot libraries -->
+        <script src="latest/js/daypilot-calendar.src.js" type="text/javascript"></script>
+        <script src="latest/js/daypilot-common.src.js" type="text/javascript"></script>
+        <!-- daypilot themes -->
+        <link type="text/css" rel="stylesheet" href="latest/themes/month_white.css?v=2018.2.232" />
+        <link type="text/css" rel="stylesheet" href="latest/themes/month_green.css?v=2018.2.232" />    
+        <link type="text/css" rel="stylesheet" href="latest/themes/month_transparent.css?v=2018.2.232" />    
+
+        <link type="text/css" rel="stylesheet" href="latest/themes/calendar_transparent.css?v=2018.2.232" />    
+        <link type="text/css" rel="stylesheet" href="latest/themes/calendar_white.css?v=2018.2.232" />    
+        <link type="text/css" rel="stylesheet" href="latest/themes/calendar_green.css?v=2018.2.232" />    
+
+        <link type="text/css" rel="stylesheet" href="latest/themes/navigator_green.css?v=2018.2.232" />    
+        <link type="text/css" rel="stylesheet" href="latest/themes/navigator_white.css?v=2018.2.232" />    
+
+        <!-- /head -->
+        
+	<link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
+	<link rel="shortcut icon" href="JMobile/favicon.ico">
+	<script src="JMobile/js/jquery.js"></script>
+	<script src="JMobile/_assets/js/index.js"></script>
+	<script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
+        <style>
+            .nav-rows{
+                width:16.6% !important;
+                clear:none !important;
+            }
+            .full-width-slider input {
+            display: none;
+            }
+            
+            @media(max-width: 630px) {
+  .nav-rows{
+                width:33.3% !important;
+                clear:none !important;
+            }
+}
+
+        </style>
+</head>
+
+<body>
+
+<!-- Start of second page: #two -->
+<div data-role="page" id="two" data-theme="a">
+<div data-role="navbar" data-grid="d">
+    <ul>
+    <li class="nav-rows"><a  href="index.html" class="ui-btn-active">CHANNEL</a></li>
+    <li class="nav-rows"><a href="#">OFFERS</a></li>
+    <li class="nav-rows"><a href="#">NEWS</a></li>
+    <li class="nav-rows"><a  href="#">CAREERS</a></li>
+    <li class="nav-rows"><a  href="#">DIRECTORY</a></li>
+    <li class="nav-rows"><a href="#">CONTACT US</a></li>
+</ul>
+</div><!-- /navbar -->
+	<div data-role="header">
+		
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<div class="full-width-slider">
+                <label for="slider-10" class="ui-hidden-accessible">Step:</label>
+                <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="2">
+            </div>
+            
+            <div id="dp"></div>
+            <p><a href="step3.html" class="ui-btn ui-shadow ui-corner-all">NEXT</a></p>
+	</div><!-- /content -->
+        
+        
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page two -->
+
+<script>
+// calendar js
+
+var dp = new DayPilot.Calendar("dp");
+
+                // view
+                dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
+                dp.viewType = "Week"; // day/week
+                dp.initScrollPos = 0; // fixing auto scroll
+                dp.durationBarVisible = true;
+                dp.eventDeleteHandling = 'Update';
+                dp.slotDurationInMin = 30;
+                dp.cellHeight = 40;
+                dp.heightSpec = 'BusinessHoursNoScroll';
+                dp.headerCellType = 'MiniuteWise';
+                dp.businessBeginsHour = 8;
+                dp.businessEndsHour = 17;
+                dp.rtl = true;
+                dp.locale = "ar-ae";
+                // event creating
+                //dp.timeRangeSelectedHandling = 'JavaScript';
+                dp.onTimeRangeSelected = function (args) {
+                    var name = prompt("New event name:", "Event");
+                    if (!name)
+                        return;
+                    var e = new DayPilot.Event({
+                        start: args.start,
+                        end: args.end,
+                        id: DayPilot.guid(),
+                        text: name
+                    });
+                    
+                    dp.events.add(e);
+                    dp.clearSelection();
+                };
+
+                dp.onEventClick = function (args) {
+                    alert("clicked: " + args.e.id());
+                };
+
+                
+
+               
+                 dp.events.list = [
+        {
+            "start": "2018-12-25T10:00:00",
+            "end": "2018-12-25T13:00:00",
+            "id": "23ef6fcd-e12d-b085-e38a-a4e23d0bb61d",
+            "text": "Event 1",
+            "backColor": "#FFE599",
+            "borderColor": "#F1C232"
+        },
+        {
+            "start": "2018-12-25T11:00:00",
+            "end": "2018-12-25T14:00:00",
+            "id": "fb62e2dd-267e-ec91-886b-73574d24e25a",
+            "text": "Event 2",
+            "backColor": "#9FC5E8",
+            "borderColor": "#3D85C6"
+        },
+        {
+            "start": "2018-12-25T10:00:00",
+            "end": "2018-12-25T13:00:00",
+            "id": "29b7a553-d44f-8f2c-11e1-a7d5f62eb123",
+            "text": "Event 3",
+            "backColor": "#B6D7A8",
+            "borderColor": "#6AA84F"
+        },
+        {
+            "start": "2018-12-25T14:00:00",
+            "end": "2018-12-25T17:00:00",
+            "id": "ff968cfb-eba1-8dc1-7396-7f0d4f465c8a",
+            "text": "Event 4",
+            "backColor": "#EA9999",
+            "borderColor": "#CC0000",
+            "tags": {
+                "type": "important"
+            }
+        }
+        
+        
+    ];
+    dp.onBeforeEventRender = function(args) {
+        if (args.data.tags && args.data.tags.type === "important"){
+            args.data.html = "<b>Important Event</b><br>" + args.data.text;
+            args.data.fontColor = "#fff";
+            args.data.backColor = "#E06666";
+        }
+    };
+
+    dp.init();
+    
+     var e = new DayPilot.Event({
+                    start: new DayPilot.Date("2018-12-26T12:00:00"),
+                   end: new DayPilot.Date("2018-12-26T14:00:00").addHours(3),
+                   id: DayPilot.guid(),
+                    text: "Special event",
+                    cssClass: 'booked',
+                    resizeDisabled : true,
+                    moveDisabled : true,
+                    deleteDisabled : true,
+                    clickDisabled : true,
+                    barHidden:true
+                    
+                });
+                dp.events.add(e);
+
+</script>
+</body>
+</html>

@@ -1299,7 +1299,7 @@ if (typeof DayPilot.Global === 'undefined') {
              
             if(!calendar.rtl){
                 for (var i = 0; i < days; i++) {
-                    var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().datePattern;
+                    var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().shortDatePattern;
 
                     var column = {};
                     column.Start = start.addDays(i);
@@ -1310,7 +1310,7 @@ if (typeof DayPilot.Global === 'undefined') {
                 }
             }else{
                 for (var i = days-1; i >= 0; i--) {
-                    var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().datePattern;
+                    var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().shortDatePattern;
 
                     var column = {};
                     column.Start = start.addDays(i);

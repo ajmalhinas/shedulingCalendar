@@ -66,9 +66,10 @@ and open the template in the editor.
                 // event creating
                 //dp.timeRangeSelectedHandling = 'JavaScript';
                 dp.onTimeRangeSelected = function (args) {
-                    var name = prompt("New event name:", "Event");
-                    if (!name)
-                        return;
+                    //var name = prompt("New event name:", "Event");
+                    //if (!name)
+                    //    return;
+                    var name = args.start;
                     var e = new DayPilot.Event({
                         start: args.start,
                         end: args.end,

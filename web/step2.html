@@ -117,9 +117,10 @@ var dp = new DayPilot.Calendar("dp");
                 // event creating
                 //dp.timeRangeSelectedHandling = 'JavaScript';
                 dp.onTimeRangeSelected = function (args) {
-                    var name = prompt("New event name:", "Event");
-                    if (!name)
-                        return;
+                    //var name = prompt("New event name:", "Event");
+                    //if (!name)
+                     //   return;
+                     var name = args.start.toString("hh:mm tt") +'-'+ args.end.toString("hh:mm tt");
                     var e = new DayPilot.Event({
                         start: args.start,
                         end: args.end,

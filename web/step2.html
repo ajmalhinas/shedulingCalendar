@@ -102,7 +102,8 @@ var dp = new DayPilot.Calendar("dp");
 
                 // view
                 dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
-                dp.viewType = "Week"; // day/week
+                dp.viewType = "Custom"; // day/week/custom
+                dp.viewTypeCustomDateArray = ['2018-12-22','2018-12-25','2018-12-26']; // day/week/custom
                 dp.initScrollPos = 0; // fixing auto scroll
                 dp.durationBarVisible = true;
                 dp.eventDeleteHandling = 'Update';
@@ -121,6 +122,7 @@ var dp = new DayPilot.Calendar("dp");
                     //if (!name)
                      //   return;
                      var name = args.start.toString("hh:mm tt") +'-'+ args.end.toString("hh:mm tt");
+                     alert(name)
                     var e = new DayPilot.Event({
                         start: args.start,
                         end: args.end,

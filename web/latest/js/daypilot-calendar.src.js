@@ -297,6 +297,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.hideUntilInit = true;
         this.hourWidth = 70;
         this.slotDurationInMin = 5;
+        this.viewTypeCustomDateArray = [],
         this.initScrollPos = 'Auto';
         this.loadingLabelText = "Loading...";
         this.loadingLabelVisible = true;
@@ -459,6 +460,7 @@ if (typeof DayPilot.Global === 'undefined') {
             // h.backColor = calendar.cellBackColor;
             h.timeFormat = calendar.timeFormat;
             h.viewType = calendar.viewType;
+            h.viewTypeCustomDateArray = calendar.viewTypeCustomDateArray;
             h.locale = calendar.locale;
 
             return h;
@@ -567,6 +569,7 @@ if (typeof DayPilot.Global === 'undefined') {
                 calendar.businessEndsHour = result.BusinessEndsHour ? result.BusinessEndsHour : calendar.businessEndsHour;
                 calendar.headerDateFormat = result.HeaderDateFormat ? result.HeaderDateFormat : calendar.headerDateFormat;
                 calendar.viewType = result.ViewType; //
+                calendar.viewTypeCustomDateArray = result.viewTypeCustomDateArray;
                 calendar.backColor = result.BackColor ? result.BackColor : calendar.backColor;
                 calendar.eventHeaderVisible = result.EventHeaderVisible ? result.EventHeaderVisible : calendar.eventHeaderVisible;
                 calendar.timeFormat = result.TimeFormat ? result.TimeFormat : calendar.timeFormat;
@@ -1273,36 +1276,55 @@ if (typeof DayPilot.Global === 'undefined') {
 
         this._createDaysViewColumns = function () {
             var columns = [];
+            var daylist = [];
 
             var start = this.startDate.getDatePart();
-
+            
             var days = this.days;
             switch (this.viewType) {
                 case "Day":
                     days = 1;
+                    daylist = [start];
                     break;
                 case "Week":
                     days = 7;
                     // TODO let weekStarts property override it?
                     start = start.firstDayOfWeek(resolved.locale().weekStarts);
+                    daylist = [start,start.addDays(1),start.addDays(2),start.addDays(3),start.addDays(4),start.addDays(5),start.addDays(6)];
                     break;
                 case "WorkWeek":
                     days = 5;
                     start = start.firstDayOfWeek(1); // Monday
+                    daylist = [start,start.addDays(1),start.addDays(2),start.addDays(3),start.addDays(4)];
+                    break;
+                case "Custom":
+                    
+                    for (var i = 0; i < this.viewTypeCustomDateArray.length; i++) {
+                        daylist[i]= new DayPilot.Date(this.viewTypeCustomDateArray[i]);
+                    }
+                    
+                    days = daylist.length;
+                    start = daylist[0].getDatePart(); // 
                     break;
             }
 
-            
-             if (this.heightSpec === 'BusinessHoursNoScroll') {
-             start = start.addHours(this.businessBeginsHour);
+            if (this.heightSpec === 'BusinessHoursNoScroll') {
+                start = start.addHours(this.businessBeginsHour);
+                for (var i = 0; i < days; i++) {
+                    daylist[i] = daylist[i].addHours(this.businessBeginsHour);
+                }
              }
+             
+             
+             
+            
              
             if(!calendar.rtl){
                 for (var i = 0; i < days; i++) {
                     var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().shortDatePattern;
 
                     var column = {};
-                    column.Start = start.addDays(i);
+                    column.Start = daylist[i];
                     column.Name = column.Start.toString(format, resolved.locale());
                     var dayname = column.Start.toString("dddd", resolved.locale());
                     column.InnerHTML = column.Name+'<br>'+dayname;
@@ -1313,7 +1335,7 @@ if (typeof DayPilot.Global === 'undefined') {
                     var format = calendar.headerDateFormat ? calendar.headerDateFormat : resolved.locale().shortDatePattern;
 
                     var column = {};
-                    column.Start = start.addDays(i);
+                    column.Start = daylist[i];
                     column.Name = column.Start.toString(format, resolved.locale());
                     var dayname = column.Start.toString("dddd", resolved.locale());
                     column.InnerHTML = column.Name+'<br>'+dayname;

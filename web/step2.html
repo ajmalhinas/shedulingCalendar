@@ -87,6 +87,23 @@ p, body, td{
                 <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="2">
             </div>
             
+            
+            <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true" hidden>
+                <legend>Mode</legend>
+                    <input type="radio" name="radio-choice-a" id="mode-choice-f" value="Week" checked="checked">
+                    <label for="mode-choice-f">Week View</label>
+                    <input type="radio" name="radio-choice-a" id="mode-choice-g" value="Custom">
+                    <label for="mode-choice-g">Appointments View</label>
+            </fieldset>
+            <fieldset id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="true" hidden>
+                <legend>Date Shown</legend>
+                    <input type="radio" name="radio-choice-b" id="radio-choice-c" value="list">
+                    <label for="radio-choice-c"><<</label>
+                    <input type="radio" name="radio-choice-b" id="radio-choice-d" value="grid" disabled>
+                    <label for="radio-choice-d">22, 25, 26</label>
+                    <input type="radio" name="radio-choice-b" id="radio-choice-e" value="gallery">
+                    <label for="radio-choice-e">>></label>
+            </fieldset>
             <div id="dp"></div>
             <p style="text-align: right">
                 <a href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
@@ -110,8 +127,14 @@ var dp = new DayPilot.Calendar("dp");
 
                 // view
                 dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
-                dp.viewType = "Custom"; // day/week/custom
+                dp.viewType = "Week"; // day/week/custom
                 dp.viewTypeCustomDateArray = ['2018-12-22','2018-12-25','2018-12-26']; // day/week/custom
+                
+                if(dp.viewType === "Custom"){
+                    $('#date_range').show();
+                }else if(dp.viewType === "Week"){
+                    $('#date_mode').show();
+                }
                 dp.initScrollPos = 0; // fixing auto scroll
                 dp.durationBarVisible = true;
                 dp.eventDeleteHandling = 'Update';
@@ -212,6 +235,19 @@ var dp = new DayPilot.Calendar("dp");
                     
                 });
                 dp.events.add(e);
+                
+                $('input[name="radio-choice-a"]').change(function(){
+                    var val = $(this).val();
+                    
+                    dp.viewType= val; 
+                    dp.update();
+                    if(val === "Custom"){
+                        $('#date_range').show();
+                    }else{
+                        $('#date_range').hide();
+                    }
+                    
+                });
 
 </script>
 </body>

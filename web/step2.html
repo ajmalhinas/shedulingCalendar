@@ -88,21 +88,18 @@ p, body, td{
             </div>
             
             
-            <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true" hidden>
+            <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true">
                 <legend>Mode</legend>
                     <input type="radio" name="radio-choice-a" id="mode-choice-f" value="Week" checked="checked">
                     <label for="mode-choice-f">Week View</label>
                     <input type="radio" name="radio-choice-a" id="mode-choice-g" value="Custom">
                     <label for="mode-choice-g">Appointments View</label>
             </fieldset>
-            <fieldset id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="true" hidden>
+            <fieldset id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="true">
                 <legend>Date Shown</legend>
-                    <input type="radio" name="radio-choice-b" id="radio-choice-c" value="list">
-                    <label for="radio-choice-c"><<</label>
-                    <input type="radio" name="radio-choice-b" id="radio-choice-d" value="grid" disabled>
-                    <label for="radio-choice-d">22, 25, 26</label>
-                    <input type="radio" name="radio-choice-b" id="radio-choice-e" value="gallery">
-                    <label for="radio-choice-e">>></label>
+                     <button id="prev" >Previous</button>
+    
+    <button id="next">Next</button>
             </fieldset>
             <div id="dp"></div>
             <p style="text-align: right">
@@ -129,12 +126,8 @@ var dp = new DayPilot.Calendar("dp");
                 dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
                 dp.viewType = "Week"; // day/week/custom
                 dp.viewTypeCustomDateArray = ['2018-12-22','2018-12-25','2018-12-26']; // day/week/custom
-                
-                if(dp.viewType === "Custom"){
-                    $('#date_range').show();
-                }else if(dp.viewType === "Week"){
-                    $('#date_mode').show();
-                }
+                var nextAppointmentDays = ['2018-12-27','2018-12-30','2019-01-02'];
+                var prevAppointmentDays = ['2018-12-01','2018-12-02','2019-12-05'];
                 dp.initScrollPos = 0; // fixing auto scroll
                 dp.durationBarVisible = true;
                 dp.eventDeleteHandling = 'Update';
@@ -241,13 +234,65 @@ var dp = new DayPilot.Calendar("dp");
                     
                     dp.viewType= val; 
                     dp.update();
-                    if(val === "Custom"){
-                        $('#date_range').show();
-                    }else{
-                        $('#date_range').hide();
-                    }
+                    
                     
                 });
+                
+                
+                
+                Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+                
+                $('#next').click(function(){
+                    if(dp.viewType ==="Week"){
+                        dp.startDate = dp.startDate.addDays(+7); dp.update();
+                    }else{
+                        prevAppointmentDays = dp.viewTypeCustomDateArray;
+                        dp.viewTypeCustomDateArray = nextAppointmentDays;
+                        nextAppointmentDays= GenerateRandomArray('next');
+                        dp.update();
+                    }
+                });
+                $('#prev').click(function(){
+                    if(dp.viewType ==="Week"){
+                        dp.startDate = dp.startDate.addDays(-7); dp.update();
+                    }else{
+                        nextAppointmentDays = dp.viewTypeCustomDateArray;
+                        dp.viewTypeCustomDateArray = prevAppointmentDays;
+                        prevAppointmentDays = GenerateRandomArray('prev');
+                        dp.update();
+                    }
+                });
+                
+                function GenerateRandomArray(type){
+                    var arrLen = dp.viewTypeCustomDateArray.length;
+                    var arr = [];
+                    var stDate;
+                    
+                    var inc = 0;
+                    if (type === 'next') {
+                        inc = 1;
+                        stDate = new Date(dp.viewTypeCustomDateArray[arrLen - 1]);
+                        for (var i = 0; i < arrLen; i++) {
+                            var date1 = stDate.addDays(i + inc);
+                            arr[i] = date1.getFullYear()+'-'+(date1.getMonth() < 9 ? '0':'')+(date1.getMonth() + 1) + '-'+(date1.getDate() < 10 ? '0':'') + date1.getDate();
+                        }
+                    }else{
+                        inc = -1;
+                        stDate = new Date(dp.viewTypeCustomDateArray[0]);
+                        for (var i = 0; i < arrLen; i++) {
+                            var date1 = stDate.addDays(inc * (i + 1));
+                            arr[arrLen - i-1] = date1.getFullYear()+'-'+(date1.getMonth() < 9 ? '0':'')+(date1.getMonth() + 1) + '-'+(date1.getDate() < 10 ? '0':'') + date1.getDate();
+                        }
+                    }
+                    
+                    
+                    console.log(arr);
+                    return arr;
+                }
 
 </script>
 </body>

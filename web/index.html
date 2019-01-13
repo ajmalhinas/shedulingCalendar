@@ -143,9 +143,9 @@ var fcy_menu = $("#fcy-menu").val();
 var spc_menu = $("#spc-menu").val();
 var fcr_menu = $("#fcr-menu").val();
 
-if (loc_menu === 'Select' || fcy_menu === 'Select'|| spc_menu === 'Select'|| fcr_menu === 'Select') {
+if (loc_menu === 'Select' && fcy_menu === 'Select'&& spc_menu === 'Select' && fcr_menu === 'Select') {
 e.preventDefault();
-alert("Please Fill Required Fields");
+alert("You need to fill at least one field.");
 }
 });
 

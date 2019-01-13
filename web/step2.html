@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Step 2</title>
-        
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Step 2</title>
+
         <!-- head -->
         <!-- demo stylesheet -->
         <link type="text/css" rel="stylesheet" href="latest/helpers/demo.css?v=2018.2.232" />    
@@ -31,260 +31,262 @@
         <link type="text/css" rel="stylesheet" href="latest/themes/navigator_white.css?v=2018.2.232" />    
 
         <!-- /head -->
-        
-	<link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
-	<link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
-	<link rel="shortcut icon" href="JMobile/favicon.ico">
-	<script src="JMobile/js/jquery.js"></script>
-	<script src="JMobile/_assets/js/index.js"></script>
-	<script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
+
+        <link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
+        <link rel="shortcut icon" href="JMobile/favicon.ico">
+        <script src="JMobile/js/jquery.js"></script>
+        <script src="JMobile/_assets/js/index.js"></script>
+        <script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
         <style>
             .nav-rows{
                 width:16.6% !important;
                 clear:none !important;
             }
             .full-width-slider input {
-            display: none;
+                display: none;
             }
-            
+
             @media(max-width: 630px) {
-  .nav-rows{
-                width:33.3% !important;
-                clear:none !important;
+                .nav-rows{
+                    width:33.3% !important;
+                    clear:none !important;
+                }
             }
-}
-p, body, td{
-    font-size:11pt;
-}
-/*transparent*/
-.calendar_default_event{
-    opacity: 0.7;
-}
+            p, body, td{
+                font-size:11pt;
+            }
+            /*transparent*/
+            .calendar_default_event{
+                opacity: 0.7;
+            }
         </style>
-</head>
+    </head>
 
-<body>
+    <body>
 
-<!-- Start of second page: #two -->
-<div data-role="page" id="two" data-theme="a">
+        <!-- Start of second page: #two -->
+        <div data-role="page" id="two" data-theme="a">
 
-	<div data-role="header">
-		
-	</div><!-- /header -->
+            <div data-role="header">
 
-	<div role="main" class="ui-content">
-		<div class="full-width-slider">
-                <label for="slider-10" class="ui-hidden-accessible">Step:</label>
-                <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="2">
-            </div>
-            
-            
-            <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                <legend>Mode</legend>
+            </div><!-- /header -->
+
+            <div role="main" class="ui-content">
+                <div class="full-width-slider">
+                    <label for="slider-10" class="ui-hidden-accessible">Step:</label>
+                    <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="2">
+                </div>
+
+
+                <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <legend>Mode</legend>
                     <input type="radio" name="radio-choice-a" id="mode-choice-f" value="Week" checked="checked">
                     <label for="mode-choice-f">Week View</label>
                     <input type="radio" name="radio-choice-a" id="mode-choice-g" value="Custom">
                     <label for="mode-choice-g">Appointments View</label>
-            </fieldset>
-            <fieldset id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                <legend>Date Shown</legend>
-                     <button id="prev" >Previous</button>
-    
-    <button id="next">Next</button>
-            </fieldset>
-            <div id="dp"></div>
-            <p style="text-align: right">
-                <a href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
-                <a href="step3.html" data-ajax="false" data-role="button" data-inline="true" data-theme="b">NEXT</a>
+                </fieldset>
+                <fieldset id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <legend>Date Shown</legend>
+                    <button id="prev" >Previous</button>
 
-            </p>
-            
-	</div><!-- /content -->
-        
-        
+                    <button id="next">Next</button>
+                </fieldset>
+                <div id="dp"></div>
+                <p style="text-align: right">
+                    <a href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
+                    <a href="step3.html" data-ajax="false" data-role="button" data-inline="true" data-theme="b">NEXT</a>
 
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-</div><!-- /page two -->
+                </p>
 
-<script>
-// calendar js
+            </div><!-- /content -->
 
-var dp = new DayPilot.Calendar("dp");
 
-                // view
-                dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
-                dp.viewType = "Week"; // day/week/custom
-                dp.viewTypeCustomDateArray = ['2018-12-22','2018-12-25','2018-12-26']; // day/week/custom
-                var nextAppointmentDays = ['2018-12-27','2018-12-30','2019-01-02'];
-                var prevAppointmentDays = ['2018-12-01','2018-12-02','2019-12-05'];
-                dp.initScrollPos = 0; // fixing auto scroll
-                dp.durationBarVisible = true;
-                dp.eventDeleteHandling = 'Update';
-                dp.slotDurationInMin = 30;
-                dp.cellHeight = 40;
-                dp.heightSpec = 'BusinessHoursNoScroll';
-                dp.headerCellType = 'MiniuteWise';
-                dp.businessBeginsHour = 8;
-                dp.businessEndsHour = 17;
-                dp.rtl = true;
-                dp.locale = "ar-ae";
-                // event creating
-                //dp.timeRangeSelectedHandling = 'JavaScript';
-                dp.onTimeRangeSelected = function (args) {
-                    //var name = prompt("New event name:", "Event");
-                    //if (!name)
-                     //   return;
-                     var name = args.start.toString("hh:mm tt") +'-'+ args.end.toString("hh:mm tt");
-                    
-                    var e = new DayPilot.Event({
-                        start: args.start,
-                        end: args.end,
-                        id: DayPilot.guid(),
-                        text: name
-                    });
-                    
-                    dp.events.add(e);
-                    dp.clearSelection();
-                };
 
-                dp.onEventClick = function (args) {
-                    alert("clicked: " + args.e.id());
-                };
+            <div data-role="footer">
+                <h4>Page Footer</h4>
+            </div><!-- /footer -->
+        </div><!-- /page two -->
 
-                
+        <script>
+        // calendar js
 
-               
-                 dp.events.list = [
-        {
-            "start": "2018-12-25T10:00:00",
-            "end": "2018-12-25T13:00:00",
-            "id": "23ef6fcd-e12d-b085-e38a-a4e23d0bb61d",
-            "text": "Event 1",
-            "backColor": "#FFE599",
-            "borderColor": "#F1C232"
-        },
-        {
-            "start": "2018-12-25T11:00:00",
-            "end": "2018-12-25T14:00:00",
-            "id": "fb62e2dd-267e-ec91-886b-73574d24e25a",
-            "text": "Event 2",
-            "backColor": "#9FC5E8",
-            "borderColor": "#3D85C6"
-        },
-        {
-            "start": "2018-12-25T10:00:00",
-            "end": "2018-12-25T13:00:00",
-            "id": "29b7a553-d44f-8f2c-11e1-a7d5f62eb123",
-            "text": "Event 3",
-            "backColor": "#B6D7A8",
-            "borderColor": "#6AA84F"
-        },
-        {
-            "start": "2018-12-25T14:00:00",
-            "end": "2018-12-25T17:00:00",
-            "id": "ff968cfb-eba1-8dc1-7396-7f0d4f465c8a",
-            "text": "Event 4",
-            "backColor": "#EA9999",
-            "borderColor": "#CC0000",
-            "tags": {
-                "type": "important"
-            }
-        }
-        
-        
-    ];
-    dp.onBeforeEventRender = function(args) {
-        if (args.data.tags && args.data.tags.type === "important"){
-            args.data.html = "<b>Important Event</b><br>" + args.data.text;
-            args.data.fontColor = "#fff";
-            args.data.backColor = "#E06666";
-        }
-    };
+            var dp = new DayPilot.Calendar("dp");
 
-    dp.init();
-    
-     var e = new DayPilot.Event({
-                    start: new DayPilot.Date("2018-12-26T12:00:00"),
-                   end: new DayPilot.Date("2018-12-26T14:00:00").addHours(3),
-                   id: DayPilot.guid(),
-                    text: "Special event",
-                    cssClass: 'booked',
-                    resizeDisabled : true,
-                    moveDisabled : true,
-                    deleteDisabled : true,
-                    clickDisabled : true,
-                    barHidden:true
-                    
+            // view
+            dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
+            dp.viewType = "Week"; // day/week/custom
+            dp.viewTypeCustomDateArray = ['2018-12-22', '2018-12-25', '2018-12-26']; // day/week/custom
+            var nextAppointmentDays = ['2018-12-27', '2018-12-30', '2019-01-02'];
+            var prevAppointmentDays = ['2018-12-01', '2018-12-02', '2019-12-05'];
+            dp.initScrollPos = 0; // fixing auto scroll
+            dp.durationBarVisible = true;
+            dp.eventDeleteHandling = 'Update';
+            dp.slotDurationInMin = 30;
+            dp.cellHeight = 40;
+            dp.heightSpec = 'BusinessHoursNoScroll';
+            dp.headerCellType = 'MiniuteWise';
+            dp.businessBeginsHour = 8;
+            dp.businessEndsHour = 17;
+            dp.rtl = true;
+            dp.locale = "ar-ae";
+            // event creating
+            //dp.timeRangeSelectedHandling = 'JavaScript';
+            dp.onTimeRangeSelected = function (args) {
+                //var name = prompt("New event name:", "Event");
+                //if (!name)
+                //   return;
+                var name = args.start.toString("hh:mm tt") + '-' + args.end.toString("hh:mm tt");
+
+                var e = new DayPilot.Event({
+                    start: args.start,
+                    end: args.end,
+                    id: DayPilot.guid(),
+                    text: name
                 });
+
                 dp.events.add(e);
-                
-                $('input[name="radio-choice-a"]').change(function(){
-                    var val = $(this).val();
-                    
-                    dp.viewType= val; 
-                    dp.update();
-                    
-                    
-                });
-                
-                
-                
-                Date.prototype.addDays = function(days) {
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
-                
-                $('#next').click(function(){
-                    if(dp.viewType ==="Week"){
-                        dp.startDate = dp.startDate.addDays(+7); dp.update();
-                    }else{
-                        prevAppointmentDays = dp.viewTypeCustomDateArray;
-                        dp.viewTypeCustomDateArray = nextAppointmentDays;
-                        nextAppointmentDays= GenerateRandomArray('next');
-                        dp.update();
+                dp.clearSelection();
+            };
+
+            dp.onEventClick = function (args) {
+                alert("clicked: " + args.e.id());
+            };
+
+
+
+
+            dp.events.list = [
+                {
+                    "start": "2018-12-25T10:00:00",
+                    "end": "2018-12-25T13:00:00",
+                    "id": "23ef6fcd-e12d-b085-e38a-a4e23d0bb61d",
+                    "text": "Event 1",
+                    "backColor": "#FFE599",
+                    "borderColor": "#F1C232"
+                },
+                {
+                    "start": "2018-12-25T11:00:00",
+                    "end": "2018-12-25T14:00:00",
+                    "id": "fb62e2dd-267e-ec91-886b-73574d24e25a",
+                    "text": "Event 2",
+                    "backColor": "#9FC5E8",
+                    "borderColor": "#3D85C6"
+                },
+                {
+                    "start": "2018-12-25T10:00:00",
+                    "end": "2018-12-25T13:00:00",
+                    "id": "29b7a553-d44f-8f2c-11e1-a7d5f62eb123",
+                    "text": "Event 3",
+                    "backColor": "#B6D7A8",
+                    "borderColor": "#6AA84F"
+                },
+                {
+                    "start": "2018-12-25T14:00:00",
+                    "end": "2018-12-25T17:00:00",
+                    "id": "ff968cfb-eba1-8dc1-7396-7f0d4f465c8a",
+                    "text": "Event 4",
+                    "backColor": "#EA9999",
+                    "borderColor": "#CC0000",
+                    "tags": {
+                        "type": "important"
                     }
-                });
-                $('#prev').click(function(){
-                    if(dp.viewType ==="Week"){
-                        dp.startDate = dp.startDate.addDays(-7); dp.update();
-                    }else{
-                        nextAppointmentDays = dp.viewTypeCustomDateArray;
-                        dp.viewTypeCustomDateArray = prevAppointmentDays;
-                        prevAppointmentDays = GenerateRandomArray('prev');
-                        dp.update();
-                    }
-                });
-                
-                function GenerateRandomArray(type){
-                    var arrLen = dp.viewTypeCustomDateArray.length;
-                    var arr = [];
-                    var stDate;
-                    
-                    var inc = 0;
-                    if (type === 'next') {
-                        inc = 1;
-                        stDate = new Date(dp.viewTypeCustomDateArray[arrLen - 1]);
-                        for (var i = 0; i < arrLen; i++) {
-                            var date1 = stDate.addDays(i + inc);
-                            arr[i] = date1.getFullYear()+'-'+(date1.getMonth() < 9 ? '0':'')+(date1.getMonth() + 1) + '-'+(date1.getDate() < 10 ? '0':'') + date1.getDate();
-                        }
-                    }else{
-                        inc = -1;
-                        stDate = new Date(dp.viewTypeCustomDateArray[0]);
-                        for (var i = 0; i < arrLen; i++) {
-                            var date1 = stDate.addDays(inc * (i + 1));
-                            arr[arrLen - i-1] = date1.getFullYear()+'-'+(date1.getMonth() < 9 ? '0':'')+(date1.getMonth() + 1) + '-'+(date1.getDate() < 10 ? '0':'') + date1.getDate();
-                        }
-                    }
-                    
-                    
-                    console.log(arr);
-                    return arr;
                 }
 
-</script>
-</body>
+
+            ];
+            dp.onBeforeEventRender = function (args) {
+                if (args.data.tags && args.data.tags.type === "important") {
+                    args.data.html = "<b>Important Event</b><br>" + args.data.text;
+                    args.data.fontColor = "#fff";
+                    args.data.backColor = "#E06666";
+                }
+            };
+
+            dp.init();
+
+            var e = new DayPilot.Event({
+                start: new DayPilot.Date("2018-12-26T12:00:00"),
+                end: new DayPilot.Date("2018-12-26T14:00:00").addHours(3),
+                id: DayPilot.guid(),
+                text: "Special event",
+                cssClass: 'booked',
+                resizeDisabled: true,
+                moveDisabled: true,
+                deleteDisabled: true,
+                clickDisabled: true,
+                barHidden: true
+
+            });
+            dp.events.add(e);
+
+            $('input[name="radio-choice-a"]').change(function () {
+                var val = $(this).val();
+
+                dp.viewType = val;
+                dp.update();
+
+
+            });
+
+
+
+            Date.prototype.addDays = function (days) {
+                var date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            }
+
+            $('#next').click(function () {
+                if (dp.viewType === "Week") {
+                    dp.startDate = dp.startDate.addDays(+7);
+                    dp.update();
+                } else {
+                    prevAppointmentDays = dp.viewTypeCustomDateArray;
+                    dp.viewTypeCustomDateArray = nextAppointmentDays;
+                    nextAppointmentDays = GenerateRandomArray('next');
+                    dp.update();
+                }
+            });
+            $('#prev').click(function () {
+                if (dp.viewType === "Week") {
+                    dp.startDate = dp.startDate.addDays(-7);
+                    dp.update();
+                } else {
+                    nextAppointmentDays = dp.viewTypeCustomDateArray;
+                    dp.viewTypeCustomDateArray = prevAppointmentDays;
+                    prevAppointmentDays = GenerateRandomArray('prev');
+                    dp.update();
+                }
+            });
+
+            function GenerateRandomArray(type) {
+                var arrLen = dp.viewTypeCustomDateArray.length;
+                var arr = [];
+                var stDate;
+
+                var inc = 0;
+                if (type === 'next') {
+                    inc = 1;
+                    stDate = new Date(dp.viewTypeCustomDateArray[arrLen - 1]);
+                    for (var i = 0; i < arrLen; i++) {
+                        var date1 = stDate.addDays(i + inc);
+                        arr[i] = date1.getFullYear() + '-' + (date1.getMonth() < 9 ? '0' : '') + (date1.getMonth() + 1) + '-' + (date1.getDate() < 10 ? '0' : '') + date1.getDate();
+                    }
+                } else {
+                    inc = -1;
+                    stDate = new Date(dp.viewTypeCustomDateArray[0]);
+                    for (var i = 0; i < arrLen; i++) {
+                        var date1 = stDate.addDays(inc * (i + 1));
+                        arr[arrLen - i - 1] = date1.getFullYear() + '-' + (date1.getMonth() < 9 ? '0' : '') + (date1.getMonth() + 1) + '-' + (date1.getDate() < 10 ? '0' : '') + date1.getDate();
+                    }
+                }
+
+
+                console.log(arr);
+                return arr;
+            }
+
+        </script>
+    </body>
 </html>

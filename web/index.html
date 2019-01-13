@@ -1,147 +1,147 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Step 1</title>
-        
-        
-	<link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
-	<link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
-	<link rel="shortcut icon" href="JMobile/favicon.ico">
-	<script src="JMobile/js/jquery.js"></script>
-	<script src="JMobile/_assets/js/index.js"></script>
-	<script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Step 1</title>
+
+
+        <link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
+        <link rel="shortcut icon" href="JMobile/favicon.ico">
+        <script src="JMobile/js/jquery.js"></script>
+        <script src="JMobile/_assets/js/index.js"></script>
+        <script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
         <style>
             .nav-rows{
                 width:16.6% !important;
                 clear:none !important;
             }
             .full-width-slider input {
-            display: none;
+                display: none;
             }
-            
+
             @media(max-width: 630px) {
-  .nav-rows{
-                width:33.3% !important;
-                clear:none !important;
+                .nav-rows{
+                    width:33.3% !important;
+                    clear:none !important;
+                }
             }
-}
-/*dropdown*/
-.ui-selectmenu.ui-popup .ui-input-search {
-    margin-left: .5em;
-    margin-right: .5em;
-}
-.ui-selectmenu.ui-dialog .ui-content {
-    padding-top: 0;
-}
-.ui-selectmenu.ui-dialog .ui-selectmenu-list {
-    margin-top: 0;
-}
-.ui-selectmenu.ui-popup .ui-selectmenu-list li.ui-first-child .ui-btn {
-    border-top-width: 1px;
-    -webkit-border-radius: 0;
-    border-radius: 0;
-}
-.ui-selectmenu.ui-dialog .ui-header {
-    border-bottom-width: 1px;
-}
+            /*dropdown*/
+            .ui-selectmenu.ui-popup .ui-input-search {
+                    margin-left: .5em;
+                    margin-right: .5em;
+            }
+            .ui-selectmenu.ui-dialog .ui-content {
+                    padding-top: 0;
+            }
+            .ui-selectmenu.ui-dialog .ui-selectmenu-list {
+                    margin-top: 0;
+            }
+            .ui-selectmenu.ui-popup .ui-selectmenu-list li.ui-first-child .ui-btn {
+                    border-top-width: 1px;
+                    -webkit-border-radius: 0;
+                    border-radius: 0;
+            }
+            .ui-selectmenu.ui-dialog .ui-header {
+                    border-bottom-width: 1px;
+            }
         </style>
-</head>
+    </head>
 
-<body>
+    <body>
 
-<!-- Start of first page: #one -->
-<div data-role="page" id="one">
-<div data-role="navbar" data-grid="d">
-</div><!-- /navbar -->
-	<div data-role="header">
-		
-	</div><!-- /header -->
+        <!-- Start of first page: #one -->
+        <div data-role="page" id="one">
+            <div data-role="navbar" data-grid="d">
+            </div><!-- /navbar -->
+            <div data-role="header">
 
-	<div role="main" class="ui-content">
-            <div class="full-width-slider">
-                <label for="slider-10" class="ui-hidden-accessible">Step:</label>
-                <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="1">
-            </div>
-            
-            <form action="step2.html" data-ajax="false" id="form1">
-                            <div class="ui-field-contain">
-                <label for="fcr-menu">Facilitator:</label>
-                <select id="fcr-menu" name="fcr_menu" data-native-menu="false" required>
-                    <option>Select</option>
-        <option value="CRG">Mohammed</option>
-        <option value="NUR">Abur Rahman</option>
-        <option value="PDT">Abdul Malik</option>
-        <option value="RDL">Soaib</option>
-                </select>
-</div>
-                        <div class="ui-field-contain">
-                <label for="spc-menu">Speciality:</label>
-                <select id="spc-menu" name="spc_menu" data-native-menu="false">
-                     <option>Select</option>
-        <option value="CRG">Cardiology</option>
-        <option value="NUR">Neurology</option>
-        <option value="PDT">Paediatrics</option>
-        <option value="RDL">Radiology</option>
-                </select>
-</div>
+            </div><!-- /header -->
 
-            <div class="ui-field-contain">
-                <label for="fcy-menu">Facility:</label>
-                <select id="fcy-menu" name="fcy_menu" data-native-menu="false">
-                     <option>Select</option>
-        <option value="ALE">Al Emadi Hospital</option>
-        <option value="AMH">American Hospital</option>
-        <option value="EHQ">Emergency Hospitals in Qatar</option>
-        <option value="HGH">Hamad General Hospital</option>
-                </select>
-</div>
-            
-            <div class="ui-field-contain">
-                <label for="loc-menu">Location:</label>
-                <select id="loc-menu" name="loc_menu" data-native-menu="false">
-<option>Select</option>
-        <option value="ALS"> Al Shamal</option>
-        <option value="ALW">Al Wakra</option>
-        <option value="DOH">Doha</option>
-        <option value="UMS">Umm Said</option>
-                </select>
-</div>
-            
+            <div role="main" class="ui-content">
+                <div class="full-width-slider">
+                    <label for="slider-10" class="ui-hidden-accessible">Step:</label>
+                    <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="1">
+                </div>
 
-		
-		<p style="text-align: right"><input type="submit" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
-            </form>
-            
+                <form action="step2.html" data-ajax="false" id="form1">
+                    <div class="ui-field-contain">
+                        <label for="fcr-menu">Facilitator:</label>
+                        <select id="fcr-menu" name="fcr_menu" data-native-menu="false" required>
+                            <option>Select</option>
+                            <option value="CRG">Mohammed</option>
+                            <option value="NUR">Abur Rahman</option>
+                            <option value="PDT">Abdul Malik</option>
+                            <option value="RDL">Soaib</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="spc-menu">Speciality:</label>
+                        <select id="spc-menu" name="spc_menu" data-native-menu="false">
+                            <option>Select</option>
+                            <option value="CRG">Cardiology</option>
+                            <option value="NUR">Neurology</option>
+                            <option value="PDT">Paediatrics</option>
+                            <option value="RDL">Radiology</option>
+                        </select>
+                    </div>
 
-	</div><!-- /content -->
+                    <div class="ui-field-contain">
+                        <label for="fcy-menu">Facility:</label>
+                        <select id="fcy-menu" name="fcy_menu" data-native-menu="false">
+                            <option>Select</option>
+                            <option value="ALE">Al Emadi Hospital</option>
+                            <option value="AMH">American Hospital</option>
+                            <option value="EHQ">Emergency Hospitals in Qatar</option>
+                            <option value="HGH">Hamad General Hospital</option>
+                        </select>
+                    </div>
 
-	<div data-role="footer" data-theme="a">
-		<h4>Qatar International</h4>
-	</div><!-- /footer -->
-</div><!-- /page one -->
+                    <div class="ui-field-contain">
+                        <label for="loc-menu">Location:</label>
+                        <select id="loc-menu" name="loc_menu" data-native-menu="false">
+                            <option>Select</option>
+                            <option value="ALS"> Al Shamal</option>
+                            <option value="ALW">Al Wakra</option>
+                            <option value="DOH">Doha</option>
+                            <option value="UMS">Umm Said</option>
+                        </select>
+                    </div>
 
 
-<script>
 
-$(document).ready(function () {
+                    <p style="text-align: right"><input type="submit" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
+                </form>
 
 
-    $("input[type=submit]").click(function(e) {
-var loc_menu = $("#loc-menu").val();
-var fcy_menu = $("#fcy-menu").val();
-var spc_menu = $("#spc-menu").val();
-var fcr_menu = $("#fcr-menu").val();
+            </div><!-- /content -->
 
-if (loc_menu === 'Select' && fcy_menu === 'Select'&& spc_menu === 'Select' && fcr_menu === 'Select') {
-e.preventDefault();
-alert("You need to fill at least one field.");
-}
-});
+            <div data-role="footer" data-theme="a">
+                <h4>Qatar International</h4>
+            </div><!-- /footer -->
+        </div><!-- /page one -->
 
-});
-</script>
-</body>
+
+        <script>
+
+            $(document).ready(function () {
+
+
+                $("input[type=submit]").click(function (e) {
+                    var loc_menu = $("#loc-menu").val();
+                    var fcy_menu = $("#fcy-menu").val();
+                    var spc_menu = $("#spc-menu").val();
+                    var fcr_menu = $("#fcr-menu").val();
+
+                    if (loc_menu === 'Select' && fcy_menu === 'Select' && spc_menu === 'Select' && fcr_menu === 'Select') {
+                        e.preventDefault();
+                        alert("You need to fill at least one field.");
+                    }
+                });
+
+            });
+        </script>
+    </body>
 </html>

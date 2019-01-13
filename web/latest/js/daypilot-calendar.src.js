@@ -318,7 +318,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.eventClickHandling = 'Enabled';
         this.eventResizeHandling = 'Update';
         this.eventMoveHandling = 'Update';
-        this.eventDeleteHandling = "Disabled";
+        this.eventDeleteHandling = "Enabled";
 
         this.onBeforeEventRender = null;
 

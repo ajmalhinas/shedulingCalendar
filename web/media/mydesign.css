@@ -1,0 +1,68 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 13, 2019, 11:47:57 PM
+    Author     : Irfan
+*/
+
+.nav-rows{
+    width:16.6% !important;
+    clear:none !important;
+}
+.full-width-slider input {
+    display: none;
+}
+
+@media(max-width: 630px) {
+    .nav-rows{
+        width:33.3% !important;
+        clear:none !important;
+    }
+}
+/*dropdown*/
+.ui-selectmenu.ui-popup .ui-input-search {
+        margin-left: .5em;
+        margin-right: .5em;
+}
+.ui-selectmenu.ui-dialog .ui-content {
+        padding-top: 0;
+}
+.ui-selectmenu.ui-dialog .ui-selectmenu-list {
+        margin-top: 0;
+}
+.ui-selectmenu.ui-popup .ui-selectmenu-list li.ui-first-child .ui-btn {
+        border-top-width: 1px;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+}
+.ui-selectmenu.ui-dialog .ui-header {
+        border-bottom-width: 1px;
+}
+/*theme b changed*/
+.ui-bar-b, .ui-page-theme-b .ui-bar-inherit, html .ui-bar-b .ui-bar-inherit, html .ui-body-b .ui-bar-inherit, html body .ui-group-theme-b .ui-bar-inherit{
+    background-color: #38c;
+    border-color: #38c;
+}
+/*header text issue fixed*/ 
+.ui-header .ui-title, .ui-footer .ui-title{
+    margin: 0 29%;
+}
+/*[rogress bar handler hide*/
+.ui-slider-track .ui-btn.ui-slider-handle{
+    display:none;
+}
+/*opacity of progress bar*/
+.ui-state-disabled{
+    opacity: 0.7;
+}
+
+ p, body, td{
+                font-size:11pt;
+            }
+            /*transparent*/
+            .calendar_default_event{
+                opacity: 0.7;
+            }

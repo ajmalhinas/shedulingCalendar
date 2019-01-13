@@ -38,29 +38,8 @@
         <script src="JMobile/js/jquery.js"></script>
         <script src="JMobile/_assets/js/index.js"></script>
         <script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
-        <style>
-            .nav-rows{
-                width:16.6% !important;
-                clear:none !important;
-            }
-            .full-width-slider input {
-                display: none;
-            }
-
-            @media(max-width: 630px) {
-                .nav-rows{
-                    width:33.3% !important;
-                    clear:none !important;
-                }
-            }
-            p, body, td{
-                font-size:11pt;
-            }
-            /*transparent*/
-            .calendar_default_event{
-                opacity: 0.7;
-            }
-        </style>
+        <link href="media/mydesign.css" rel="stylesheet" type="text/css"/>
+       
     </head>
 
     <body>
@@ -68,8 +47,8 @@
         <!-- Start of second page: #two -->
         <div data-role="page" id="two" data-theme="a">
 
-            <div data-role="header">
-
+            <div data-theme="b" data-role="header">
+                <h4>Channeling System</h4>
             </div><!-- /header -->
 
             <div role="main" class="ui-content">
@@ -80,14 +59,14 @@
 
 
                 <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                    <legend>Mode</legend>
+                    <legend></legend>
                     <input type="radio" name="radio-choice-a" id="mode-choice-f" value="Week" checked="checked">
                     <label for="mode-choice-f">Week View</label>
                     <input type="radio" name="radio-choice-a" id="mode-choice-g" value="Custom">
-                    <label for="mode-choice-g">Appointments View</label>
+                    <label for="mode-choice-g">Available</label>
                 </fieldset>
                 <fieldset id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                    <legend>Date Shown</legend>
+                    <legend></legend>
                     <button id="prev" >Previous</button>
 
                     <button id="next">Next</button>
@@ -104,7 +83,7 @@
 
 
             <div data-role="footer">
-                <h4>Page Footer</h4>
+                <h4>Qatar International</h4>
             </div><!-- /footer -->
         </div><!-- /page two -->
 

@@ -6,48 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Step 1</title>
 
-
+        <link rel="stylesheet" href="JqueryUI/jquery.mobile.datepicker.css">
         <link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
         <link rel="shortcut icon" href="JMobile/favicon.ico">
         <script src="JMobile/js/jquery.js"></script>
         <script src="JMobile/_assets/js/index.js"></script>
         <script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
-        <style>
-            .nav-rows{
-                width:16.6% !important;
-                clear:none !important;
-            }
-            .full-width-slider input {
-                display: none;
-            }
-
-            @media(max-width: 630px) {
-                .nav-rows{
-                    width:33.3% !important;
-                    clear:none !important;
-                }
-            }
-            /*dropdown*/
-            .ui-selectmenu.ui-popup .ui-input-search {
-                    margin-left: .5em;
-                    margin-right: .5em;
-            }
-            .ui-selectmenu.ui-dialog .ui-content {
-                    padding-top: 0;
-            }
-            .ui-selectmenu.ui-dialog .ui-selectmenu-list {
-                    margin-top: 0;
-            }
-            .ui-selectmenu.ui-popup .ui-selectmenu-list li.ui-first-child .ui-btn {
-                    border-top-width: 1px;
-                    -webkit-border-radius: 0;
-                    border-radius: 0;
-            }
-            .ui-selectmenu.ui-dialog .ui-header {
-                    border-bottom-width: 1px;
-            }
-        </style>
+        <script src="JqueryUI/jquery.ui.datepicker.js"></script>
+        <script id="mobile-datepicker" src="JqueryUI/jquery.mobile.datepicker.js"></script>
+        <link href="media/mydesign.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body>
@@ -56,8 +24,8 @@
         <div data-role="page" id="one">
             <div data-role="navbar" data-grid="d">
             </div><!-- /navbar -->
-            <div data-role="header">
-
+            <div data-theme="b" data-role="header">
+                <h4>Channeling System</h4>
             </div><!-- /header -->
 
             <div role="main" class="ui-content">
@@ -69,18 +37,19 @@
                 <form action="step2.html" data-ajax="false" id="form1">
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Facilitator:</label>
-                        <select id="fcr-menu" name="fcr_menu" data-native-menu="false" required>
-                            <option>Select</option>
+                        <select id="fcr-menu" data-native-menu="false" class="filterable-select">
+                            <option value="">Select doctor...</option>
                             <option value="CRG">Mohammed</option>
                             <option value="NUR">Abur Rahman</option>
                             <option value="PDT">Abdul Malik</option>
                             <option value="RDL">Soaib</option>
                         </select>
                     </div>
+
                     <div class="ui-field-contain">
                         <label for="spc-menu">Speciality:</label>
-                        <select id="spc-menu" name="spc_menu" data-native-menu="false">
-                            <option>Select</option>
+                        <select id="spc-menu" data-native-menu="false" class="filterable-select">
+                            <option value="">Select Speciality...</option>
                             <option value="CRG">Cardiology</option>
                             <option value="NUR">Neurology</option>
                             <option value="PDT">Paediatrics</option>
@@ -90,8 +59,8 @@
 
                     <div class="ui-field-contain">
                         <label for="fcy-menu">Facility:</label>
-                        <select id="fcy-menu" name="fcy_menu" data-native-menu="false">
-                            <option>Select</option>
+                        <select id="fcy-menu" data-native-menu="false" class="filterable-select">
+                            <option value="">Select Facility...</option>
                             <option value="ALE">Al Emadi Hospital</option>
                             <option value="AMH">American Hospital</option>
                             <option value="EHQ">Emergency Hospitals in Qatar</option>
@@ -101,15 +70,24 @@
 
                     <div class="ui-field-contain">
                         <label for="loc-menu">Location:</label>
-                        <select id="loc-menu" name="loc_menu" data-native-menu="false">
-                            <option>Select</option>
+                        <select id="loc-menu" data-native-menu="false" class="filterable-select">
+                            <option value="">Select Location...</option>
                             <option value="ALS"> Al Shamal</option>
                             <option value="ALW">Al Wakra</option>
                             <option value="DOH">Doha</option>
                             <option value="UMS">Umm Said</option>
                         </select>
                     </div>
+                    <div class="ui-field-contain">
+                        <label for="fm-date">From Date:</label>
+                        <input type="text" name="fm-date" id="fm-date" autocomplete="off" data-role="date">
 
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="to-date">To Date:</label>
+                        <input type="text" name="to-date" id="to-date" autocomplete="off" data-role="date">
+
+                    </div>
 
 
                     <p style="text-align: right"><input type="submit" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
@@ -134,14 +112,92 @@
                     var fcy_menu = $("#fcy-menu").val();
                     var spc_menu = $("#spc-menu").val();
                     var fcr_menu = $("#fcr-menu").val();
-
-                    if (loc_menu === 'Select' && fcy_menu === 'Select' && spc_menu === 'Select' && fcr_menu === 'Select') {
+                    //alert(loc_menu)
+                    if (loc_menu === '' && fcy_menu === '' && spc_menu === '' && fcr_menu === '') {
                         e.preventDefault();
                         alert("You need to fill at least one field.");
                     }
                 });
 
             });
+
+            (function ($) {
+                function pageIsSelectmenuDialog(page) {
+                        var isDialog = false,
+                                    id = page && page.attr("id");
+                        $(".filterable-select").each(function () {
+                                if ($(this).attr("id") + "-dialog" === id) {
+                                        isDialog = true;
+                                        return false;
+                                }
+                        });
+                        return isDialog;
+                }
+                $.mobile.document
+                            // Upon creation of the select menu, we want to make use of the fact that the ID of the
+                            // listview it generates starts with the ID of the select menu itself, plus the suffix "-menu".
+                            // We retrieve the listview and insert a search input before it.
+                            .on("selectmenucreate", ".filterable-select", function (event) {
+                                    var input,
+                                                selectmenu = $(event.target),
+                                                list = $("#" + selectmenu.attr("id") + "-menu"),
+                                                form = list.jqmData("filter-form");
+                                    // We store the generated form in a variable attached to the popup so we avoid creating a
+                                    // second form/input field when the listview is destroyed/rebuilt during a refresh.
+                                    if (!form) {
+                                            input = $("<input data-type='search'></input>");
+                                            form = $("<form></form>").append(input);
+                                            input.textinput();
+                                            list
+                                                        .before(form)
+                                                        .jqmData("filter-form", form);
+                                            form.jqmData("listview", list);
+                                    }
+                                    // Instantiate a filterable widget on the newly created selectmenu widget and indicate that
+                                    // the generated input form element is to be used for the filtering.
+                                    selectmenu
+                                                .filterable({
+                                                        input: input,
+                                                        children: "> option[value]"
+                                                })
+                                                // Rebuild the custom select menu's list items to reflect the results of the filtering
+                                                // done on the select menu.
+                                                .on("filterablefilter", function () {
+                                                        selectmenu.selectmenu("refresh");
+                                                });
+                            })
+                            // The custom select list may show up as either a popup or a dialog, depending on how much
+                            // vertical room there is on the screen. If it shows up as a dialog, then the form containing
+                            // the filter input field must be transferred to the dialog so that the user can continue to
+                            // use it for filtering list items.
+                            .on("pagecontainerbeforeshow", function (event, data) {
+                                    var listview, form;
+                                    // We only handle the appearance of a dialog generated by a filterable selectmenu
+                                    if (!pageIsSelectmenuDialog(data.toPage)) {
+                                            return;
+                                    }
+                                    listview = data.toPage.find("ul");
+                                    form = listview.jqmData("filter-form");
+                                    // Attach a reference to the listview as a data item to the dialog, because during the
+                                    // pagecontainerhide handler below the selectmenu widget will already have returned the
+                                    // listview to the popup, so we won't be able to find it inside the dialog with a selector.
+                                    data.toPage.jqmData("listview", listview);
+                                    // Place the form before the listview in the dialog.
+                                    listview.before(form);
+                            })
+                            // After the dialog is closed, the form containing the filter input is returned to the popup.
+                            .on("pagecontainerhide", function (event, data) {
+                                    var listview, form;
+                                    // We only handle the disappearance of a dialog generated by a filterable selectmenu
+                                    if (!pageIsSelectmenuDialog(data.toPage)) {
+                                            return;
+                                    }
+                                    listview = data.prevPage.jqmData("listview"),
+                                            form = listview.jqmData("filter-form");
+                                    // Put the form back in the popup. It goes ahead of the listview.
+                                    listview.before(form);
+                            });
+            })(jQuery);
         </script>
     </body>
 </html>

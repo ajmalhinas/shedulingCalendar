@@ -35,6 +35,7 @@
                 </div>
 
                 <form action="step2.html" data-ajax="false" id="form1">
+                    <div id="error-text" class=""></div>
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Facilitator:</label>
                         <select id="fcr-menu" data-native-menu="false" class="filterable-select">
@@ -108,6 +109,7 @@
 
 
                 $("input[type=submit]").click(function (e) {
+                    $('#error-text').removeClass('error').text("");
                     var loc_menu = $("#loc-menu").val();
                     var fcy_menu = $("#fcy-menu").val();
                     var spc_menu = $("#spc-menu").val();
@@ -115,7 +117,7 @@
                     //alert(loc_menu)
                     if (loc_menu === '' && fcy_menu === '' && spc_menu === '' && fcr_menu === '') {
                         e.preventDefault();
-                        alert("You need to fill at least one field.");
+                        $('#error-text').addClass('error').text("You need to fill at least one field.");
                     }
                 });
 

@@ -39,44 +39,29 @@
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Facilitator:</label>
                         <select id="fcr-menu" data-native-menu="false" class="filterable-select">
-                            <option value="">Select doctor...</option>
-                            <option value="CRG">Mohammed</option>
-                            <option value="NUR">Abur Rahman</option>
-                            <option value="PDT">Abdul Malik</option>
-                            <option value="RDL">Soaib</option>
+                           
                         </select>
                     </div>
 
                     <div class="ui-field-contain">
                         <label for="spc-menu">Speciality:</label>
                         <select id="spc-menu" data-native-menu="false" class="filterable-select">
-                            <option value="">Select Speciality...</option>
-                            <option value="CRG">Cardiology</option>
-                            <option value="NUR">Neurology</option>
-                            <option value="PDT">Paediatrics</option>
-                            <option value="RDL">Radiology</option>
+                            
                         </select>
+                        
                     </div>
 
                     <div class="ui-field-contain">
                         <label for="fcy-menu">Facility:</label>
                         <select id="fcy-menu" data-native-menu="false" class="filterable-select">
-                            <option value="">Select Facility...</option>
-                            <option value="ALE">Al Emadi Hospital</option>
-                            <option value="AMH">American Hospital</option>
-                            <option value="EHQ">Emergency Hospitals in Qatar</option>
-                            <option value="HGH">Hamad General Hospital</option>
+                            
                         </select>
                     </div>
 
                     <div class="ui-field-contain">
                         <label for="loc-menu">Location:</label>
                         <select id="loc-menu" data-native-menu="false" class="filterable-select">
-                            <option value="">Select Location...</option>
-                            <option value="ALS"> Al Shamal</option>
-                            <option value="ALW">Al Wakra</option>
-                            <option value="DOH">Doha</option>
-                            <option value="UMS">Umm Said</option>
+                            
                         </select>
                     </div>
                     <div class="ui-field-contain">
@@ -122,6 +107,24 @@
                 });
 
             });
+            
+            var fcls = [{name: 'Mohammed',id:'1'},{name: 'Raasil',id:'2'},{name: 'Abdurrahim',id:'3'},{name: 'Aboobakr',id:'4'}];
+            var sps = [{name: 'Cardiology',id:'1'},{name: 'Neurology',id:'2'},{name: 'Paediatrics',id:'3'},{name: 'Radiology',id:'4'}];
+            var fys = [{name: 'Al Emadi Hospital',id:'1'},{name: 'American Hospital',id:'2'},{name: 'Emergency Hospitals in Qatar',id:'3'},{name: 'Hamad General Hospital',id:'4'}];
+            var los = [{name: 'Al Shamal',id:'1'},{name: 'Al Wakra',id:'2'},{name: 'Doha',id:'3'},{name: 'Umm Said',id:'4'}];
+            LoadDropDown(fcls,"#fcr-menu",true);   
+            LoadDropDown(sps,"#spc-menu",true);
+            LoadDropDown(fys,"#fcy-menu",true);
+            LoadDropDown(los,"#loc-menu",true);
+                
+               function LoadDropDown(json, selector,optSelect){
+                   if (optSelect) {
+                        $(selector).append('<option value="">Select</option>')
+                    }
+                    $.each(json,function(index,value){
+                        $(selector).append('<option value="'+value.id+'">'+value.name+'</option>')
+                    });
+               } 
 
             (function ($) {
                 function pageIsSelectmenuDialog(page) {
@@ -135,6 +138,9 @@
                         });
                         return isDialog;
                 }
+                
+                
+                
                 $.mobile.document
                             // Upon creation of the select menu, we want to make use of the fact that the ID of the
                             // listview it generates starts with the ID of the select menu itself, plus the suffix "-menu".

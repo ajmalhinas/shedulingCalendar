@@ -71,6 +71,7 @@
 
                     <button id="next">Next</button>
                 </fieldset>
+                <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'></h4>
                 <div id="dp"></div>
                 <p style="text-align: right">
                     <a href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
@@ -262,9 +263,66 @@
                 }
 
 
-                console.log(arr);
                 return arr;
             }
+            
+            $(document).ready(function(){
+                var fcls = [{name: 'Mohammed',id:'1'},{name: 'Raasil',id:'2'},{name: 'Abdurrahim',id:'3'},{name: 'Aboobakr',id:'4'}];
+                var sps = [{name: 'Cardiology',id:'1'},{name: 'Neurology',id:'2'},{name: 'Paediatrics',id:'3'},{name: 'Radiology',id:'4'}];
+                var fys = [{name: 'Al Emadi Hospital',id:'1'},{name: 'American Hospital',id:'2'},{name: 'Emergency Hospitals in Qatar',id:'3'},{name: 'Hamad General Hospital',id:'4'}];
+                var los = [{name: 'Al Shamal',id:'1'},{name: 'Al Wakra',id:'2'},{name: 'Doha',id:'3'},{name: 'Umm Said',id:'4'}];
+                var sumtxt = [];
+                var fclsid = getNameFromJson(fcls,getUrlParameter('fcr-menu')) ;
+                var spssid = getNameFromJson(sps,getUrlParameter('spc-menu')) ;
+                var fyssid = getNameFromJson(fys,getUrlParameter('fcy-menu')) ;
+                var losid = getNameFromJson(los,getUrlParameter('loc-menu')) ;
+                
+                if(fclsid){
+                    sumtxt.push(fclsid);
+                }
+                if(spssid){
+                    sumtxt.push(spssid);
+                }
+                if(fyssid){
+                    sumtxt.push(fyssid);
+                }
+                if(losid){
+                    sumtxt.push(losid);
+                }
+                
+                
+                
+                //sumtxt += getNameFromJson(fcls,fclsid) +', '+ getNameFromJson(sps,spssid) 
+                 //       +', '+ getNameFromJson(fys,fyssid) +', '+ getNameFromJson(los,losid);
+                $('#sum-text').text(sumtxt.join(', '));
+                
+            })
+            
+            var getNameFromJson = function getNameFromJson(json, id){
+                var toReturn; 
+                $.each(json, function(i,v){
+                    if(v.id === id){
+                        toReturn = v.name;
+                        return false;
+                    }
+                });
+                return toReturn === undefined ? false : toReturn;
+            }
+            
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                    }
+                }
+            };
 
         </script>
     </body>

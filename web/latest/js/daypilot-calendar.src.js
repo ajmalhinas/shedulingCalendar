@@ -204,7 +204,7 @@ if (typeof DayPilot.Global === 'undefined') {
             DayPilotCalendar.selecting = false;
 
             var sel = calendar.getSelection();
-
+            //alert(sel.start);
             calendar._timeRangeSelectedDispatch(sel.start, sel.end);
             if (calendar.timeRangeSelectedHandling !== "Hold" && calendar.timeRangeSelectedHandling !== "HoldForever") {
                 doNothing();
@@ -316,7 +316,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.overlappingSameWidth = false; // overlapping same event with same width
         this.timeRangeSelectedHandling = 'Enabled';
         this.eventClickHandling = 'Enabled';
-        this.eventResizeHandling = 'Update';
+        this.eventResizeHandling = 'Enabled';
         this.eventMoveHandling = 'Update';
         this.eventDeleteHandling = "Enabled";
 

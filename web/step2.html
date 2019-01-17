@@ -72,6 +72,7 @@
                     <button id="next">Next</button>
                 </fieldset>
                 <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'></h4>
+                <div id="error-text" class=""></div>
                 <div id="dp"></div>
                 <p style="text-align: right">
                     <a href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
@@ -110,12 +111,23 @@
             dp.businessEndsHour = 17;
             dp.rtl = true;
             dp.locale = "ar-ae";
+            var maxSlotSelection = 2;
             // event creating
             //dp.timeRangeSelectedHandling = 'JavaScript';
             dp.onTimeRangeSelected = function (args) {
                 //var name = prompt("New event name:", "Event");
                 //if (!name)
                 //   return;
+                if(checkMaxSlotsCountExceed(args.start,args.end)){
+                    $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
+                    setTimeout(function() {
+                        $('#error-text').removeClass('error').text('');}, 3000);
+                   
+
+                    dp.clearSelection();
+                    return;
+                }
+                
                 var name = args.start.toString("hh:mm tt") + '-' + args.end.toString("hh:mm tt");
 
                 var e = new DayPilot.Event({
@@ -128,6 +140,24 @@
                 dp.events.add(e);
                 dp.clearSelection();
             };
+            
+            dp.onEventResized = function(args){
+                //alert(args.newStart)
+                if(checkMaxSlotsCountExceed(args.newStart,args.newEnd)){
+                    $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
+                    setTimeout(function() {
+                        $('#error-text').removeClass('error').text('');}, 3000);
+                   
+
+                    dp.clearSelection();
+                    return;
+                }
+                 var e = args.e;
+                    e.start(args.newStart);
+                    e.end(args.newEnd);
+                    dp.events.update(e);
+                    dp.clearSelection();
+            }
 
             dp.onEventClick = function (args) {
                 alert("clicked: " + args.e.id());
@@ -240,31 +270,7 @@
                 }
             });
 
-            function GenerateRandomArray(type) {
-                var arrLen = dp.viewTypeCustomDateArray.length;
-                var arr = [];
-                var stDate;
-
-                var inc = 0;
-                if (type === 'next') {
-                    inc = 1;
-                    stDate = new Date(dp.viewTypeCustomDateArray[arrLen - 1]);
-                    for (var i = 0; i < arrLen; i++) {
-                        var date1 = stDate.addDays(i + inc);
-                        arr[i] = date1.getFullYear() + '-' + (date1.getMonth() < 9 ? '0' : '') + (date1.getMonth() + 1) + '-' + (date1.getDate() < 10 ? '0' : '') + date1.getDate();
-                    }
-                } else {
-                    inc = -1;
-                    stDate = new Date(dp.viewTypeCustomDateArray[0]);
-                    for (var i = 0; i < arrLen; i++) {
-                        var date1 = stDate.addDays(inc * (i + 1));
-                        arr[arrLen - i - 1] = date1.getFullYear() + '-' + (date1.getMonth() < 9 ? '0' : '') + (date1.getMonth() + 1) + '-' + (date1.getDate() < 10 ? '0' : '') + date1.getDate();
-                    }
-                }
-
-
-                return arr;
-            }
+           
             
             $(document).ready(function(){
                 var fcls = [{name: 'Mohammed',id:'1'},{name: 'Raasil',id:'2'},{name: 'Abdurrahim',id:'3'},{name: 'Aboobakr',id:'4'}];
@@ -298,32 +304,19 @@
                 
             })
             
-            var getNameFromJson = function getNameFromJson(json, id){
-                var toReturn; 
-                $.each(json, function(i,v){
-                    if(v.id === id){
-                        toReturn = v.name;
-                        return false;
-                    }
-                });
-                return toReturn === undefined ? false : toReturn;
+            
+            
+            var getSelectedSlotsCount = function getSelectedSlotsCount(start, end){
+                
+                return ((new Date(end) - new Date(start))/(1000*60))/ dp.slotDurationInMin;
+                
             }
             
-            var getUrlParameter = function getUrlParameter(sParam) {
-                var sPageURL = window.location.search.substring(1),
-                sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
-
-                for (i = 0; i < sURLVariables.length; i++) {
-                    sParameterName = sURLVariables[i].split('=');
-
-                    if (sParameterName[0] === sParam) {
-                        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-                    }
-                }
-            };
+            var checkMaxSlotsCountExceed = function checkMaxSlotsCountExceed(start, end){
+                return getSelectedSlotsCount(start, end) > maxSlotSelection ;
+            }
 
         </script>
+        <script src="js/custom.js" type="text/javascript"></script>
     </body>
 </html>

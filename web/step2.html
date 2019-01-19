@@ -39,7 +39,7 @@
         <script src="JMobile/_assets/js/index.js"></script>
         <script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
         <link href="media/mydesign.css" rel="stylesheet" type="text/css"/>
-       
+
     </head>
 
     <body>
@@ -88,9 +88,9 @@
                 <h4>Qatar International</h4>
             </div><!-- /footer -->
         </div><!-- /page two -->
-
+        <script src="js/custom.js" type="text/javascript"></script>
         <script>
-        // calendar js
+            // calendar js
 
             var dp = new DayPilot.Calendar("dp");
 
@@ -118,16 +118,17 @@
                 //var name = prompt("New event name:", "Event");
                 //if (!name)
                 //   return;
-                if(checkMaxSlotsCountExceed(args.start,args.end)){
+                if (checkMaxSlotsCountExceed(args.start, args.end)) {
                     $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
-                    setTimeout(function() {
-                        $('#error-text').removeClass('error').text('');}, 3000);
-                   
+                    setTimeout(function () {
+                        $('#error-text').removeClass('error').text('');
+                    }, 3000);
+
 
                     dp.clearSelection();
                     return;
                 }
-                
+
                 var name = args.start.toString("hh:mm tt") + '-' + args.end.toString("hh:mm tt");
 
                 var e = new DayPilot.Event({
@@ -140,23 +141,24 @@
                 dp.events.add(e);
                 dp.clearSelection();
             };
-            
-            dp.onEventResized = function(args){
+
+            dp.onEventResized = function (args) {
                 //alert(args.newStart)
-                if(checkMaxSlotsCountExceed(args.newStart,args.newEnd)){
+                if (checkMaxSlotsCountExceed(args.newStart, args.newEnd)) {
                     $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
-                    setTimeout(function() {
-                        $('#error-text').removeClass('error').text('');}, 3000);
-                   
+                    setTimeout(function () {
+                        $('#error-text').removeClass('error').text('');
+                    }, 3000);
+
 
                     dp.clearSelection();
                     return;
                 }
-                 var e = args.e;
-                    e.start(args.newStart);
-                    e.end(args.newEnd);
-                    dp.events.update(e);
-                    dp.clearSelection();
+                var e = args.e;
+                e.start(args.newStart);
+                e.end(args.newEnd);
+                dp.events.update(e);
+                dp.clearSelection();
             }
 
             dp.onEventClick = function (args) {
@@ -270,53 +272,53 @@
                 }
             });
 
-           
-            
-            $(document).ready(function(){
-                var fcls = [{name: 'Mohammed',id:'1'},{name: 'Raasil',id:'2'},{name: 'Abdurrahim',id:'3'},{name: 'Aboobakr',id:'4'}];
-                var sps = [{name: 'Cardiology',id:'1'},{name: 'Neurology',id:'2'},{name: 'Paediatrics',id:'3'},{name: 'Radiology',id:'4'}];
-                var fys = [{name: 'Al Emadi Hospital',id:'1'},{name: 'American Hospital',id:'2'},{name: 'Emergency Hospitals in Qatar',id:'3'},{name: 'Hamad General Hospital',id:'4'}];
-                var los = [{name: 'Al Shamal',id:'1'},{name: 'Al Wakra',id:'2'},{name: 'Doha',id:'3'},{name: 'Umm Said',id:'4'}];
+
+
+            $(document).ready(function () {
+                var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
+                var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
+                var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
+                var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
                 var sumtxt = [];
-                var fclsid = getNameFromJson(fcls,getUrlParameter('fcr-menu')) ;
-                var spssid = getNameFromJson(sps,getUrlParameter('spc-menu')) ;
-                var fyssid = getNameFromJson(fys,getUrlParameter('fcy-menu')) ;
-                var losid = getNameFromJson(los,getUrlParameter('loc-menu')) ;
-                
-                if(fclsid){
+                var fclsid = getNameFromJson(fcls, getUrlParameter('fcr-menu'));
+                var spssid = getNameFromJson(sps, getUrlParameter('spc-menu'));
+                var fyssid = getNameFromJson(fys, getUrlParameter('fcy-menu'));
+                var losid = getNameFromJson(los, getUrlParameter('loc-menu'));
+
+                if (fclsid) {
                     sumtxt.push(fclsid);
                 }
-                if(spssid){
+                if (spssid) {
                     sumtxt.push(spssid);
                 }
-                if(fyssid){
+                if (fyssid) {
                     sumtxt.push(fyssid);
                 }
-                if(losid){
+                if (losid) {
                     sumtxt.push(losid);
                 }
-                
-                
-                
+
+
+
                 //sumtxt += getNameFromJson(fcls,fclsid) +', '+ getNameFromJson(sps,spssid) 
-                 //       +', '+ getNameFromJson(fys,fyssid) +', '+ getNameFromJson(los,losid);
+                //       +', '+ getNameFromJson(fys,fyssid) +', '+ getNameFromJson(los,losid);
                 $('#sum-text').text(sumtxt.join(', '));
-                
+
             })
-            
-            
-            
-            var getSelectedSlotsCount = function getSelectedSlotsCount(start, end){
-                
-                return ((new Date(end) - new Date(start))/(1000*60))/ dp.slotDurationInMin;
-                
+
+
+
+            var getSelectedSlotsCount = function getSelectedSlotsCount(start, end) {
+
+                return ((new Date(end) - new Date(start)) / (1000 * 60)) / dp.slotDurationInMin;
+
             }
-            
-            var checkMaxSlotsCountExceed = function checkMaxSlotsCountExceed(start, end){
-                return getSelectedSlotsCount(start, end) > maxSlotSelection ;
+
+            var checkMaxSlotsCountExceed = function checkMaxSlotsCountExceed(start, end) {
+                return getSelectedSlotsCount(start, end) > maxSlotSelection;
             }
 
         </script>
-        <script src="js/custom.js" type="text/javascript"></script>
+
     </body>
 </html>

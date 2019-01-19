@@ -38,30 +38,33 @@
                     <div id="error-text" class=""></div>
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Facilitator:</label>
-                        <select id="fcr-menu" name="fcr-menu" data-native-menu="false" class="filterable-select">
-                           
-                        </select>
+                        <!--                        <select id="fcr-menu" name="fcr-menu" data-native-menu="false" class="filterable-select">
+                        
+                                                </select>-->
+                        <input type="text" id="searchField" placeholder="Search">
+                        <ul class="ui-popup-container pop in ui-popup-active" id="suggestions" data-role="listview" data-inset="true"></ul>
+
                     </div>
 
                     <div class="ui-field-contain">
                         <label for="spc-menu">Speciality:</label>
                         <select id="spc-menu" name="spc-menu" data-native-menu="false" class="filterable-select">
-                            
+
                         </select>
-                        
+
                     </div>
 
                     <div class="ui-field-contain">
                         <label for="fcy-menu">Facility:</label>
                         <select id="fcy-menu" name="fcy-menu" data-native-menu="false" class="filterable-select">
-                            
+
                         </select>
                     </div>
 
                     <div class="ui-field-contain">
                         <label for="loc-menu">Location:</label>
                         <select id="loc-menu" name="loc-menu" data-native-menu="false" class="filterable-select">
-                            
+
                         </select>
                     </div>
                     <div class="ui-field-contain">
@@ -89,7 +92,7 @@
             </div><!-- /footer -->
         </div><!-- /page one -->
 
-
+        <script src="js/custom.js" type="text/javascript"></script>
         <script>
 
             $(document).ready(function () {
@@ -108,21 +111,62 @@
                     }
                 });
 
+                showSuggestionList('#searchField', '#suggestions', fcls);
+                
+                
+                 $(document).on( 'touchstart mousedown', '.sug-ele', function (e) {
+                    $($(this).attr('data-search')).val($(this).attr('data-val'));
+                    var sugList = $(this).parent('ul');
+                    sugList.html("");
+                    sugList.listview("refresh");
+                } );
+
             });
-            
-            var fcls = [{name: 'Mohammed',id:'1'},{name: 'Raasil',id:'2'},{name: 'Abdurrahim',id:'3'},{name: 'Aboobakr',id:'4'}];
-            var sps = [{name: 'Cardiology',id:'1'},{name: 'Neurology',id:'2'},{name: 'Paediatrics',id:'3'},{name: 'Radiology',id:'4'}];
-            var fys = [{name: 'Al Emadi Hospital',id:'1'},{name: 'American Hospital',id:'2'},{name: 'Emergency Hospitals in Qatar',id:'3'},{name: 'Hamad General Hospital',id:'4'}];
-            var los = [{name: 'Al Shamal',id:'1'},{name: 'Al Wakra',id:'2'},{name: 'Doha',id:'3'},{name: 'Umm Said',id:'4'}];
-            
-            LoadDropDown(fcls,"#fcr-menu",true);   
-            LoadDropDown(sps,"#spc-menu",true);
-            LoadDropDown(fys,"#fcy-menu",true);
-            LoadDropDown(los,"#loc-menu",true);
+
+            var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
+            var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
+            var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
+            var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
+
+            //LoadDropDown(fcls, "#fcr-menu", true);
+            LoadDropDown(sps, "#spc-menu", true);
+            LoadDropDown(fys, "#fcy-menu", true);
+            LoadDropDown(los, "#loc-menu", true);
+
+
+            function showSuggestionList(searchField, suggestions, result) {
+                var sugList = $(suggestions);
+                var pos = $(searchField).position();
+                sugList.css('top', pos.top + 29).css('left', pos.left);
+                $(searchField).on("input", function (e) {
+                    var text = $(this).val();
+                    if (text.length < 1) {
+                        sugList.html("");
+                        sugList.listview("refresh");
+                    } else {
+                        var filres = [];
+                        $.each(result,function(i,v){
+                            if(v.name.toLowerCase().indexOf(text.toLowerCase()) >= 0){
+                                filres.push(v);
+                            }
+                        })
+                        var str = "";
+                        for (var i = 0, len = filres.length; i < len; i++) {
+                            str += "<li class='sug-ele' data-search="+searchField+" data-val='" + filres[i].name + "'><a href='javascript:void(0)'>" + filres[i].name + "</a></li>";
+                        }
+                        sugList.html(str);
+                        sugList.listview("refresh");
+                        //console.dir(res);
+
+                    }
+                });
                 
                
-            
+            }
+
+
+
         </script>
-        <script src="js/custom.js" type="text/javascript"></script>
+
     </body>
 </html>

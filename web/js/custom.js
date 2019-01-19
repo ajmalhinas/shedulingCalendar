@@ -120,10 +120,10 @@ function GenerateRandomArray(type) {
     return arr;
 }
 
-var getNameFromJson = function getNameFromJson(json, id) {
+var getNameFromJson = function getNameFromJson(json, name) {
     var toReturn;
     $.each(json, function (i, v) {
-        if (v.id === id) {
+        if (v.name === name) {
             toReturn = v.name;
             return false;
         }
@@ -141,7 +141,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
         sParameterName = sURLVariables[i].split('=');
 
         if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]).replace(/\+/gi,' ');
         }
     }
 };

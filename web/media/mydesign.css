@@ -102,3 +102,89 @@ body{
     background-color: #FFCCBA;
     background-image: url('./img/GnyDvKN.png');
 }
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.stepwizard-step p {
+    margin-top: 0px;
+    color:#666;
+    
+}
+.stepwizard-step a{
+    text-decoration: none;
+}
+.stepwizard-row {
+    display: table-row;
+}
+.stepwizard {
+    display: table;
+    width: 100%;
+    position: relative;
+}
+
+.stepwizard .btn.disabled, .stepwizard .btn[disabled], .stepwizard fieldset[disabled] .btn {
+    opacity:1 !important;
+    color:#bbb;
+}
+.stepwizard-row:before {
+    top: 14px;
+    left:12px;
+    bottom: 0;
+    position: absolute;
+    content:" ";
+    width: 97%;
+    height: 1px;
+    background-color: #ccc;
+    z-index: 0;
+}
+.stepwizard-step {
+    
+    display: table-cell;
+    position: relative;
+}
+.stepwizard-row .stepwizard-step:nth-child(1){
+    text-align:left;
+    width:12.5%;
+}
+.stepwizard-row .stepwizard-step:nth-child(2),.stepwizard-row .stepwizard-step:nth-child(3),.stepwizard-row .stepwizard-step:nth-child(4){
+    text-align:center;
+    width:25%;
+}
+.stepwizard-row .stepwizard-step:nth-child(5){
+    text-align:right;
+    width:12.5%;
+}
+.btn-circle {
+    width: 30px;
+   
+    text-align: center;
+    padding: 6px 0 !important;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 16px !important;
+}
+.btn-success{
+    color: white !important; background: rgb(0, 128, 0); border-color: green;
+}
+.btn-warning{
+    color:white !important; background:#fba840; border-color:#fba840;cursor: default;
+}

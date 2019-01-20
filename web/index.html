@@ -29,10 +29,34 @@
             </div><!-- /header -->
 
             <div role="main" class="ui-content">
-                <div class="full-width-slider">
-                    <label for="slider-10" class="ui-hidden-accessible">Step:</label>
-                    <input type="range" name="slider-10" id="slider-10" disabled="disabled" data-mini="true" data-highlight="true" min="0" max="10" step="1" value="1">
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step ">
+                            <a href="#step-1" type="button" id="step1" class="btn btn-success btn-circle">1</a>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-2" type="button" id="step2" class="btn btn-success btn-circle">2</a>
+
+
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-3" type="button" id="step3" class="btn btn-warning btn-circle">3</a>
+
+                            </select>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-4" type="button" id="step4" class="btn btn-warning btn-circle">4</a>
+
+                            </select>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-5" type="button" id="step5" class="btn btn-warning btn-circle">5</a>
+
+                            </select>
+                        </div>
+                    </div>
                 </div>
+
 
                 <form action="step2.html" data-ajax="false" id="form1">
                     <div id="error-text" class=""></div>
@@ -91,94 +115,94 @@
                     <p style="text-align: right">
                         <input type="reset" data-role="button" data-inline="true" value="RESET"/>
                         <input type="submit" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
-            </div>
-        </form>
+
+                </form>
 
 
-    </div><!-- /content -->
+            </div><!-- /content -->
 
-    <div data-role="footer" data-theme="a">
-        <h4>Qatar International</h4>
-    </div><!-- /footer -->
-</div><!-- /page one -->
+            <div data-role="footer" data-theme="a">
+                <h4>Qatar International</h4>
+            </div><!-- /footer -->
+        </div><!-- /page one -->
 
-<script src="js/custom.js" type="text/javascript"></script>
-<script>
+        <script src="js/custom.js" type="text/javascript"></script>
+        <script>
 
-    $(document).ready(function () {
-
-
-        $("input[type=submit]").click(function (e) {
-            $('#error-text').removeClass('error').text("");
-            var loc_menu = $("#loc-menu").val();
-            var fcy_menu = $("#fcy-menu").val();
-            var spc_menu = $("#spc-menu").val();
-            var fcr_menu = $("#fcr-menu").val();
-            //alert(loc_menu)
-            if (loc_menu === '' && fcy_menu === '' && spc_menu === '' && fcr_menu === '') {
-                e.preventDefault();
-                $('#error-text').addClass('error').text("You need to fill at least one field.");
-            }
-        });
-
-        showSuggestionList('#fcr-menu', '#suggestions', fcls);
-        showSuggestionList('#spc-menu', '#suggestions-spc', sps);
-        showSuggestionList('#fcy-menu', '#suggestions-fcy', fys);
-        showSuggestionList('#loc-menu', '#suggestions-loc', los);
-
-        $(document).on('touchstart mousedown', '.sug-ele', function (e) {
-            $($(this).attr('data-search')).val($(this).attr('data-val'));
-            var sugList = $(this).parent('ul');
-            sugList.html("");
-            sugList.listview("refresh");
-        });
-
-    });
-
-    var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
-    var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
-    var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
-    var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
-
-    //LoadDropDown(fcls, "#fcr-menu", true);
-    //LoadDropDown(sps, "#spc-menu", true);
-    //LoadDropDown(fys, "#fcy-menu", true);
-    //LoadDropDown(los, "#loc-menu", true);
+            $(document).ready(function () {
 
 
-    function showSuggestionList(searchField, suggestions, result) {
-        var sugList = $(suggestions);
-        var pos = $(searchField).position();
-        sugList.css('top', pos.top + 29).css('left', pos.left);
-        $(searchField).on("input", function (e) {
-            var text = $(this).val();
-            if (text.length < 1) {
-                sugList.html("");
-                sugList.listview("refresh");
-            } else {
-                var filres = [];
-                $.each(result, function (i, v) {
-                    if (v.name.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
-                        filres.push(v);
+                $("input[type=submit]").click(function (e) {
+                    $('#error-text').removeClass('error').text("");
+                    var loc_menu = $("#loc-menu").val();
+                    var fcy_menu = $("#fcy-menu").val();
+                    var spc_menu = $("#spc-menu").val();
+                    var fcr_menu = $("#fcr-menu").val();
+                    //alert(loc_menu)
+                    if (loc_menu === '' && fcy_menu === '' && spc_menu === '' && fcr_menu === '') {
+                        e.preventDefault();
+                        $('#error-text').addClass('error').text("You need to fill at least one field.");
                     }
-                })
-                var str = "";
-                for (var i = 0, len = filres.length; i < len; i++) {
-                    str += "<li class='sug-ele' data-search=" + searchField + " data-val='" + filres[i].name + "'><a href='javascript:void(0)'>" + filres[i].name + "</a></li>";
-                }
-                sugList.html(str);
-                sugList.listview("refresh");
-                //console.dir(res);
+                });
+
+                showSuggestionList('#fcr-menu', '#suggestions', fcls);
+                showSuggestionList('#spc-menu', '#suggestions-spc', sps);
+                showSuggestionList('#fcy-menu', '#suggestions-fcy', fys);
+                showSuggestionList('#loc-menu', '#suggestions-loc', los);
+
+                $(document).on('touchstart mousedown', '.sug-ele', function (e) {
+                    $($(this).attr('data-search')).val($(this).attr('data-val'));
+                    var sugList = $(this).parent('ul');
+                    sugList.html("");
+                    sugList.listview("refresh");
+                });
+
+            });
+
+            var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
+            var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
+            var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
+            var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
+
+            //LoadDropDown(fcls, "#fcr-menu", true);
+            //LoadDropDown(sps, "#spc-menu", true);
+            //LoadDropDown(fys, "#fcy-menu", true);
+            //LoadDropDown(los, "#loc-menu", true);
+
+
+            function showSuggestionList(searchField, suggestions, result) {
+                var sugList = $(suggestions);
+                var pos = $(searchField).position();
+                sugList.css('top', pos.top + 29).css('left', pos.left);
+                $(searchField).on("input", function (e) {
+                    var text = $(this).val();
+                    if (text.length < 1) {
+                        sugList.html("");
+                        sugList.listview("refresh");
+                    } else {
+                        var filres = [];
+                        $.each(result, function (i, v) {
+                            if (v.name.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
+                                filres.push(v);
+                            }
+                        })
+                        var str = "";
+                        for (var i = 0, len = filres.length; i < len; i++) {
+                            str += "<li class='sug-ele' data-search=" + searchField + " data-val='" + filres[i].name + "'><a href='javascript:void(0)'>" + filres[i].name + "</a></li>";
+                        }
+                        sugList.html(str);
+                        sugList.listview("refresh");
+                        //console.dir(res);
+
+                    }
+                });
+
 
             }
-        });
-
-
-    }
 
 
 
-</script>
+        </script>
 
-</body>
+    </body>
 </html>

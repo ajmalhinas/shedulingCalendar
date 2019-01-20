@@ -116,6 +116,7 @@
             // calendar js
 
             var dp = new DayPilot.Calendar("dp");
+            var selectedSlotCount = 0;
 
             // view
             dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
@@ -125,7 +126,7 @@
             var prevAppointmentDays = ['2018-12-01', '2018-12-02', '2019-12-05'];
             dp.initScrollPos = 0; // fixing auto scroll
             dp.durationBarVisible = true;
-            dp.eventDeleteHandling = 'Update';
+            //dp.eventDeleteHandling = 'Update';
             dp.slotDurationInMin = 30;
             dp.cellHeight = 40;
             dp.heightSpec = 'BusinessHoursNoScroll';
@@ -182,6 +183,12 @@
                 e.end(args.newEnd);
                 dp.events.update(e);
                 dp.clearSelection();
+            }
+            
+            dp.onEventDeleted = function(args){
+                
+                dp.events.remove(args.e);
+                selectedSlotCount -= getSelectedSlotsCount(args.e.start(),args.e.end());
             }
 
             dp.onEventClick = function (args) {
@@ -338,7 +345,12 @@
             }
 
             var checkMaxSlotsCountExceed = function checkMaxSlotsCountExceed(start, end) {
-                return getSelectedSlotsCount(start, end) > maxSlotSelection;
+                var crntSelCount = getSelectedSlotsCount(start, end);
+                if(selectedSlotCount + crntSelCount > maxSlotSelection) {
+                    return true;
+                }else{
+                    selectedSlotCount += crntSelCount;
+                }
             }
 
         </script>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Step 1</title>
+
+        <link rel="stylesheet" href="JqueryUI/jquery.mobile.datepicker.css">
+        <link rel="stylesheet" href="JMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="JMobile/_assets/css/jqm-demos.css">
+        <link rel="shortcut icon" href="JMobile/favicon.ico">
+        <script src="JMobile/js/jquery.js"></script>
+        <script src="JMobile/_assets/js/index.js"></script>
+        <script src="JMobile/js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="JqueryUI/jquery.ui.datepicker.js"></script>
+        <script id="mobile-datepicker" src="JqueryUI/jquery.mobile.datepicker.js"></script>
+        <link href="media/mydesign.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+
+        <!-- Start of first page: #one -->
+        <div data-role="page" id="one">
+            <div data-role="navbar" data-grid="d">
+            </div><!-- /navbar -->
+            <div data-theme="b" data-role="header">
+                <h4>Channeling System</h4>
+            </div><!-- /header -->
+
+            <div role="main" class="ui-content">
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step ">
+                            <a href="#step-1" type="button" id="step1" class="btn btn-success btn-circle">1</a>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-2" type="button" id="step2" class="btn btn-success btn-circle">2</a>
+
+
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-3" type="button" id="step3" class="btn btn-success btn-circle">3</a>
+
+                            </select>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-4" type="button" id="step4" class="btn btn-warning btn-circle">4</a>
+
+                            </select>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-5" type="button" id="step5" class="btn btn-warning btn-circle">5</a>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <form action="step4.html" data-ajax="false" id="form1">
+                    <br/>
+                    <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'>Mohamed, Facial, Max Salon, Doha ( 10/11/18 4.30-5.00 pm)</h4>
+                    <div id="error-text" class=""></div>
+                    <div class="ui-field-contain">
+                        <label for="fcr-menu">Name:</label>
+
+                        <input type="text" id="uname" name="uname" placeholder="Name" autocomplete="off" required>
+
+                    </div>
+
+                    <div class="ui-field-contain">
+                        <label for="umobile">Mobile #:</label>
+                        <input type="text" id="umobile" name="umobile" placeholder="Mobile number" autocomplete="off" required>
+
+
+                    </div>
+
+                    <div class="ui-field-contain">
+                        <label for="uemail">Email:</label>
+
+                        <input type="text" id="uemail" name="uemail" placeholder="Email" autocomplete="off">
+                    </div>
+
+
+                    <div class="ui-field-contain">
+                        <label for="uqid" name="loc-menu">QID #:</label>
+
+                        <input type="text" id="uqid" name="uqid" placeholder="QID number" autocomplete="off">
+
+                    </div>
+
+                    <div class="ui-field-contain">
+                        <a  href="../" target="_blank">Terms and conditions</a>
+                        <input type="checkbox" name="checkbox-mini-0" id="checkbox-mini-0" data-mini="true" required>
+                        <label for="checkbox-mini-0">I accept the terms and conditions</label> 
+                        
+
+                    </div>
+
+
+                    <p style="text-align: right">
+                       <a href="step2.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
+                       <input type="submit" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
+
+                </form>
+
+
+            </div><!-- /content -->
+
+            <div data-role="footer" data-theme="a">
+                <h4>Qatar International</h4>
+            </div><!-- /footer -->
+        </div><!-- /page one -->
+
+        <script src="js/custom.js" type="text/javascript"></script>
+        <script>
+
+            $(document).ready(function () {
+            
+            });
+
+        </script>
+
+    </body>
+</html>

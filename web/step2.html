@@ -52,33 +52,33 @@
             </div><!-- /header -->
 
             <div role="main" class="ui-content">
-                 <div class="stepwizard">
+                <div class="stepwizard">
                     <div class="stepwizard-row setup-panel">
                         <div class="stepwizard-step ">
                             <a href="#step-1" type="button" id="step1" class="btn btn-success btn-circle">1</a>
                         </div>
-                            <div class="stepwizard-step ">
-                                <a href="#step-2" type="button" id="step2" class="btn btn-success btn-circle">2</a>
+                        <div class="stepwizard-step ">
+                            <a href="#step-2" type="button" id="step2" class="btn btn-success btn-circle">2</a>
 
 
-                            </div>
-                            <div class="stepwizard-step ">
-                                <a href="#step-3" type="button" id="step3" class="btn btn-warning btn-circle">3</a>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-3" type="button" id="step3" class="btn btn-warning btn-circle">3</a>
 
-                                </select>
-                            </div>
-                            <div class="stepwizard-step ">
-                                <a href="#step-4" type="button" id="step4" class="btn btn-warning btn-circle">4</a>
+                            </select>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-4" type="button" id="step4" class="btn btn-warning btn-circle">4</a>
 
-                                </select>
-                            </div>
-                            <div class="stepwizard-step ">
-                                <a href="#step-5" type="button" id="step5" class="btn btn-warning btn-circle">5</a>
+                            </select>
+                        </div>
+                        <div class="stepwizard-step ">
+                            <a href="#step-5" type="button" id="step5" class="btn btn-warning btn-circle">5</a>
 
-                                </select>
-                            </div>
+                            </select>
                         </div>
                     </div>
+                </div>
 
 
                 <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true">
@@ -97,10 +97,14 @@
                 <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'></h4>
                 <div id="error-text" class=""></div>
                 <div id="dp"></div>
-                <p style="text-align: right">
-                    <a href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
-                    <a href="step3.html" data-ajax="false" data-role="button" data-inline="true" data-theme="b">NEXT</a>
+                <form action="step3.html" data-ajax="false">
+                    <p style="text-align: right">
+                        <a href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
 
+                        <input type="submit" data-role="button" data-inline="true" data-theme="b" value="NEXT"/>
+
+                    </p>
+                </form>
                 </p>
 
             </div><!-- /content -->
@@ -184,11 +188,11 @@
                 dp.events.update(e);
                 dp.clearSelection();
             }
-            
-            dp.onEventDeleted = function(args){
-                
+
+            dp.onEventDeleted = function (args) {
+
                 dp.events.remove(args.e);
-                selectedSlotCount -= getSelectedSlotsCount(args.e.start(),args.e.end());
+                selectedSlotCount -= getSelectedSlotsCount(args.e.start(), args.e.end());
             }
 
             dp.onEventClick = function (args) {
@@ -302,6 +306,14 @@
                 }
             });
 
+            $("input[type=submit]").click(function (e) {
+                $('#error-text').removeClass('error').text("");
+
+                if (selectedSlotCount < 1) {
+                    e.preventDefault();
+                    $('#error-text').addClass('error').text("Please select a slot to continue");
+                }
+            });
 
 
             $(document).ready(function () {
@@ -334,6 +346,8 @@
                 //       +', '+ getNameFromJson(fys,fyssid) +', '+ getNameFromJson(los,losid);
                 $('#sum-text').text(sumtxt.join(', '));
 
+
+
             })
 
 
@@ -346,12 +360,14 @@
 
             var checkMaxSlotsCountExceed = function checkMaxSlotsCountExceed(start, end) {
                 var crntSelCount = getSelectedSlotsCount(start, end);
-                if(selectedSlotCount + crntSelCount > maxSlotSelection) {
+                if (selectedSlotCount + crntSelCount > maxSlotSelection) {
                     return true;
-                }else{
+                } else {
                     selectedSlotCount += crntSelCount;
                 }
             }
+
+
 
         </script>
 

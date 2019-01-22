@@ -188,3 +188,7 @@ body{
 .btn-warning{
     color:white !important; background:#fba840; border-color:#fba840;cursor: default;
 }
+
+.table{
+    width:100%;
+}

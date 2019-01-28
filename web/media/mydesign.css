@@ -131,6 +131,7 @@ body{
 }
 .stepwizard-step a{
     text-decoration: none;
+    text-shadow:none;
 }
 .stepwizard-row {
     display: table-row;
@@ -174,13 +175,13 @@ body{
     width:12.5%;
 }
 .btn-circle {
-    width: 30px;
+    width: 27px;
    
     text-align: center;
     padding: 6px 0 !important;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.428571429;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
 }
 .btn-success{
     color: white !important; background: rgb(0, 128, 0); border-color: green;
@@ -191,4 +192,28 @@ body{
 
 .table{
     width:100%;
+}
+
+.ui-btn-b{
+    
+    
+    background-color: #e9222f !important;
+    color: #ffffff !important;
+    border: none !important;
+    -webkit-transition: background-color 0.2s ease, color 0.2s ease, -webkit-box-shadow 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, -webkit-box-shadow 0.2s ease;
+    -o-transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, -webkit-box-shadow 0.2s ease;
+}
+
+.ui-input-btn{
+    font-size:14px !important;
+    font-weight: 400 !important;
+    border: 0.1px !important;
+    text-shadow: none !important;
+    border-radius: 4px !important;
+}
+.ui-icon-carat-r:after{
+    background: none !important;
 }

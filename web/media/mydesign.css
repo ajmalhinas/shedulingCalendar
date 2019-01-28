@@ -66,9 +66,9 @@ and open the template in the editor.
 .calendar_default_event{
     opacity: 0.7;
 }
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
+p, body, td {
+    font-family: Tahoma, Arial, Sans-Serif;
+    font-size: 14px !important;
 }
 .info, .success, .warning, .error, .validation {
     border: 1px solid;
@@ -216,4 +216,11 @@ body{
 }
 .ui-icon-carat-r:after{
     background: none !important;
+}
+.ui-mobile label, div.ui-controlgroup-label{
+    font-size:14px !important;
+}
+.ui-btn{
+    font-size:14px !important;
+    font-weight: 400 !important;
 }

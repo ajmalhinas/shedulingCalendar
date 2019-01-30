@@ -16,6 +16,9 @@
         <script src="JqueryUI/jquery.ui.datepicker.js"></script>
         <script id="mobile-datepicker" src="JqueryUI/jquery.mobile.datepicker.js"></script>
         <link href="media/mydesign.css" rel="stylesheet" type="text/css"/>
+        <script src="js/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="js/additional-methods.js" type="text/javascript"></script>
+        <script src="Gritter/js/jquery.gritter.min.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -24,9 +27,9 @@
         <div data-role="page" id="one">
             <div data-role="navbar" data-grid="d">
             </div><!-- /navbar -->
-            <div data-theme="b" data-role="header">
-                <h4>Channeling System</h4>
-            </div><!-- /header -->
+            <!--            <div data-theme="b" data-role="header">
+                            <h4>Channeling System</h4>
+                        </div> /header -->
 
             <div role="main" class="ui-content">
                 <div class="stepwizard">
@@ -61,7 +64,7 @@
                 <form action="step5.html" data-ajax="false" id="form1">
                     <br/>
                     <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'>Mohamed, Facial, Max Salon, Doha ( 10/11/18 4.30-5.00 pm)</h4>
-                    <div id="error-text" class=""></div>
+
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Payment:</label>
                         <span><b>QR. 5.00</b></span>
@@ -83,7 +86,7 @@
 
 
                     </div>
-
+                    <label id="error-text" class=""></label>
                     <p style="text-align: right">
                         <a class="ui-input-btn" href="step5.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
                         <input type="submit" data-role="button" data-inline="true" data-theme="b" value="Pay"/></p>
@@ -93,9 +96,9 @@
 
             </div><!-- /content -->
 
-            <div data-role="footer" data-theme="a">
-                <h4>Qatar International</h4>
-            </div><!-- /footer -->
+            <!--            <div data-role="footer" data-theme="a">
+                            <h4>Qatar International</h4>
+                        </div> /footer -->
         </div><!-- /page one -->
 
         <script src="js/custom.js" type="text/javascript"></script>

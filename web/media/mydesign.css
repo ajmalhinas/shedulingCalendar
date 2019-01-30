@@ -70,7 +70,7 @@ p, body, td {
     font-family: Tahoma, Arial, Sans-Serif;
     font-size: 14px !important;
 }
-.info, .success, .warning, .error, .validation {
+/*.info, .success, .warning, .error, .validation {
     border: 1px solid;
     margin: 10px 0px;
     padding: 15px 10px 15px 50px;
@@ -101,7 +101,7 @@ p, body, td {
     color: #D63301;
     background-color: #FFCCBA;
     background-image: url('./img/GnyDvKN.png');
-}
+}*/
 
 .btn {
     display: inline-block;
@@ -224,3 +224,31 @@ p, body, td {
     font-size:14px !important;
     font-weight: 400 !important;
 }
+
+
+	label.error {
+		color: red;
+		font-size: 16px;
+		font-weight: normal;
+		line-height: 1.4;
+		margin-top: 0.5em;
+		width: 100%;
+		float: none;
+	}
+	@media screen and (orientation: portrait) {
+		label.error {
+			margin-left: 0;
+			display: block;
+		}
+	}
+	@media screen and (orientation: landscape) {
+		label.error {
+			display: inline-block;
+			margin-left: 22%;
+		}
+	}
+	em {
+		color: red;
+		font-weight: bold;
+		padding-right: .25em;
+	}

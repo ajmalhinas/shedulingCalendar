@@ -19,6 +19,7 @@
         <script src="js/jquery.validate.min.js" type="text/javascript"></script>
         <script src="js/additional-methods.js" type="text/javascript"></script>
         <script src="Gritter/js/jquery.gritter.min.js" type="text/javascript"></script>
+        <script src="js/webStorage.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -65,9 +66,7 @@
                     
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Facilitator:</label>
-                        <!--                        <select id="fcr-menu" name="fcr-menu" data-native-menu="false" class="filterable-select">
-                        
-                                                </select>-->
+                       
                         <input class="com_fld" type="text" id="fcr-menu" name="fcr_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions" data-role="listview" data-inset="true"></ul>
 
@@ -75,9 +74,7 @@
 
                     <div class="ui-field-contain">
                         <label for="spc-menu">Speciality:</label>
-                        <!--                        <select id="spc-menu" name="spc-menu" data-native-menu="false" class="filterable-select">
-                        
-                                                </select>-->
+                       
                         <input class="com_fld" type="text" id="spc-menu" name="spc_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-spc" data-role="listview" data-inset="true"></ul>
 
@@ -85,9 +82,7 @@
 
                     <div class="ui-field-contain">
                         <label for="fcy-menu">Facility:</label>
-                        <!--                        <select id="fcy-menu" name="fcy-menu" data-native-menu="false" class="filterable-select">
                         
-                                                </select>-->
                         <input class="com_fld" type="text" id="fcy-menu" name="fcy_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-fcy" data-role="listview" data-inset="true"></ul>
 
@@ -96,28 +91,26 @@
 
                     <div class="ui-field-contain">
                         <label  for="loc-menu" name="loc-menu">Location:</label>
-                        <!--                        <select id="loc-menu" name="loc-menu" data-native-menu="false" class="filterable-select">
                         
-                                                </select>-->
                         <input class="com_fld" type="text" id="loc-menu" name="loc_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-loc" data-role="listview" data-inset="true"></ul>
 
                     </div>
                     <div class="ui-field-contain">
                         <label for="fm-date">From Date:</label>
-                        <input type="text" name="fm-date" id="fm-date" autocomplete="off" data-role="date">
+                        <input type="text" name="fm-date" id="fm_date" autocomplete="off" data-role="date">
 
                     </div>
                     <div class="ui-field-contain">
                         <label for="to-date">To Date:</label>
-                        <input type="text" name="to-date" id="to-date" autocomplete="off" data-role="date">
+                        <input type="text" name="to-date" id="to_date" autocomplete="off" data-role="date">
 
                     </div>
 
 <div id="error-text" class=""></div>
                     <p style="text-align: right">
                         <input type="reset" data-role="button" data-inline="true" value="RESET"/>
-                        <input type="submit" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
+                        <input type="button" id="nxt_btn" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
 
                 </form>
 
@@ -133,6 +126,20 @@
         <script>
 
             $(document).ready(function () {
+                $('#nxt_btn').click(function(){
+                    if($('#form1').valid()){
+                        setSrchItems($('#fcr-menu').val(),$('#spc-menu').val(),$('#fcy-menu').val(),$('#loc-menu').val(),$('#fm_date').val(),$('#to_date').val() );
+                        $('#form1').submit();
+                    }
+                });
+                updateOldValues();
+                function updateOldValues(){
+                    var srchObj = getSrchItems();
+                    $('#fcr-menu').val(srchObj.fcr);$('#spc-menu').val(srchObj.spc);
+                    $('#fcy-menu').val(srchObj.fcy);$('#loc-menu').val(srchObj.loc);
+                    $('#fm_date').val(srchObj.fm_date);$('#to_date').val(srchObj.to_date);
+                    
+                }
                 $("#form1").validate({
                     groups: {
                         names: "fcr_menu spc_menu fcy_menu loc_menu"

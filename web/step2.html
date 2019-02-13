@@ -175,7 +175,7 @@
         });
 
         dp.events.add(e);
-        
+
         dp.clearSelection();
     };
 
@@ -321,7 +321,7 @@
 
 
 
-    $('#nxt_btn').click(function () {
+    $('#nxt_btn').click(function (e) {
         $('#error-text').removeClass('error').text("");
 
         if (selectedSlotCount < 1) {
@@ -329,13 +329,14 @@
             $('#error-text').addClass('error').text("Please select a slot to continue");
         } else {
 
-            for (var i = 0; i < dp.events; i++) {
-                if (dp.events[i].tags.type === "new") {
-                    myEvents.push(dp.events[i]);
+            for (var i = 0; i < dp.events.list.length; i++) {
+                if (dp.events.list[i].tags !== undefined && dp.events.list[i].tags.type === "new") {
+                    myEvents.push(dp.events.list[i]);
                 }
             }
             // save the events on session
-            
+            setEvents(myEvents);
+
             $('#form1').submit();
         }
 
@@ -344,8 +345,22 @@
 
     $(document).ready(function () {
         // is events already selected get it from session
-        
-        
+        updateSelEvents();
+        function updateSelEvents() {
+            var events = getSelEvents();
+
+            $.each(events, function (i, ele) {
+                checkMaxSlotsCountExceed(ele.start, ele.end);
+                dp.events.add(new DayPilot.Event({
+                    start: new DayPilot.Date(ele.start),
+                    end: new DayPilot.Date(ele.end),
+                    id: ele.id,
+                    text: ele.text,
+                    "tags": ele.tags
+                }));
+            })
+        }
+
         var sumtxt = [];
         var srchObj = getSrchItems();
         if (srchObj.fcr !== '') {

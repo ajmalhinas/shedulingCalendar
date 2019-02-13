@@ -5,7 +5,7 @@ var getSrchItems = (function () {
     return function () {
         var srchItems = {fcr: '', spc: '', fcy: '', loc: '', fm_date: '', to_date: ''};
         if (typeof (Storage) !== "undefined") {
-            if (sessionStorage.srchItems !== "{}") {
+            if (sessionStorage.srchItems !== undefined && sessionStorage.srchItems !== "{}") {
                 srchItems = JSON.parse(sessionStorage.srchItems);
 
             }
@@ -30,5 +30,37 @@ var setSrchItems = (function () {
             document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
         }
         return srchItems;
+    }
+})();
+
+var setEvents = (function () {
+
+    return function (events) {
+
+        if (typeof (Storage) !== "undefined") {
+
+            sessionStorage.SelEvents = JSON.stringify(events);
+
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        return events;
+    }
+})();
+var getSelEvents = (function () {
+
+
+    return function () {
+        var events = {};
+        if (typeof (Storage) !== "undefined") {
+            if (sessionStorage.SelEvents !== undefined && sessionStorage.SelEvents !== "{}") {
+                events = JSON.parse(sessionStorage.SelEvents);
+
+            }
+            sessionStorage.SelEvents = JSON.stringify(events);
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        return events;
     }
 })();

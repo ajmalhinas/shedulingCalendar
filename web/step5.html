@@ -28,9 +28,9 @@
         <div data-role="page" id="one">
             <div data-role="navbar" data-grid="d">
             </div><!-- /navbar -->
-<!--            <div data-theme="b" data-role="header">
-                <h4>Channeling System</h4>
-            </div> /header -->
+            <!--            <div data-theme="b" data-role="header">
+                            <h4>Channeling System</h4>
+                        </div> /header -->
 
             <div role="main" class="ui-content">
                 <div class="stepwizard">
@@ -65,53 +65,101 @@
 
                 <br/>
 
+
+
                 <table id="table-custom-2" class="table ui-body-d ui-shadow table-stripe ui-responsive">
                     <tbody>
                         <tr>
-                            <th>Facilitator Name : </th>
-                            <td></td>
-                            <th>Booking Time : </th>
-                            <td></td>
+                            <th align="right" width="200">Facilitator Name : </th>
+                            <td id="facname" width="300"></td>
+                            <th align="right" width="200">Name : </th>
+                            <td id="nme" width="300"></td>
                         </tr>
                         <tr>
-                            <th>Speciality : </th>
-                            <td></td>
-                            <th>Name : </th>
-                            <td></td>
+                            <th align="right">Speciality : </th>
+                            <td id="specty"></td>
+                            <th align="right">Mobile # : </th>
+                            <td id="umobile"></td>
                         </tr>
                         <tr>
-                            <th>Facility : </th>
-                            <td></td>
-                            <th>Mobile # : </th>
-                            <td></td>
+                            <th align="right">Facility : </th>
+                            <td id="fcy"></td>
+                            <th align="right">Email : </th>
+                            <td id="uemail"></td>
                         </tr>
                         <tr>
-                            <th>Location : </th>
-                            <td></td>
-                            <th>Email : </th>
-                            <td></td>
+                            <th align="right">Location : </th>
+                            <td id="loc"></td>
+                            <th align="right">QID : </th>
+                            <td id="uqid"></td>
+                        </tr>
+                        <tr>
+                            <th align="right">Booking Time : </th>
+                            <td id="bktime"></td>
+                            <th align="right">Payment Details : </th>
+                            <td id="paydet"></td>
                         </tr>
                     </tbody>
                 </table>
-
+               
                 <p style="text-align: right">
-                    <input type="submit" data-role="button" data-inline="true" data-theme="b" value="Thank You"/></p>
+                    <a href="/shedulingCalendar" dat-ajax="false" id="thk_btn" data-role="button" data-inline="true" data-theme="b">Thank You</a></p>
 
 
 
 
             </div><!-- /content -->
 
-<!--            <div data-role="footer" data-theme="a">
-                <h4>Qatar International</h4>
-            </div> /footer -->
+            <!--            <div data-role="footer" data-theme="a">
+                            <h4>Qatar International</h4>
+                        </div> /footer -->
         </div><!-- /page one -->
 
         <script src="js/custom.js" type="text/javascript"></script>
         <script>
 
             $(document).ready(function () {
+                var sumtxt = [];
+                var srchObj = getSrchItems();
+                if (srchObj.fcr !== '') {
 
+                    $('#facname').text(srchObj.fcr);
+                }
+                if (srchObj.spc !== '') {
+
+                    $('#specty').text(srchObj.spc);
+                }
+                if (srchObj.fcy !== '') {
+
+                    $('#fcy').text(srchObj.fcy)
+                }
+                if (srchObj.loc !== '') {
+
+                    $('#loc').text(srchObj.loc)
+                }
+                var eve_text = [];
+                var events = getSelEvents();
+
+                $.each(events, function (i, ele) {
+                    var stdate = new Date(ele.start);
+                    var enddate = new Date(ele.end);
+                    eve_text.push(stdate.getDate() + '/' + (stdate.getMonth() + 1) + '/' + stdate.getFullYear()
+                            + '  ' + stdate.getHours() + ':' + (stdate.getMinutes() < 10 ? '0' + stdate.getMinutes() : stdate.getMinutes()) + ' - ' + enddate.getHours()
+                            + ':' + (enddate.getMinutes() < 10 ? '0' + enddate.getMinutes() : enddate.getMinutes()))
+                })
+
+                $('#bktime').text(eve_text.join(', '));
+
+                var user = getUserDetails();
+                $('#nme').text(user.name);
+                $('#umobile').text(user.mobile);
+                $('#uemail').text(user.email);
+                $('#uqid').text(user.qid);
+
+                var paydetails = getPayDetails();
+                $('#paydet').text(paydetails.pay + ', ' + paydetails.paytype);
+                
+                destroySession();
             });
 
         </script>

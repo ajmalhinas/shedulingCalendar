@@ -105,7 +105,7 @@
 
                     <p style="text-align: right">
                         <a class="ui-input-btn" href="step2.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
-                        <input type="submit" data-role="button" data-inline="true" data-theme="b" value="Confirm Booking/Checkout"/></p>
+                        <input type="button" id="cnf_btn" data-role="button" data-inline="true" data-theme="b" value="Confirm Booking/Checkout"/></p>
 
                 </form>
 
@@ -121,7 +121,13 @@
         <script>
 
             $(document).ready(function () {
-
+                $('#cnf_btn').click(function () {
+                    if($('#form1').valid()){
+                        var user= { name: $('#uname').val(), mobile: $('#umobile').val(), email: $('#uemail').val(), qid : $('#uqid').val()};
+                        setUserDetails(user);
+                        $('#form1').submit();
+                    }
+                });
                 var sumtxt = [];
                 var srchObj = getSrchItems();
                 if (srchObj.fcr !== '') {
@@ -141,19 +147,11 @@
                 var events = getSelEvents();
 
                 $.each(events, function (i, ele) {
-//                    dp.events.add(new DayPilot.Event({
-//                        start: new DayPilot.Date(ele.start),
-//                        end: new DayPilot.Date(ele.end),
-//                        id: ele.id,
-//                        text: ele.text,
-//                        "tags": ele.tags
-//                    }));
-
                     var stdate = new Date(ele.start);
                     var enddate = new Date(ele.end);
-                    eve_text.push(stdate.getDate() + '-' + (stdate.getMonth() + 1) + '-' + stdate.getFullYear() 
-                            + '  ' + stdate.getHours() + ':' + (stdate.getMinutes() < 10 ? '0'+stdate.getMinutes(): stdate.getMinutes()) + ' - ' + enddate.getHours() 
-                            + ':' + (enddate.getMinutes() < 10 ? '0'+enddate.getMinutes(): enddate.getMinutes()))
+                    eve_text.push(stdate.getDate() + '/' + (stdate.getMonth() + 1) + '/' + stdate.getFullYear()
+                            + '  ' + stdate.getHours() + ':' + (stdate.getMinutes() < 10 ? '0' + stdate.getMinutes() : stdate.getMinutes()) + ' - ' + enddate.getHours()
+                            + ':' + (enddate.getMinutes() < 10 ? '0' + enddate.getMinutes() : enddate.getMinutes()))
                 })
 
                 $('#sum-text2').text(sumtxt.join(', ') + ' ( ' + eve_text.join(', ') + ' )');

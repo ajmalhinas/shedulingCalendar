@@ -64,12 +64,12 @@
 
                 <form action="step5.html" data-ajax="false" id="form1">
                     <br/>
-                    <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'>Mohamed, Facial, Max Salon, Doha ( 10/11/18 4.30-5.00 pm)</h4>
+                    <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'></h4>
 
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Payment:</label>
                         <span><b>QR. 5.00</b></span>
-
+                        <input type="hidden" name="payment" id="payment" value="5"/>
 
                     </div>
 
@@ -106,12 +106,43 @@
         <script>
 
             $(document).ready(function () {
+
+                var sumtxt = [];
+                var srchObj = getSrchItems();
+                if (srchObj.fcr !== '') {
+                    sumtxt.push(srchObj.fcr);
+                }
+                if (srchObj.spc !== '') {
+                    sumtxt.push(srchObj.spc);
+                }
+                if (srchObj.fcy !== '') {
+                    sumtxt.push(srchObj.fcy);
+                }
+                if (srchObj.loc !== '') {
+                    sumtxt.push(srchObj.loc);
+                }
+                var eve_text = [];
+                var events = getSelEvents();
+
+                $.each(events, function (i, ele) {
+                    var stdate = new Date(ele.start);
+                    var enddate = new Date(ele.end);
+                    eve_text.push(stdate.getDate() + '/' + (stdate.getMonth() + 1) + '/' + stdate.getFullYear()
+                            + '  ' + stdate.getHours() + ':' + (stdate.getMinutes() < 10 ? '0' + stdate.getMinutes() : stdate.getMinutes()) + ' - ' + enddate.getHours()
+                            + ':' + (enddate.getMinutes() < 10 ? '0' + enddate.getMinutes() : enddate.getMinutes()))
+                })
+
+                $('#sum-text').text(sumtxt.join(', ') + ' ( ' + eve_text.join(', ') + ' )');
+
                 $("input[type=submit]").click(function (e) {
                     $('#error-text').removeClass('error').text("");
 
                     if (!$('input:radio[name="gateway"]').is(':checked')) {
                         e.preventDefault();
                         $('#error-text').addClass('error').text("Please select the payment gateway");
+                    }else{
+                        var paydetails = {pay : $('#payment').val(), paytype: $('input:radio[name="gateway"]:checked').val() };
+                        setPayDetails(paydetails);
                     }
                 });
             });

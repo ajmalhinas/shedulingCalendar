@@ -43,6 +43,11 @@
         <script src="js/additional-methods.js" type="text/javascript"></script>
         <script src="Gritter/js/jquery.gritter.min.js" type="text/javascript"></script>
         <script src="js/webStorage.js" type="text/javascript"></script>
+        <script src="js/service/SchedulerService.js" type="text/javascript"></script>
+
+        <script src="js/service/engine.js" type="text/javascript"></script>
+
+        <script src="js/service/util.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -84,20 +89,21 @@
                 </div>
 
 
-                <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                    <legend></legend>
-                    <input type="radio" name="radio-choice-a" id="mode-choice-f" value="Week" checked="checked">
-                    <label for="mode-choice-f">Week View</label>
-                    <input type="radio" name="radio-choice-a" id="mode-choice-g" value="Custom">
-                    <label for="mode-choice-g">Available</label>
-                </fieldset>
-                <fieldset id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                    <legend></legend>
-                    <button id="prev" >Previous</button>
-
-                    <button id="next">Next</button>
-                </fieldset>
+                <!--                <fieldset id="date_mode" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                    <legend></legend>
+                                    <input type="radio" name="radio-choice-a" id="mode-choice-f" value="Week" checked="checked">
+                                    <label for="mode-choice-f">Week View</label>
+                                    <input type="radio" name="radio-choice-a" id="mode-choice-g" value="Custom">
+                                    <label for="mode-choice-g">Available</label>
+                                </fieldset>-->
                 <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'></h4>
+                <div style="text-align:right" id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="tprevrue" >
+                    <legend></legend>
+                    <a id="prev" data-ajax="false"  onclick="history.back();" hidden>Previous</a>
+
+                    <a id="next" data-ajax="false" href="#" hidden>Next</a>
+                </div>
+                
 
                 <div id="dp"></div>
                 <label id="error-text" class=""></div>
@@ -121,207 +127,245 @@
 </div><!-- /page two -->
 <script src="js/custom.js" type="text/javascript"></script>
 <script>
-    // calendar js
+    
+    
+   
+    
 
+    var viewCount = 3;
     var dp = new DayPilot.Calendar("dp");
-    var selectedSlotCount = 0;
+    var allSsns = [];
+    var allSsnsIndex = 0;
+    dp.viewTypeCustomDateArray = []; // day/week/custom
+    dp.businessBeginsHour = 24;
+    dp.businessEndsHour = 0;
+    
+    // functions of prev/ next button
+    function RefreshTheCalendar(){
+        var url_string = window.location.href;
+        
+        var url = new URL(url_string);
+        var c1 = url.searchParams.get("d");
+        if(!(c1 === ""|| c1 === null)){
+            $('#prev').show();
+        }
+         var purl = new URL(url_string);
 
-    // view
-    dp.startDate = "2018-12-25";  // or just dp.startDate = "2013-03-25";
-    dp.viewType = "Week"; // day/week/custom
-    dp.viewTypeCustomDateArray = ['2018-12-22', '2018-12-25', '2018-12-26']; // day/week/custom
-    var nextAppointmentDays = ['2018-12-27', '2018-12-30', '2019-01-02'];
-    var prevAppointmentDays = ['2018-12-01', '2018-12-02', '2019-12-05'];
-    dp.initScrollPos = 0; // fixing auto scroll
-    dp.durationBarVisible = true;
-    //dp.eventDeleteHandling = 'Update';
-    dp.slotDurationInMin = 30;
-    dp.cellHeight = 35;
-    dp.heightSpec = 'BusinessHoursNoScroll';
-    dp.headerCellType = 'MiniuteWise';
-    dp.businessBeginsHour = 8;
-    dp.businessEndsHour = 17;
-    dp.rtl = true;
-    dp.locale = "ar-ae";
-    var maxSlotSelection = 2;
-    var myEvents = [];
-    // event creating
-    //dp.timeRangeSelectedHandling = 'JavaScript';
-    dp.onTimeRangeSelected = function (args) {
-        //var name = prompt("New event name:", "Event");
-        //if (!name)
-        //   return;
-        if (checkMaxSlotsCountExceed(args.start, args.end)) {
-            $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
-            setTimeout(function () {
-                $('#error-text').removeClass('error').text('');
-            }, 3000);
+        if(allSsns.length === 0){
+            dp.viewTypeCustomDateArray = [];
+        }else if(allSsns.length < viewCount){
+            dp.viewTypeCustomDateArray = allSsns.splice(0,allSsns.length)
+        }else{
+            if(allSsns.length > viewCount)
+                    $('#next').show();
+            var nurl = new URL(url_string);
+            var c = nurl.searchParams.get("d");
+            if(c === ""|| c === null){
+                nurl.searchParams.append("d",allSsns[viewCount-1]);
+            }else{
+                nurl.searchParams.delete("d");
+                nurl.searchParams.append("d",allSsns[viewCount-1]);
+            }
 
+            $('#next').attr('href',nurl);
+            dp.viewTypeCustomDateArray = allSsns.splice(0,viewCount);
+            
+        }
+        
+    }
+    // calendar js
+    var replySSNList = function (data)
+    {
+        if (data != null && typeof data == 'object') {
+            //console.log(data);
+            $.each(data, function (i, v) {
+                //dp.viewTypeCustomDateArray.push(formatDate(v.dat));
+                allSsns.push(formatDate(v.dat));
+                //alert(v.start.getHours())
+                if(dp.businessBeginsHour > v.start.getHours()){
+                    dp.businessBeginsHour = v.start.getHours();
+                }
+                if(dp.businessEndsHour < v.end.getHours()){
+                    dp.businessEndsHour = v.end.getHours();
+                }
+            });
+            RefreshTheCalendar();
+            if(data.length > 0){
+                dpinit();
+            }else{
+                alert('No appointments details found')
+            }
+            
+        } else
+            dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
+    }
+    
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var c = url.searchParams.get("d");
+    if(c ===null || c === ''){
+        c = formatDate(new Date());
+    }
+    SchedulerService.getAllSsns(formatDate(new Date()),c , 1, 1, replySSNList);
+
+    function dpinit() {
+        selectedSlotCount = 0;
+
+        // view
+        dp.startDate = new Date()//"2019-03-01";  // or just dp.startDate = "2013-03-25";
+        dp.viewType = "Custom"; // day/week/custom
+//        var nextAppointmentDays = ['2018-12-27', '2018-12-30', '2019-01-02'];
+//        var prevAppointmentDays = ['2018-12-01', '2018-12-02', '2019-12-05'];
+        dp.initScrollPos = 0; // fixing auto scroll
+        dp.durationBarVisible = true;
+        //dp.eventDeleteHandling = 'Update';
+        dp.slotDurationInMin = 30;
+        dp.cellHeight = 35;
+        dp.heightSpec = 'BusinessHoursNoScroll';
+        dp.headerCellType = 'MiniuteWise';
+        //dp.businessBeginsHour = 8;
+        //dp.businessEndsHour = 17;
+        //dp.rtl = true;
+        //dp.locale = "ar-ae";
+        var maxSlotSelection = 2;
+        myEvents = [];
+
+        // event creating
+        //dp.timeRangeSelectedHandling = 'JavaScript';
+        dp.onTimeRangeSelected = function (args) {
+            //var name = prompt("New event name:", "Event");
+            //if (!name)
+            //   return;
+            if (checkMaxSlotsCountExceed(args.start, args.end)) {
+                $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
+                setTimeout(function () {
+                    $('#error-text').removeClass('error').text('');
+                }, 3000);
+
+
+                dp.clearSelection();
+                return;
+            }
+
+            var name = args.start.toString("hh:mm tt") + '-' + args.end.toString("hh:mm tt");
+
+            var e = new DayPilot.Event({
+                start: args.start,
+                end: args.end,
+                id: DayPilot.guid(),
+                text: name,
+                "tags": {
+                    "type": "new"
+                }
+            });
+
+            dp.events.add(e);
 
             dp.clearSelection();
-            return;
-        }
+        };
 
-        var name = args.start.toString("hh:mm tt") + '-' + args.end.toString("hh:mm tt");
+        dp.onEventResized = function (args) {
+            //alert(args.newStart)
+            console.log(args)
+            if (checkMaxSlotsCountExceed(args.newStart, args.newEnd)) {
+                $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
+                setTimeout(function () {
+                    $('#error-text').removeClass('error').text('');
+                }, 3000);
 
-        var e = new DayPilot.Event({
-            start: args.start,
-            end: args.end,
-            id: DayPilot.guid(),
-            text: name,
-            "tags": {
-                "type": "new"
+
+                dp.clearSelection();
+                return;
             }
-        });
+            if (IsMyevent(args)) {
 
-        dp.events.add(e);
-
-        dp.clearSelection();
-    };
-
-    dp.onEventResized = function (args) {
-        //alert(args.newStart)
-        console.log(args)
-        if (checkMaxSlotsCountExceed(args.newStart, args.newEnd)) {
-            $('#error-text').addClass('error').text('Maximum selected slot count exceeded');
-            setTimeout(function () {
-                $('#error-text').removeClass('error').text('');
-            }, 3000);
-
-
+            }
+            var e = args.e;
+            e.start(args.newStart);
+            e.end(args.newEnd);
+            dp.events.update(e);
             dp.clearSelection();
-            return;
         }
-        if (IsMyevent(args)) {
+
+        dp.onEventDeleted = function (args) {
+
+            dp.events.remove(args.e);
+            selectedSlotCount -= getSelectedSlotsCount(args.e.start(), args.e.end());
+        }
+
+        dp.onEventClick = function (args) {
+            alert("clicked: " + args.e.id());
+        };
+
+
+
+
+        dp.events.list = [
+            {
+                "start": "2018-12-25T10:00:00",
+                "end": "2018-12-25T13:00:00",
+                "id": "23ef6fcd-e12d-b085-e38a-a4e23d0bb61d",
+                "text": "Event 1",
+                "backColor": "#FFE599",
+                "borderColor": "#F1C232"
+            },
+            {
+                "start": "2018-12-25T11:00:00",
+                "end": "2018-12-25T14:00:00",
+                "id": "fb62e2dd-267e-ec91-886b-73574d24e25a",
+                "text": "Event 2",
+                "backColor": "#9FC5E8",
+                "borderColor": "#3D85C6"
+            },
+            {
+                "start": "2018-12-25T10:00:00",
+                "end": "2018-12-25T13:00:00",
+                "id": "29b7a553-d44f-8f2c-11e1-a7d5f62eb123",
+                "text": "Event 3",
+                "backColor": "#B6D7A8",
+                "borderColor": "#6AA84F"
+            },
+            {
+                "start": "2018-12-25T14:00:00",
+                "end": "2018-12-25T17:00:00",
+                "id": "ff968cfb-eba1-8dc1-7396-7f0d4f465c8a",
+                "text": "Event 4",
+                "backColor": "#EA9999",
+                "borderColor": "#CC0000",
+                "tags": {
+                    "type": "important"
+                }
+            }
+
+
+        ];
+        dp.onBeforeEventRender = function (args) {
+            if (args.data.tags && args.data.tags.type === "important") {
+                args.data.html = "<b>Important Event</b><br>" + args.data.text;
+                args.data.fontColor = "#fff";
+                args.data.backColor = "#E06666";
+            }
+        };
+
+        dp.init();
+
+        var getSelectedSlotsCount = function getSelectedSlotsCount(start, end) {
+
+            return ((new Date(end) - new Date(start)) / (1000 * 60)) / dp.slotDurationInMin;
 
         }
-        var e = args.e;
-        e.start(args.newStart);
-        e.end(args.newEnd);
-        dp.events.update(e);
-        dp.clearSelection();
-    }
 
-    dp.onEventDeleted = function (args) {
-
-        dp.events.remove(args.e);
-        selectedSlotCount -= getSelectedSlotsCount(args.e.start(), args.e.end());
-    }
-
-    dp.onEventClick = function (args) {
-        alert("clicked: " + args.e.id());
-    };
-
-
-
-
-    dp.events.list = [
-        {
-            "start": "2018-12-25T10:00:00",
-            "end": "2018-12-25T13:00:00",
-            "id": "23ef6fcd-e12d-b085-e38a-a4e23d0bb61d",
-            "text": "Event 1",
-            "backColor": "#FFE599",
-            "borderColor": "#F1C232"
-        },
-        {
-            "start": "2018-12-25T11:00:00",
-            "end": "2018-12-25T14:00:00",
-            "id": "fb62e2dd-267e-ec91-886b-73574d24e25a",
-            "text": "Event 2",
-            "backColor": "#9FC5E8",
-            "borderColor": "#3D85C6"
-        },
-        {
-            "start": "2018-12-25T10:00:00",
-            "end": "2018-12-25T13:00:00",
-            "id": "29b7a553-d44f-8f2c-11e1-a7d5f62eb123",
-            "text": "Event 3",
-            "backColor": "#B6D7A8",
-            "borderColor": "#6AA84F"
-        },
-        {
-            "start": "2018-12-25T14:00:00",
-            "end": "2018-12-25T17:00:00",
-            "id": "ff968cfb-eba1-8dc1-7396-7f0d4f465c8a",
-            "text": "Event 4",
-            "backColor": "#EA9999",
-            "borderColor": "#CC0000",
-            "tags": {
-                "type": "important"
+        var checkMaxSlotsCountExceed = function checkMaxSlotsCountExceed(start, end) {
+            var crntSelCount = getSelectedSlotsCount(start, end);
+            if (selectedSlotCount + crntSelCount > maxSlotSelection) {
+                return true;
+            } else {
+                selectedSlotCount += crntSelCount;
             }
         }
-
-
-    ];
-    dp.onBeforeEventRender = function (args) {
-        if (args.data.tags && args.data.tags.type === "important") {
-            args.data.html = "<b>Important Event</b><br>" + args.data.text;
-            args.data.fontColor = "#fff";
-            args.data.backColor = "#E06666";
-        }
-    };
-
-    dp.init();
-
-    var e = new DayPilot.Event({
-        start: new DayPilot.Date("2018-12-26T12:00:00"),
-        end: new DayPilot.Date("2018-12-26T14:00:00").addHours(3),
-        id: DayPilot.guid(),
-        text: "Special event",
-        cssClass: 'booked',
-        resizeDisabled: true,
-        moveDisabled: true,
-        deleteDisabled: true,
-        clickDisabled: true,
-        barHidden: true
-
-    });
-    dp.events.add(e);
-
-    $('input[name="radio-choice-a"]').change(function () {
-        var val = $(this).val();
-
-        dp.viewType = val;
-        dp.update();
-
-
-    });
-
-
-
-    Date.prototype.addDays = function (days) {
-        var date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-    }
-
-    $('#next').click(function () {
-        if (dp.viewType === "Week") {
-            dp.startDate = dp.startDate.addDays(+7);
-            dp.update();
-        } else {
-            prevAppointmentDays = dp.viewTypeCustomDateArray;
-            dp.viewTypeCustomDateArray = nextAppointmentDays;
-            nextAppointmentDays = GenerateRandomArray('next');
-            dp.update();
-        }
-    });
-    $('#prev').click(function () {
-        if (dp.viewType === "Week") {
-            dp.startDate = dp.startDate.addDays(-7);
-            dp.update();
-        } else {
-            nextAppointmentDays = dp.viewTypeCustomDateArray;
-            dp.viewTypeCustomDateArray = prevAppointmentDays;
-            prevAppointmentDays = GenerateRandomArray('prev');
-            dp.update();
-        }
-    });
-
-
-
-    $('#nxt_btn').click(function (e) {
+        
+        
+     $('#nxt_btn').click(function (e) {
         $('#error-text').removeClass('error').text("");
 
         if (selectedSlotCount < 1) {
@@ -342,8 +386,88 @@
 
     });
 
+    }
 
-    $(document).ready(function () {
+
+    var e = new DayPilot.Event({
+        start: new DayPilot.Date("2018-12-26T12:00:00"),
+        end: new DayPilot.Date("2018-12-26T14:00:00").addHours(3),
+        id: DayPilot.guid(),
+        text: "Special event",
+        cssClass: 'booked',
+        resizeDisabled: true,
+        moveDisabled: true,
+        deleteDisabled: true,
+        clickDisabled: true,
+        barHidden: true
+
+    });
+    dp.events.add(e);
+
+//    $('input[name="radio-choice-a"]').change(function () {
+//        var val = $(this).val();
+//
+//        dp.viewType = val;
+//        dp.update();
+//
+//
+//    });
+
+
+    Date.prototype.addDays = function (days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+
+//    $('#next').click(function () {
+//        if (dp.viewType === "Week") {
+//            dp.startDate = dp.startDate.addDays(+7);
+//            dp.update();
+//        } else {
+//            prevAppointmentDays = dp.viewTypeCustomDateArray;
+//            dp.viewTypeCustomDateArray = nextAppointmentDays;
+//            nextAppointmentDays = GenerateRandomArray('next');
+//            dp.update();
+//        }
+//    });
+//    $('#prev').click(function () {
+//        if (dp.viewType === "Week") {
+//            dp.startDate = dp.startDate.addDays(-7);
+//            dp.update();
+//        } else {
+//            nextAppointmentDays = dp.viewTypeCustomDateArray;
+//            dp.viewTypeCustomDateArray = prevAppointmentDays;
+//            prevAppointmentDays = GenerateRandomArray('prev');
+//            dp.update();
+//        }
+//    });
+
+
+
+   
+
+
+
+
+
+
+
+    function formatDate(date) {
+        var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+ $(document).ready(function () {
         // is events already selected get it from session
         updateSelEvents();
         function updateSelEvents() {
@@ -378,28 +502,28 @@
 
         $('#sum-text').text(sumtxt.join(', '));
 
+         $('#nxt_btn').click(function (e) {
+        $('#error-text').removeClass('error').text("");
 
-
-    })
-
-
-
-    var getSelectedSlotsCount = function getSelectedSlotsCount(start, end) {
-
-        return ((new Date(end) - new Date(start)) / (1000 * 60)) / dp.slotDurationInMin;
-
-    }
-
-    var checkMaxSlotsCountExceed = function checkMaxSlotsCountExceed(start, end) {
-        var crntSelCount = getSelectedSlotsCount(start, end);
-        if (selectedSlotCount + crntSelCount > maxSlotSelection) {
-            return true;
+        if (selectedSlotCount < 1) {
+            e.preventDefault();
+            $('#error-text').addClass('error').text("Please select a slot to continue");
         } else {
-            selectedSlotCount += crntSelCount;
+
+            for (var i = 0; i < dp.events.list.length; i++) {
+                if (dp.events.list[i].tags !== undefined && dp.events.list[i].tags.type === "new") {
+                    myEvents.push(dp.events.list[i]);
+                }
+            }
+            // save the events on session
+            setEvents(myEvents);
+
+            $('#form1').submit();
         }
-    }
 
+    });
 
+    });
 
 </script>
 

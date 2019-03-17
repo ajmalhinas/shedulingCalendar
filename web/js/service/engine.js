@@ -224,13 +224,13 @@ dwr.engine.setPollType = function() { dwr.engine._debug("Manually setting the Po
 //==============================================================================
 
 /** The original page id sent from the server */
-dwr.engine._origScriptSessionId = "591297DAA1099297F1DD94799B66408F";
+dwr.engine._origScriptSessionId = "571421AC6112EEB23E07525BEBA7E226";
 
 /** The session cookie name */
 dwr.engine._sessionCookieName = "JSESSIONID"; // JSESSIONID
 
 /** Is GET enabled for the benefit of Safari? */
-dwr.engine._allowGetForSafariButMakeForgeryEasier = "false";
+dwr.engine._allowGetForSafariButMakeForgeryEasier = "true";
 
 /** The script prefix to strip in the case of scriptTagProtection. */
 dwr.engine._scriptTagProtection = "throw 'allowScriptTagRemoting is false.';";
@@ -1327,4 +1327,3 @@ dwr.engine._debug = function(message, stacktrace) {
     }
   }
 };
-

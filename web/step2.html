@@ -154,7 +154,9 @@
         if(allSsns.length === 0){
             dp.viewTypeCustomDateArray = [];
         }else if(allSsns.length < viewCount){
-            dp.viewTypeCustomDateArray = allSsns.splice(0,allSsns.length)
+            dp.viewTypeCustomDateArray = allSsns.splice(0,allSsns.length);
+            
+            SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0],dp.viewTypeCustomDateArray[allSsns.length - 1] , 1, 1, replyApmtList);
         }else{
             if(allSsns.length > viewCount)
                     $('#next').show();
@@ -169,9 +171,37 @@
 
             $('#next').attr('href',nurl);
             dp.viewTypeCustomDateArray = allSsns.splice(0,viewCount);
-            
+            SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0],dp.viewTypeCustomDateArray[viewCount - 1] , 1, 1, replyApmtList);
+
         }
         
+    }
+    
+    var replyApmtList = function(data){
+        
+        if (data != null && typeof data == 'object'){
+            console.log(data);
+            $.each(data, function (i, v){
+                var e = new DayPilot.Event({
+                    start: new DayPilot.Date(formatDate(v.ssn.dat)+"T"+formatTime(v.start)),
+                    end: new DayPilot.Date(formatDate(v.ssn.dat)+"T"+formatTime(v.end)),
+                    id: DayPilot.guid(),
+                    text: "Already Booked",
+                    cssClass: 'booked',
+                    backColor: "#EA9999",
+                    borderColor: "#CC0000",
+                    resizeDisabled: true,
+                    moveDisabled: true,
+                    deleteDisabled: true,
+                    clickDisabled: true,
+                    barHidden: true,
+                    fontColor : "#fff",
+                    backColor : "#E06666"
+                });
+                    dp.events.add(e);
+            });
+        }else
+            dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
     }
     // calendar js
     var replySSNList = function (data)
@@ -383,7 +413,7 @@
         ];
         dp.onBeforeEventRender = function (args) {
             if (args.data.tags && args.data.tags.type === "important") {
-                args.data.html = "<b>Important Event</b><br>" + args.data.text;
+                args.data.html = "<b>Already Booked</b><br>" + args.data.text;
                 args.data.fontColor = "#fff";
                 args.data.backColor = "#E06666";
             }
@@ -492,7 +522,19 @@
 
 
 
-
+function formatTime(tTime){
+    var d = new Date(tTime),
+                hours = '' + (d.getHours()),
+                mins = '' + d.getMinutes(),
+                seconts = ''+d.getSeconds();
+        if (hours.length < 2)
+            hours = '0' + hours;
+        if (mins.length < 2)
+            mins = '0' + mins;
+        if (seconts.length < 2)
+            seconts = '0' + seconts;
+        return [hours, mins, seconts].join('-');
+}
 
 
     function formatDate(date) {

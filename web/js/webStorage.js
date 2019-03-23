@@ -3,7 +3,7 @@ var getSrchItems = (function () {
 
 
     return function () {
-        var srchItems = {fcr: '', spc: '', fcy: '', loc: '', fm_date: '', to_date: ''};
+        var srchItems = { spc: '', fcy: '', loc: '', fm_date: '', to_date: ''};
         if (typeof (Storage) !== "undefined") {
             if (sessionStorage.srchItems !== undefined && sessionStorage.srchItems !== "undefined" && sessionStorage.srchItems !== "{}") {
                 srchItems = JSON.parse(sessionStorage.srchItems);

@@ -70,15 +70,22 @@
                 <form action="step2.html" data-ajax="false" id="form1">
                     
                     <div class="ui-field-contain">
+                        <label  for="loc-menu" name="loc-menu">Location:</label>
+                        
+                        <input class="com_fld" type="text" id="loc-menu" name="loc_menu" placeholder="Search" autocomplete="off">
+                        <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-loc" data-role="listview" data-inset="true"></ul>
+
+                    </div>
+<!--                    <div class="ui-field-contain">
                         <label for="fcr-menu">Facilitator:</label>
                        
                         <input class="com_fld" type="text" id="fcr-menu" name="fcr_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions" data-role="listview" data-inset="true"></ul>
 
-                    </div>
+                    </div>-->
 
                     <div class="ui-field-contain">
-                        <label for="spc-menu">Speciality:</label>
+                        <label for="spc-menu">Service Type:</label>
                        
                         <input class="com_fld" type="text" id="spc-menu" name="spc_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-spc" data-role="listview" data-inset="true"></ul>
@@ -94,13 +101,7 @@
                     </div>
 
 
-                    <div class="ui-field-contain">
-                        <label  for="loc-menu" name="loc-menu">Location:</label>
-                        
-                        <input class="com_fld" type="text" id="loc-menu" name="loc_menu" placeholder="Search" autocomplete="off">
-                        <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-loc" data-role="listview" data-inset="true"></ul>
-
-                    </div>
+                  
                     <div class="ui-field-contain">
                         <label for="fm-date">From Date:</label>
                         <input type="text" name="fm-date" id="fm_date" autocomplete="off" data-role="date">
@@ -135,26 +136,27 @@
                  
                 $('#nxt_btn').click(function(){
                     if($('#form1').valid()){
-                        setSrchItems($('#fcr-menu').val(),$('#spc-menu').val(),$('#fcy-menu').val(),$('#loc-menu').val(),$('#fm_date').val(),$('#to_date').val() );
+                        setSrchItems($('#spc-menu').val(),$('#fcy-menu').val(),$('#loc-menu').val(),$('#fm_date').val(),$('#to_date').val() );
                         $('#form1').submit();
                     }
                 });
                 updateOldValues();
                 function updateOldValues(){
                     var srchObj = getSrchItems();
-                    $('#fcr-menu').val(srchObj.fcr);$('#spc-menu').val(srchObj.spc);
+                   // $('#fcr-menu').val(srchObj.fcr);
+                    $('#spc-menu').val(srchObj.spc);
                     $('#fcy-menu').val(srchObj.fcy);$('#loc-menu').val(srchObj.loc);
                     $('#fm_date').val(srchObj.fm_date);$('#to_date').val(srchObj.to_date);
                     
                 }
                 $("#form1").validate({
                     groups: {
-                        names: "fcr_menu spc_menu fcy_menu loc_menu"
+                        names: "spc_menu fcy_menu loc_menu"
                     },
                     rules: {
-                        fcr_menu: {
-                            require_from_group: [1, ".com_fld"]
-                        },
+//                        fcr_menu: {
+//                            require_from_group: [1, ".com_fld"]
+//                        },
                         spc_menu: {
                             require_from_group: [1, ".com_fld"]
                         },
@@ -212,7 +214,7 @@
         return isValid;
     }, $.validator.format("Please fill at least {0} of these fields."));
 
-                showSuggestionList('#fcr-menu', '#suggestions', fcls);
+                //showSuggestionList('#fcr-menu', '#suggestions', fcls);
                 showSuggestionList('#spc-menu', '#suggestions-spc', sps);
                 showSuggestionList('#fcy-menu', '#suggestions-fcy', fys);
                 showSuggestionList('#loc-menu', '#suggestions-loc', los);
@@ -277,7 +279,7 @@ var replyFac = function(data)
             //var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
             
     
-    SchedulerService.getAllFacilitators(replyFac);
+   // SchedulerService.getAllFacilitators(replyFac);
     SchedulerService.getAllSpecialities(replySps);
     SchedulerService.getAllFacilities(replyFys);
     SchedulerService.getAllLocalities(replyLoc);

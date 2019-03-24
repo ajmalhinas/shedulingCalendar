@@ -227,16 +227,7 @@
                 });
 
             });
-var replyFac = function(data)
-    {
-      if (data != null && typeof data == 'object') {
-          //console.log(data);
-          $.each(data,function(i,v){
-              fcls.push({name: v.name,id:v.id});
-          })
-      }
-      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
-    }
+
     var replySps = function(data)
     {
       if (data != null && typeof data == 'object') {

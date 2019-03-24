@@ -119,7 +119,7 @@
                 <label id="error-text" class=""></div>
             <form action="step3.html" data-ajax="false" id="form1">
                 <p style="text-align: right">
-                    <a class="ui-input-btn" href="index.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
+                    <a class="ui-input-btn" href="index.html" data-ajax="false" data-role="button" data-inline="true" >BACK</a>
 
                     <input id="nxt_btn" type="button" data-role="button" data-inline="true" data-theme="b" value="NEXT"/>
 
@@ -162,6 +162,7 @@
                                     var fr = url.searchParams.get("fr");
                                     if (fr === null || fr === "") {
                                         $('#fcr-menu').val(fcls[0].id);
+                                        fr = fcls[0].id;
                                     } else {
                                         $('#fcr-menu').val(fr);
                                     }
@@ -175,7 +176,7 @@
                             if (c === null || c === '') {
                                 c = formatDate(new Date());
                             }
-                            
+                            //alert(fr);
                             SchedulerService.getAllSsns(formatDate(new Date()), c, 1, fr , replySSNList);
                                     
                                 } else

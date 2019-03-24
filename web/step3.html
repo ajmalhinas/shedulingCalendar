@@ -130,8 +130,10 @@
                 });
                 var sumtxt = [];
                 var srchObj = getSrchItems();
-                if (srchObj.fcr !== '') {
-                    sumtxt.push(srchObj.fcr);
+                var fcrObj = getFacrDetails();
+                
+                if (fcrObj !== '') {
+                    sumtxt.push(fcrObj.name);
                 }
                 if (srchObj.spc !== '') {
                     sumtxt.push(srchObj.spc);

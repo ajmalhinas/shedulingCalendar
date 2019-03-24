@@ -142,3 +142,34 @@ var destroySession = (function () {
 
     }
 })();
+
+var setFacrDetails = (function () {
+
+    return function (facrdetails) {
+
+        if (typeof (Storage) !== "undefined") {
+
+            sessionStorage.FacrDetails = JSON.stringify(facrdetails);
+
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        return facrdetails;
+    }
+})();
+
+var getFacrDetails = (function () {
+    return function () {
+        var facrdetails = {};
+        if (typeof (Storage) !== "undefined") {
+            if (sessionStorage.FacrDetails !== undefined && sessionStorage.FacrDetails !== "undefined" && sessionStorage.FacrDetails !== "{}") {
+                facrdetails = JSON.parse(sessionStorage.FacrDetails);
+
+            }
+            sessionStorage.FacrDetails = JSON.stringify(facrdetails);
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        return facrdetails;
+    }
+})();

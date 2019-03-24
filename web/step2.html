@@ -166,7 +166,12 @@
                                     } else {
                                         $('#fcr-menu').val(fr);
                                     }
-
+                                    function findSelFcr(fcrEle) {
+                                        return fcrEle.id == fr;
+                                      }
+                                    var Sfcr = fcls.find(findSelFcr) ;
+                                    setFacrDetails(Sfcr);
+                                    //alert(Sfcr)
 
                                     $('#fcr-menu').selectmenu('refresh');
                                     
@@ -465,7 +470,7 @@ var mySelEvents = [];
                                 }
 
                                 dp.onEventClick = function (args) {
-                                    alert("clicked: " + args.e.id());
+                                   // alert("clicked: " + args.e.id());
                                 };
 
 // is events already selected get it from session
@@ -557,6 +562,7 @@ var mySelEvents = [];
                                         }
                                         // save the events on session
                                         setEvents(mySelEvents);
+                                        
 
                                         $('#form1').submit();
                                     }

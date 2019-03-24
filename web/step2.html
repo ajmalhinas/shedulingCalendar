@@ -191,22 +191,7 @@
                                 window.location.href = url;
                             })
                             SchedulerService.getAllFacilitators(replyFac)
-                            // is events already selected get it from session
-                            // updateSelEvents();
-                            function updateSelEvents() {
-                                var events = getSelEvents();
-
-                                $.each(events, function (i, ele) {
-                                    //checkMaxSlotsCountExceed(ele.start, ele.end);
-                                    dp.events.add(new DayPilot.Event({
-                                        start: new DayPilot.Date(ele.start),
-                                        end: new DayPilot.Date(ele.end),
-                                        id: ele.id,
-                                        text: ele.text,
-                                        "tags": ele.tags
-                                    }));
-                                })
-                            }
+                            
 
                             var sumtxt = [];
                             var srchObj = getSrchItems();
@@ -226,26 +211,7 @@
 
                             $('#sum-text').text(sumtxt.join(', '));
 
-                            $('#nxt_btn').click(function (e) {
-                                $('#error-text').removeClass('error').text("");
 
-                                if (selectedSlotCount < 1) {
-                                    e.preventDefault();
-                                    $('#error-text').addClass('error').text("Please select a slot to continue");
-                                } else {
-
-                                    for (var i = 0; i < dp.events.list.length; i++) {
-                                        if (dp.events.list[i].tags !== undefined && dp.events.list[i].tags.type === "new") {
-                                            myEvents.push(dp.events.list[i]);
-                                        }
-                                    }
-                                    // save the events on session
-                                    setEvents(myEvents);
-
-                                    $('#form1').submit();
-                                }
-
-                            });
 
                             var viewCount = 3;
                             var dp = new DayPilot.Calendar("dp");
@@ -344,6 +310,7 @@
                                     RefreshTheCalendar();
                                     if (data.length > 0) {
                                         dpinit();
+                                        
                                     } else {
                                         alert('No appointments details found')
                                     }
@@ -391,7 +358,7 @@
                             }
 
                             
-
+var mySelEvents = [];
                             function dpinit() {
                                 selectedSlotCount = 0;
 
@@ -412,7 +379,7 @@
                                 //dp.rtl = true;
                                 //dp.locale = "ar-ae";
                                 var maxSlotSelection = 2;
-                                myEvents = [];
+                                
 
                                 var getSelectedSlotsCount = function getSelectedSlotsCount(start, end) {
 
@@ -453,8 +420,13 @@
                                         end: args.end,
                                         id: DayPilot.guid(),
                                         text: name,
+                                        backColor: "#FFE599",
+                                        borderColor: "#F1C232",
+                                        resizeDisabled: true,
+                                        moveDisabled: true,
                                         "tags": {
-                                            "type": "new"
+                                            "type": "new"  
+                                            
                                         }
                                     });
 
@@ -496,9 +468,28 @@
                                     alert("clicked: " + args.e.id());
                                 };
 
+// is events already selected get it from session
+                            // updateSelEvents();
+                            function updateSelEvents() {
+                                var events = getSelEvents();
 
+                                $.each(events, function (i, ele) {
+                                    checkMaxSlotsCountExceed(ele.start, ele.end);
+                                    dp.events.add(new DayPilot.Event({
+                                        start: new DayPilot.Date(ele.start),
+                                        end: new DayPilot.Date(ele.end),
+                                        backColor: "#FFE599",
+                                        borderColor: "#F1C232",
+                                        id: ele.id,
+                                        resizeDisabled: true,
+                                        moveDisabled: true,
+                                        text: ele.text,
+                                        "tags": ele.tags
+                                    }));
+                                })
+                            }
 
-
+                                //
                                 dp.events.list = [
                                     {
                                         "start": "2018-12-25T10:00:00",
@@ -548,8 +539,8 @@
 
                                 dp.init();
 
-
-
+                                // updated selected events
+                                updateSelEvents();
 
                                 $('#nxt_btn').click(function (e) {
                                     $('#error-text').removeClass('error').text("");
@@ -561,11 +552,11 @@
 
                                         for (var i = 0; i < dp.events.list.length; i++) {
                                             if (dp.events.list[i].tags !== undefined && dp.events.list[i].tags.type === "new") {
-                                                myEvents.push(dp.events.list[i]);
+                                                mySelEvents.push(dp.events.list[i]);
                                             }
                                         }
                                         // save the events on session
-                                        setEvents(myEvents);
+                                        setEvents(mySelEvents);
 
                                         $('#form1').submit();
                                     }

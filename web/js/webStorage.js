@@ -3,7 +3,7 @@ var getSrchItems = (function () {
 
 
     return function () {
-        var srchItems = { spc: '', fcy: '', loc: '', fm_date: '', to_date: ''};
+        var srchItems = { spc: '', fcy: '', loc: '', fm_date: '', to_date: '', fcy_id: ''};
         if (typeof (Storage) !== "undefined") {
             if (sessionStorage.srchItems !== undefined && sessionStorage.srchItems !== "undefined" && sessionStorage.srchItems !== "{}") {
                 srchItems = JSON.parse(sessionStorage.srchItems);
@@ -19,9 +19,9 @@ var getSrchItems = (function () {
 
 var setSrchItems = (function () {
 
-    return function ( spc_menu, fcy_menu, loc_menu, fm_date, to_date) {
+    return function ( spc_menu, fcy_menu, loc_menu, fm_date, to_date,fcy_id) {
 
-        var srchItems = { spc: spc_menu, fcy: fcy_menu, loc: loc_menu, fm_date: fm_date, to_date: to_date};
+        var srchItems = { spc: spc_menu, fcy: fcy_menu, loc: loc_menu, fm_date: fm_date, to_date: to_date,fcy_id: fcy_id};
         if (typeof (Storage) !== "undefined") {
 
             sessionStorage.srchItems = JSON.stringify(srchItems);

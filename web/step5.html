@@ -121,10 +121,11 @@
             $(document).ready(function () {
                 var sumtxt = [];
                 var srchObj = getSrchItems();
-                if (srchObj.fcr !== '') {
-
-                    $('#facname').text(srchObj.fcr);
+                var fcrObj = getFacrDetails();
+                if (fcrObj !== null) {
+                     $('#facname').text(fcrObj.name);
                 }
+                
                 if (srchObj.spc !== '') {
 
                     $('#specty').text(srchObj.spc);

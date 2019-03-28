@@ -132,14 +132,100 @@
         <script>
 
             $(document).ready(function () {
-                
+                  var replySps = function(data)
+    {
+      if (data != null && typeof data == 'object') {
+          //console.log(data);
+          $.each(data,function(i,v){
+              sps.push({name: v.name,id:v.id});
+          })
+      }
+      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
+    }
+    
+    var replyFys = function(data)
+    {
+      if (data != null && typeof data == 'object') {
+          //console.log(data);
+          $.each(data,function(i,v){
+              fys.push({name: v.name,id:v.id});
+          })
+      }
+      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
+    }
+    
+    var replyLoc = function(data)
+    {
+      if (data != null && typeof data == 'object') {
+          //console.log(data);
+          $.each(data,function(i,v){
+              los.push({name: v.name,id:v.id});
+          })
+      }
+      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
+    }
+    var fcls =[];
+    var sps = [];
+    var fys = [];
+    var los = [];
+            //var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
+            //var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
+            //var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
+            //var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
+            
+    
+   // SchedulerService.getAllFacilitators(replyFac);
+    SchedulerService.getAllSpecialities(replySps);
+    SchedulerService.getAllFacilities(replyFys);
+    SchedulerService.getAllLocalities(replyLoc);
+            //LoadDropDown(fcls, "#fcr-menu", true);
+            //LoadDropDown(sps, "#spc-menu", true);
+            //LoadDropDown(fys, "#fcy-menu", true);
+            //LoadDropDown(los, "#loc-menu", true);
+
+   
+  
+
+            function showSuggestionList(searchField, suggestions, result) {
+                var sugList = $(suggestions);
+                var pos = $(searchField).position();
+                sugList.css('top', pos.top + 29).css('left', pos.left);
+                $(searchField).on("input", function (e) {
+                    var text = $(this).val();
+                    if (text.length < 1) {
+                        sugList.html("");
+                        sugList.listview("refresh");
+                    } else {
+                        var filres = [];
+                        $.each(result, function (i, v) {
+                            if (v.name.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
+                                filres.push(v);
+                            }
+                        })
+                        var str = "";
+                        for (var i = 0, len = filres.length; i < len; i++) {
+                            str += "<li class='sug-ele' data-search=" + searchField + " data-val='" + filres[i].name + "'><a href='javascript:void(0)'>" + filres[i].name + "</a></li>";
+                        }
+                        sugList.html(str);
+                        sugList.listview("refresh");
+                        //console.dir(res);
+
+                    }
+                });
+
+
+            }
                  
                 $('#nxt_btn').click(function(){
                     if($('#form1').valid()){
-                        setSrchItems($('#spc-menu').val(),$('#fcy-menu').val(),$('#loc-menu').val(),$('#fm_date').val(),$('#to_date').val() );
+                        setSrchItems($('#spc-menu').val(),$('#fcy-menu').val(),$('#loc-menu').val(),$('#fm_date').val(),$('#to_date').val(), fys.find(findSelFcy).id );
                         $('#form1').submit();
                     }
                 });
+                
+                function findSelFcy(fcyEle) {
+                                        return fcyEle.name === $('#fcy-menu').val();
+                                      }
                 updateOldValues();
                 function updateOldValues(){
                     var srchObj = getSrchItems();
@@ -225,92 +311,13 @@
                     sugList.html("");
                     sugList.listview("refresh");
                 });
+                
+                
+               
 
             });
 
-    var replySps = function(data)
-    {
-      if (data != null && typeof data == 'object') {
-          //console.log(data);
-          $.each(data,function(i,v){
-              sps.push({name: v.name,id:v.id});
-          })
-      }
-      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
-    }
-    
-    var replyFys = function(data)
-    {
-      if (data != null && typeof data == 'object') {
-          //console.log(data);
-          $.each(data,function(i,v){
-              fys.push({name: v.name,id:v.id});
-          })
-      }
-      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
-    }
-    
-    var replyLoc = function(data)
-    {
-      if (data != null && typeof data == 'object') {
-          //console.log(data);
-          $.each(data,function(i,v){
-              los.push({name: v.name,id:v.id});
-          })
-      }
-      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
-    }
-    var fcls =[];
-    var sps = [];
-    var fys = [];
-    var los = [];
-            //var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
-            //var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
-            //var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
-            //var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
-            
-    
-   // SchedulerService.getAllFacilitators(replyFac);
-    SchedulerService.getAllSpecialities(replySps);
-    SchedulerService.getAllFacilities(replyFys);
-    SchedulerService.getAllLocalities(replyLoc);
-            //LoadDropDown(fcls, "#fcr-menu", true);
-            //LoadDropDown(sps, "#spc-menu", true);
-            //LoadDropDown(fys, "#fcy-menu", true);
-            //LoadDropDown(los, "#loc-menu", true);
-
    
-  
-
-            function showSuggestionList(searchField, suggestions, result) {
-                var sugList = $(suggestions);
-                var pos = $(searchField).position();
-                sugList.css('top', pos.top + 29).css('left', pos.left);
-                $(searchField).on("input", function (e) {
-                    var text = $(this).val();
-                    if (text.length < 1) {
-                        sugList.html("");
-                        sugList.listview("refresh");
-                    } else {
-                        var filres = [];
-                        $.each(result, function (i, v) {
-                            if (v.name.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
-                                filres.push(v);
-                            }
-                        })
-                        var str = "";
-                        for (var i = 0, len = filres.length; i < len; i++) {
-                            str += "<li class='sug-ele' data-search=" + searchField + " data-val='" + filres[i].name + "'><a href='javascript:void(0)'>" + filres[i].name + "</a></li>";
-                        }
-                        sugList.html(str);
-                        sugList.listview("refresh");
-                        //console.dir(res);
-
-                    }
-                });
-
-
-            }
 
 
 

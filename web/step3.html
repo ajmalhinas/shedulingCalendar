@@ -141,9 +141,21 @@
             var strDate = events[0].start.substring(0, 10).replace(/-/gi, "/");
             //var apntr = {"name": "gfd fs", "phone": "0763138791", "email": "abc@gmail.com", "qid": ""};
                         
-                        SchedulerService.lockApmt2(strDate, apmt, fcyid, fcrid, user)
+                        SchedulerService.lockApmt2(strDate, apmt, fcyid, fcrid, user, AfterLockApmt)
                     }
                 });
+                
+                  var AfterLockApmt = function (data)
+                            {
+                                console.log(data);
+                                   // alert(data)
+                                   setApmtDetails(data);
+                                if (data !== null) {
+                                    window.location.href='/shedulingCalendar/step4.html';
+                            }
+                        }
+                
+                
                 var sumtxt = [];
                 var fcrid = 0;
                 var fcyid = 0;

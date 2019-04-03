@@ -16,11 +16,20 @@ else
 SchedulerService.getDate = function(p0, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getDate', p0, callback);
 }
+SchedulerService.getServices = function(p0, callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getServices', p0, callback);
+}
+SchedulerService.getAllFacilitators = function(callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getAllFacilitators', callback);
+}
+SchedulerService.getAllSpecialities = function(callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getAllSpecialities', callback);
+}
+SchedulerService.updatePaypalResponse = function(p0, p1, callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'updatePaypalResponse', p0, p1, callback);
+}
 SchedulerService.createSsn = function(p0, p1, p2, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'createSsn', p0, p1, p2, callback);
-}
-SchedulerService.lockApmt = function(p0, p1, p2, callback) {
-  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'lockApmt', p0, p1, p2, callback);
 }
 SchedulerService.lockApmt1 = function(p0, p1, p2, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'lockApmt1', p0, p1, p2, callback);
@@ -33,6 +42,9 @@ SchedulerService.confirmApmt = function(p0, p1, callback) {
 }
 SchedulerService.updateApmt = function(p0, p1, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'updateApmt', p0, p1, callback);
+}
+SchedulerService.updateApmt2 = function(p0, callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'updateApmt2', p0, callback);
 }
 SchedulerService.cancelApmt = function(p0, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'cancelApmt', p0, callback);
@@ -60,10 +72,4 @@ SchedulerService.getAllSsns = function(p0, p1, p2, p3, callback) {
 }
 SchedulerService.addAppointer = function(p0, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'addAppointer', p0, callback);
-}
-SchedulerService.getAllFacilitators = function(callback) {
-  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getAllFacilitators', callback);
-}
-SchedulerService.getAllSpecialities = function(callback) {
-  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getAllSpecialities', callback);
 }

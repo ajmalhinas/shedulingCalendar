@@ -245,7 +245,7 @@
                                 } else if (allSsns.length < viewCount) {
                                     dp.viewTypeCustomDateArray = allSsns.splice(0, allSsns.length);
 
-                                    SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0], dp.viewTypeCustomDateArray[allSsns.length - 1], 1, $('#fcr-menu').val(), replyApmtList);
+                                    SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0], dp.viewTypeCustomDateArray[dp.viewTypeCustomDateArray.length - 1], 1, $('#fcr-menu').val(), replyApmtList);
                                 } else {
                                     if (allSsns.length > viewCount)
                                         $('#next').show();
@@ -271,13 +271,32 @@
                                 if (data != null && typeof data == 'object') {
                                     console.log(data);
                                     $.each(data, function (i, v) {
-                                        var e = new DayPilot.Event({
+                                        
+                                        if(v.stts === -1){
+                                            var e = new DayPilot.Event({
+                                            start: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.start)),
+                                            end: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.end)),
+                                            id: DayPilot.guid(),
+                                            text: "Locked",
+                                            cssClass: 'booked',
+                                            resizeDisabled: true,
+                                            moveDisabled: true,
+                                            deleteDisabled: true,
+                                            clickDisabled: true,
+                                            barHidden: true,
+                                            fontColor: "black",
+                                            backColor: "#FFE599",
+                                            borderColor: "#F1C232",
+                                        });
+                                        dp.events.add(e);
+                                        }else{
+                                            var e = new DayPilot.Event({
                                             start: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.start)),
                                             end: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.end)),
                                             id: DayPilot.guid(),
                                             text: "Already Booked",
                                             cssClass: 'booked',
-                                            backColor: "#EA9999",
+                                            
                                             borderColor: "#CC0000",
                                             resizeDisabled: true,
                                             moveDisabled: true,
@@ -288,6 +307,8 @@
                                             backColor: "#E06666"
                                         });
                                         dp.events.add(e);
+                                        }
+                                        
                                     });
                                 } else
                                     dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
@@ -425,8 +446,9 @@ var mySelEvents = [];
                                         end: args.end,
                                         id: DayPilot.guid(),
                                         text: name,
-                                        backColor: "#FFE599",
-                                        borderColor: "#F1C232",
+                                        backColor: "#9FC5E8",
+                                        borderColor: "#3D85C6",
+                                        
                                         resizeDisabled: true,
                                         moveDisabled: true,
                                         "tags": {
@@ -483,8 +505,8 @@ var mySelEvents = [];
                                     dp.events.add(new DayPilot.Event({
                                         start: new DayPilot.Date(ele.start),
                                         end: new DayPilot.Date(ele.end),
-                                        backColor: "#FFE599",
-                                        borderColor: "#F1C232",
+                                        backColor: "#9FC5E8",
+                                        borderColor: "#3D85C6",
                                         id: ele.id,
                                         resizeDisabled: true,
                                         moveDisabled: true,
@@ -659,7 +681,7 @@ var mySelEvents = [];
                                 if (day.length < 2)
                                     day = '0' + day;
 
-                                return [year, month, day].join('-');
+                                return [year, month, day].join('/');
                             }
 
 

@@ -135,6 +135,7 @@ var destroySession = (function () {
             sessionStorage.SelEvents = undefined;
             sessionStorage.UserDetails = undefined;
             sessionStorage.PayDetails = undefined;
+            sessionStorage.FacrDetails = undefined;
 
         } else {
             document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
@@ -171,5 +172,37 @@ var getFacrDetails = (function () {
             document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
         }
         return facrdetails;
+    }
+})();
+
+
+var setApmtDetails = (function () {
+
+    return function (apmtdetails) {
+
+        if (typeof (Storage) !== "undefined") {
+
+            sessionStorage.ApmtDetails = JSON.stringify(apmtdetails);
+
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        return apmtdetails;
+    }
+})();
+
+var getApmtDetails = (function () {
+    return function () {
+        var apmtdetails = {};
+        if (typeof (Storage) !== "undefined") {
+            if (sessionStorage.ApmtDetails !== undefined && sessionStorage.ApmtDetails !== "undefined" && sessionStorage.ApmtDetails !== "{}") {
+                apmtdetails = JSON.parse(sessionStorage.ApmtDetails);
+
+            }
+            sessionStorage.ApmtDetails = JSON.stringify(apmtdetails);
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        return apmtdetails;
     }
 })();

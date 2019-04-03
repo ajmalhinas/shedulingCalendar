@@ -62,37 +62,49 @@
                 </div>
 
 
-                <form action="step5.html" data-ajax="false" id="form1">
+                <div action="step5.html" data-ajax="false" id="form1">
                     <br/>
                     <h4 style='text-align: center;margin-top: 0px;margin-bottom: 0px;' id='sum-text'></h4>
 
                     <div class="ui-field-contain">
                         <label for="fcr-menu">Payment:</label>
-                        <span><b>QR. 5.00</b></span>
+                        <span><b>USD <span id="apmtAmt"></span></b></span>
                         <input type="hidden" name="payment" id="payment" value="5"/>
 
                     </div>
 
                     <div class="ui-field-contain">
 
-                        <fieldset data-role="controlgroup" data-type="horizontal" >
+                    <fieldset data-role="controlgroup" data-type="horizontal" >
                             <legend>Gateway:</legend>
+                            <!--    
                             <input  type="radio" name="gateway" id="radio-choice-h-2a" value="Visa">
                             <label for="radio-choice-h-2a">Visa</label>
                             <input  type="radio" name="gateway" id="radio-choice-h-2b" value="Master">
                             <label for="radio-choice-h-2b">Master</label>
                             <input  type="radio" name="gateway" id="radio-choice-h-2c" value="Amex">
-                            <label for="radio-choice-h-2c">Amex</label>
+                            <label for="radio-choice-h-2c">Amex</label>-->
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_xclick">
+ <input id="business" name="business" type="hidden" value="mamirfan92-facilitator@gmail.com">
+<input type="hidden" name="hosted_button_id" value="TJUKJMHPJAYW6">
+<input id="currency_code" name="currency_code" type="hidden" value="USD">
+<input id="amount" name="amount" type="hidden">
+<input id="item_name" name="item_name" type="hidden">
+<input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
                         </fieldset>
+
 
 
                     </div>
                     <label id="error-text" class=""></label>
                     <p style="text-align: right">
-                        <a class="ui-input-btn" href="step5.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
-                        <input type="submit" data-role="button" data-inline="true" data-theme="b" value="Pay"/></p>
+                   <!--       <a class="ui-input-btn" href="step5.html" data-ajax="false" data-role="button" data-inline="true" data-rel="back" >BACK</a>
+                      <input type="submit" data-role="button" data-inline="true" data-theme="b" value="Pay"/></p>-->
 
-                </form>
+                </div>
 
 
             </div><!-- /content -->
@@ -110,6 +122,12 @@
                 var sumtxt = [];
                 var srchObj = getSrchItems();
                 var fcrObj = getFacrDetails();
+                var apmtObj = getApmtDetails();
+                if (apmtObj !==  null && apmtObj !== ''){
+                    $('#apmtAmt').text(apmtObj.amt.toFixed(2));
+                    $('#amount').val(apmtObj.amt);
+                    $('#item_name').val(apmtObj.ref)
+                }
                 if (fcrObj !== null) {
                     sumtxt.push(fcrObj.name);
                 }

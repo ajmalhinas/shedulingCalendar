@@ -21,7 +21,7 @@
         <script src="Gritter/js/jquery.gritter.min.js" type="text/javascript"></script>
         <script src="js/webStorage.js" type="text/javascript"></script>
         <script src="js/service/SchedulerService.js" type="text/javascript"></script>
-               
+
         <script src="js/service/engine.js" type="text/javascript"></script>
 
         <script src="js/service/util.js" type="text/javascript"></script>
@@ -33,9 +33,9 @@
         <div data-role="page" id="one">
             <div data-role="navbar" data-grid="d">
             </div><!-- /navbar -->
-<!--            <div data-theme="b" data-role="header">
-                <h4>Channeling System</h4>
-            </div> /header -->
+            <!--            <div data-theme="b" data-role="header">
+                            <h4>Channeling System</h4>
+                        </div> /header -->
 
             <div role="main" class="ui-content">
                 <div class="stepwizard">
@@ -68,25 +68,25 @@
 
 
                 <form action="step2.html" data-ajax="false" id="form1">
-                    
+
                     <div class="ui-field-contain">
                         <label  for="loc-menu" name="loc-menu">Location:</label>
-                        
+
                         <input class="com_fld" type="text" id="loc-menu" name="loc_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-loc" data-role="listview" data-inset="true"></ul>
 
                     </div>
-<!--                    <div class="ui-field-contain">
-                        <label for="fcr-menu">Facilitator:</label>
-                       
-                        <input class="com_fld" type="text" id="fcr-menu" name="fcr_menu" placeholder="Search" autocomplete="off">
-                        <ul class="ui-popup-container pop in ui-popup-active" id="suggestions" data-role="listview" data-inset="true"></ul>
-
-                    </div>-->
+                    <!--                    <div class="ui-field-contain">
+                                            <label for="fcr-menu">Facilitator:</label>
+                                           
+                                            <input class="com_fld" type="text" id="fcr-menu" name="fcr_menu" placeholder="Search" autocomplete="off">
+                                            <ul class="ui-popup-container pop in ui-popup-active" id="suggestions" data-role="listview" data-inset="true"></ul>
+                    
+                                        </div>-->
 
                     <div class="ui-field-contain">
                         <label for="spc-menu">Service Type:</label>
-                       
+
                         <input class="com_fld" type="text" id="spc-menu" name="spc_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-spc" data-role="listview" data-inset="true"></ul>
 
@@ -94,14 +94,14 @@
 
                     <div class="ui-field-contain">
                         <label for="fcy-menu">Facility:</label>
-                        
+
                         <input class="com_fld" type="text" id="fcy-menu" name="fcy_menu" placeholder="Search" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-fcy" data-role="listview" data-inset="true"></ul>
 
                     </div>
 
 
-                  
+
                     <div class="ui-field-contain">
                         <label for="fm-date">From Date:</label>
                         <input type="text" name="fm-date" id="fm_date" autocomplete="off" data-role="date">
@@ -113,7 +113,7 @@
 
                     </div>
 
-<div id="error-text" class=""></div>
+                    <div id="error-text" class=""></div>
                     <p style="text-align: right">
                         <input type="reset" data-role="button" data-inline="true" value="RESET"/>
                         <input type="button" id="nxt_btn" data-role="button" data-inline="true" data-theme="b" value="NEXT"/></p>
@@ -123,117 +123,119 @@
 
             </div><!-- /content -->
 
-<!--            <div data-role="footer" data-theme="a">
-                <h4>Qatar International</h4>
-            </div> /footer -->
+            <!--            <div data-role="footer" data-theme="a">
+                            <h4>Qatar International</h4>
+                        </div> /footer -->
         </div><!-- /page one -->
 
         <script src="js/custom.js" type="text/javascript"></script>
         <script>
 
-            $(document).ready(function () {
-                  var replySps = function(data)
-    {
-      if (data != null && typeof data == 'object') {
-          //console.log(data);
-          $.each(data,function(i,v){
-              sps.push({name: v.name,id:v.id});
-          })
-      }
-      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
-    }
-    
-    var replyFys = function(data)
-    {
-      if (data != null && typeof data == 'object') {
-          //console.log(data);
-          $.each(data,function(i,v){
-              fys.push({name: v.name,id:v.id});
-          })
-      }
-      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
-    }
-    
-    var replyLoc = function(data)
-    {
-      if (data != null && typeof data == 'object') {
-          //console.log(data);
-          $.each(data,function(i,v){
-              los.push({name: v.name,id:v.id});
-          })
-      }
-      else dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
-    }
-    var fcls =[];
-    var sps = [];
-    var fys = [];
-    var los = [];
-            //var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
-            //var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
-            //var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
-            //var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
-            
-    
-   // SchedulerService.getAllFacilitators(replyFac);
-    SchedulerService.getAllSpecialities(replySps);
-    SchedulerService.getAllFacilities(replyFys);
-    SchedulerService.getAllLocalities(replyLoc);
-            //LoadDropDown(fcls, "#fcr-menu", true);
-            //LoadDropDown(sps, "#spc-menu", true);
-            //LoadDropDown(fys, "#fcy-menu", true);
-            //LoadDropDown(los, "#loc-menu", true);
-
-   
-  
-
-            function showSuggestionList(searchField, suggestions, result) {
-                var sugList = $(suggestions);
-                var pos = $(searchField).position();
-                sugList.css('top', pos.top + 29).css('left', pos.left);
-                $(searchField).on("input", function (e) {
-                    var text = $(this).val();
-                    if (text.length < 1) {
-                        sugList.html("");
-                        sugList.listview("refresh");
-                    } else {
-                        var filres = [];
-                        $.each(result, function (i, v) {
-                            if (v.name.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
-                                filres.push(v);
-                            }
+$(document).on('pageinit', function(){
+                var replySps = function (data)
+                {
+                    if (data != null && typeof data == 'object') {
+                        //console.log(data);
+                        $.each(data, function (i, v) {
+                            sps.push({name: v.name, id: v.id});
                         })
-                        var str = "";
-                        for (var i = 0, len = filres.length; i < len; i++) {
-                            str += "<li class='sug-ele' data-search=" + searchField + " data-val='" + filres[i].name + "'><a href='javascript:void(0)'>" + filres[i].name + "</a></li>";
+                    } else
+                        dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
+                }
+
+                var replyFys = function (data)
+                {
+                    if (data != null && typeof data == 'object') {
+                        //console.log(data);
+                        $.each(data, function (i, v) {
+                            fys.push({name: v.name, id: v.id});
+                        })
+                    } else
+                        dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
+                }
+
+                var replyLoc = function (data)
+                {
+                    if (data != null && typeof data == 'object') {
+                        //console.log(data);
+                        $.each(data, function (i, v) {
+                            los.push({name: v.name, id: v.id});
+                        })
+                    } else
+                        dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
+                }
+                var fcls = [];
+                var sps = [];
+                var fys = [];
+                var los = [];
+                //var fcls = [{name: 'Mohammed', id: '1'}, {name: 'Raasil', id: '2'}, {name: 'Abdurrahim', id: '3'}, {name: 'Aboobakr', id: '4'}];
+                //var sps = [{name: 'Cardiology', id: '1'}, {name: 'Neurology', id: '2'}, {name: 'Paediatrics', id: '3'}, {name: 'Radiology', id: '4'}];
+                //var fys = [{name: 'Al Emadi Hospital', id: '1'}, {name: 'American Hospital', id: '2'}, {name: 'Emergency Hospitals in Qatar', id: '3'}, {name: 'Hamad General Hospital', id: '4'}];
+                //var los = [{name: 'Al Shamal', id: '1'}, {name: 'Al Wakra', id: '2'}, {name: 'Doha', id: '3'}, {name: 'Umm Said', id: '4'}];
+
+
+                // SchedulerService.getAllFacilitators(replyFac);
+                SchedulerService.getAllSpecialities(replySps);
+                SchedulerService.getAllFacilities(replyFys);
+                SchedulerService.getAllLocalities(replyLoc);
+                //LoadDropDown(fcls, "#fcr-menu", true);
+                //LoadDropDown(sps, "#spc-menu", true);
+                //LoadDropDown(fys, "#fcy-menu", true);
+                //LoadDropDown(los, "#loc-menu", true);
+
+
+
+
+                function showSuggestionList(searchField, suggestions, result) {
+                    var sugList = $(suggestions);
+                    var pos = $(searchField).position();
+                    sugList.css('top', pos.top + 29).css('left', pos.left);
+                    $(searchField).on("input", function (e) {
+                        var text = $(this).val();
+                        if (text.length < 1) {
+                            sugList.html("");
+                            sugList.listview("refresh");
+                        } else {
+                            var filres = [];
+                            $.each(result, function (i, v) {
+                                if (v.name.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
+                                    filres.push(v);
+                                }
+                            })
+                            var str = "";
+                            for (var i = 0, len = filres.length; i < len; i++) {
+                                str += "<li class='sug-ele' data-search=" + searchField + " data-val='" + filres[i].name + "'><a href='javascript:void(0)'>" + filres[i].name + "</a></li>";
+                            }
+                            sugList.html(str);
+                            sugList.listview("refresh");
+                            //console.dir(res);
+
                         }
-                        sugList.html(str);
-                        sugList.listview("refresh");
-                        //console.dir(res);
-
-                    }
-                });
+                    });
 
 
-            }
-                 
-                $('#nxt_btn').click(function(){
-                    if($('#form1').valid()){
-                        setSrchItems($('#spc-menu').val(),$('#fcy-menu').val(),$('#loc-menu').val(),$('#fm_date').val(),$('#to_date').val(), fys.find(findSelFcy).id );
+                }
+
+                $('#nxt_btn').click(function () {
+                    if ($('#form1').valid()) {
+                        setSrchItems($('#spc-menu').val(), $('#fcy-menu').val(), $('#loc-menu').val(), $('#fm_date').val(), $('#to_date').val(), fys.find(findSelFcy).id);
                         $('#form1').submit();
                     }
                 });
-                
+
                 function findSelFcy(fcyEle) {
-                                        return fcyEle.name === $('#fcy-menu').val();
-                                      }
+                    return fcyEle.name === $('#fcy-menu').val();
+                }
                 updateOldValues();
-                function updateOldValues(){
+                function updateOldValues() {
                     var srchObj = getSrchItems();
-                   // $('#fcr-menu').val(srchObj.fcr);
+                    // $('#fcr-menu').val(srchObj.fcr);
                     $('#spc-menu').val(srchObj.spc);
-                    $('#fcy-menu').val(srchObj.fcy);$('#loc-menu').val(srchObj.loc);
-                    $('#fm_date').val(srchObj.fm_date);$('#to_date').val(srchObj.to_date);
-                    
+                    $('#fcy-menu').val(srchObj.fcy);
+                    $('#loc-menu').val(srchObj.loc);
+                    $('#fm_date').val(srchObj.fm_date);
+                    $('#to_date').val(srchObj.to_date);
+
                 }
                 $("#form1").validate({
                     groups: {
@@ -274,31 +276,31 @@
                     }
 
                 });
-                
+
                 var errorshowed = false;
 
-                
-    $.validator.addMethod("require_from_group", function (value, element, options) {
-        var $fields = $(options[1], element.form),
-            $fieldsFirst = $fields.eq(0),
-            validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : $.extend({}, this),
-            isValid = $fields.filter(function () {
-                return validator.elementValue(this);
-            }).length >= options[0];
 
-        // Store the cloned validator for future validation
-        $fieldsFirst.data("valid_req_grp", validator);
+                $.validator.addMethod("require_from_group", function (value, element, options) {
+                    var $fields = $(options[1], element.form),
+                            $fieldsFirst = $fields.eq(0),
+                            validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : $.extend({}, this),
+                            isValid = $fields.filter(function () {
+                                return validator.elementValue(this);
+                            }).length >= options[0];
 
-        // If element isn't being validated, run each require_from_group field's validation rules
-        if (!$(element).data("being_validated")) {
-            $fields.data("being_validated", true);
-            $fields.each(function () {
-                validator.element(this);
-            });
-            $fields.data("being_validated", false);
-        }
-        return isValid;
-    }, $.validator.format("Please fill at least {0} of these fields."));
+                    // Store the cloned validator for future validation
+                    $fieldsFirst.data("valid_req_grp", validator);
+
+                    // If element isn't being validated, run each require_from_group field's validation rules
+                    if (!$(element).data("being_validated")) {
+                        $fields.data("being_validated", true);
+                        $fields.each(function () {
+                            validator.element(this);
+                        });
+                        $fields.data("being_validated", false);
+                    }
+                    return isValid;
+                }, $.validator.format("Please fill at least {0} of these fields."));
 
                 //showSuggestionList('#fcr-menu', '#suggestions', fcls);
                 showSuggestionList('#spc-menu', '#suggestions-spc', sps);
@@ -311,13 +313,13 @@
                     sugList.html("");
                     sugList.listview("refresh");
                 });
-                
-                
-               
+
+
+
 
             });
 
-   
+
 
 
 

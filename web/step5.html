@@ -108,7 +108,7 @@
                 </table>
 
                 <p style="text-align: right">
-                    <a href="/shedulingCalendar" dat-ajax="false" id="thk_btn" data-role="button" data-inline="true" data-theme="b">Thank You</a></p>
+                    <a href="/shedulingCalendar/index.html" dat-ajax="false" id="thk_btn" data-role="button" data-inline="true" data-theme="b">Thank You</a></p>
 
 
 
@@ -142,7 +142,7 @@
                 {
                     console.log(data);
 
-
+ destroySession();
 //                    if (data !== null) {
 //                        window.location.href = '/shedulingCalendar/step4.html';
 //                    }
@@ -181,16 +181,16 @@
 
                 var user = getUserDetails();
                 $('#nme').text(user.name);
-                $('#umobile').text(user.mobile);
+                $('#umobile').text(user.phone);
                 $('#uemail').text(user.email);
-                $('#uqid').text(user.qid);
+                $('#uqid').text(user.nic);
 
 
 
                 var paydetails = getPayDetails();
-                $('#paydet').text(paydetails.pay + ', ' + paydetails.paytype);
+                $('#paydet').text(cc +' '+amt  + ', ' + st);
 
-                destroySession();
+               
             });
 
         </script>

@@ -88,12 +88,13 @@
 <input type="hidden" name="cmd" value="_xclick">
  <input id="business" name="business" type="hidden" value="mamirfan92-facilitator@gmail.com">
  <input id="return" name="return" type="hidden" value="http://mie.zapto.org:8080/shedulingCalendar/step5.html">
+<!-- <input id="return" name="return" type="hidden" value="http://localhost:8080/shedulingCalendar/step5.html">-->
 <input type="hidden" name="hosted_button_id" value="TJUKJMHPJAYW6">
 <input id="currency_code" name="currency_code" type="hidden" value="USD">
 <input id="amount" name="amount" type="hidden">
 <input id="item_name" name="item_name" type="hidden">
-<input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+<input type="submit" data-role="button" data-inline="true" data-theme="b" value="Checkout with PayPal" name="submit">
+<!--<img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
 </form>
                         </fieldset>
 
@@ -154,17 +155,17 @@
 
                 $('#sum-text').text(sumtxt.join(', ') + ' ( ' + eve_text.join(', ') + ' )');
 
-                $("input[type=submit]").click(function (e) {
-                    $('#error-text').removeClass('error').text("");
-
-                    if (!$('input:radio[name="gateway"]').is(':checked')) {
-                        e.preventDefault();
-                        $('#error-text').addClass('error').text("Please select the payment gateway");
-                    }else{
-                        var paydetails = {pay : $('#payment').val(), paytype: $('input:radio[name="gateway"]:checked').val() };
-                        setPayDetails(paydetails);
-                    }
-                });
+//                $("input[type=submit]").click(function (e) {
+//                    $('#error-text').removeClass('error').text("");
+//
+//                    if (!$('input:radio[name="gateway"]').is(':checked')) {
+//                        e.preventDefault();
+//                        $('#error-text').addClass('error').text("Please select the payment gateway");
+//                    }else{
+//                        var paydetails = {pay : $('#payment').val(), paytype: $('input:radio[name="gateway"]:checked').val() };
+//                        setPayDetails(paydetails);
+//                    }
+//                });
             });
 
         </script>

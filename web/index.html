@@ -27,10 +27,10 @@
         <script src="js/service/util.js" type="text/javascript"></script>
     </head>
 
-    <body>
+    <body data-role="page">
 
         <!-- Start of first page: #one -->
-        <div data-role="page" id="one">
+        <div data-role="content" id="one">
             <div data-role="navbar" data-grid="d">
             </div><!-- /navbar -->
             <!--            <div data-theme="b" data-role="header">
@@ -72,7 +72,7 @@
                     <div class="ui-field-contain">
                         <label  for="loc-menu" name="loc-menu">Location:</label>
 
-                        <input class="com_fld" type="text" id="loc-menu" name="loc_menu" placeholder="Search" autocomplete="off">
+                        <input class="com_fld" type="text" id="loc-menu" name="loc_menu" placeholder="Select Location" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-loc" data-role="listview" data-inset="true"></ul>
 
                     </div>
@@ -87,7 +87,7 @@
                     <div class="ui-field-contain">
                         <label for="spc-menu">Service Type:</label>
 
-                        <input class="com_fld" type="text" id="spc-menu" name="spc_menu" placeholder="Search" autocomplete="off">
+                        <input class="com_fld" type="text" id="spc-menu" name="spc_menu" placeholder="Select Service Type" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-spc" data-role="listview" data-inset="true"></ul>
 
                     </div>
@@ -95,7 +95,7 @@
                     <div class="ui-field-contain">
                         <label for="fcy-menu">Facility:</label>
 
-                        <input class="com_fld" type="text" id="fcy-menu" name="fcy_menu" placeholder="Search" autocomplete="off">
+                        <input class="com_fld" type="text" id="fcy-menu" name="fcy_menu" placeholder="Select Facility" autocomplete="off">
                         <ul class="ui-popup-container pop in ui-popup-active" id="suggestions-fcy" data-role="listview" data-inset="true"></ul>
 
                     </div>
@@ -104,12 +104,12 @@
 
                     <div class="ui-field-contain">
                         <label for="fm-date">From Date:</label>
-                        <input type="text" name="fm-date" id="fm_date" autocomplete="off" data-role="date">
+                        <input type="text" name="fm-date" id="fm_date" placeholder="mm/dd/yyyy" autocomplete="off" data-role="date">
 
                     </div>
                     <div class="ui-field-contain">
                         <label for="to-date">To Date:</label>
-                        <input type="text" name="to-date" id="to_date" autocomplete="off" data-role="date">
+                        <input type="text" name="to-date" id="to_date" placeholder="mm/dd/yyyy" autocomplete="off" data-role="date">
 
                     </div>
 

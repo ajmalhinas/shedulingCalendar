@@ -133,20 +133,27 @@
                 var item_name = url.searchParams.get("item_name");
                 var st = url.searchParams.get("st");
                 var tx = url.searchParams.get("tx");
+                
+                 var AfterPayPalRes = function (data)
+                {
+                    console.log(data);
+
+                    destroySession();
+                    var paydetails = getPayDetails();
+                    if (data !== true) {
+                        
+                        $('#paydet').text(cc +' '+amt  + ', ' + st);
+                    }else{
+                        
+                        $('#paydet').text(cc +' '+amt  + ', Not Completed' );
+                    }
+                }
 
                 SchedulerService.updatePaypalResponse(tx, item_name, AfterPayPalRes);
 
 
 
-                var AfterPayPalRes = function (data)
-                {
-                    console.log(data);
-
- destroySession();
-//                    if (data !== null) {
-//                        window.location.href = '/shedulingCalendar/step4.html';
-//                    }
-                }
+               
 
                 var srchObj = getSrchItems();
                 var fcrObj = getFacrDetails();
@@ -187,8 +194,7 @@
 
 
 
-                var paydetails = getPayDetails();
-                $('#paydet').text(cc +' '+amt  + ', ' + st);
+                
 
                
             });

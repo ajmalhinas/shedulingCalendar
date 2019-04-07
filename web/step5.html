@@ -133,19 +133,17 @@
                 var item_name = url.searchParams.get("item_name");
                 var st = url.searchParams.get("st");
                 var tx = url.searchParams.get("tx");
+                $('#paydet').text('Please wait...');
                 
                  var AfterPayPalRes = function (data)
                 {
                     console.log(data);
-
+                    //var paydetails = getPayDetails();
                     destroySession();
-                    var paydetails = getPayDetails();
-                    if (data !== true) {
+                    
+                    if (data !== undefined && data !== null) {
                         
-                        $('#paydet').text(cc +' '+amt  + ', ' + st);
-                    }else{
-                        
-                        $('#paydet').text(cc +' '+amt  + ', Not Completed' );
+                        $('#paydet').text(cc +' '+amt  + ', ' + data.paymentStatus);
                     }
                 }
 

@@ -5,7 +5,7 @@ if (dwr.engine == null) dwr.engine = {};
 if (DWREngine == null) var DWREngine = dwr.engine;
 
 if (SchedulerService == null) var SchedulerService = {};
-var isLocal = false;
+var isLocal = true;
 if(isLocal)
     SchedulerService._path = 'http://localhost:8080/qLabV2/dwr';
 else

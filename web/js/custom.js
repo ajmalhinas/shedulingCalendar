@@ -5,8 +5,8 @@
  */
 
 function LoadDropDown(json, selector, optSelect) {
-    if (optSelect) {
-        $(selector).append('<option value="">Select</option>')
+    if (optSelect !== null) {
+        $(selector).append('<option value="">'+optSelect+'</option>')
     }
     $.each(json, function (index, value) {
         $(selector).append('<option value="' + value.id + '">' + value.name + '</option>')

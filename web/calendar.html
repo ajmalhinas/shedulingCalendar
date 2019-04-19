@@ -78,7 +78,7 @@
                 </div>
                 <div style="text-align:right" id="date_range" data-role="controlgroup" data-type="horizontal" data-mini="tprevrue" >
                     <legend></legend>
-                    <a id="prev" data-ajax="false"  onclick="history.back();" hidden>Previous</a>
+                    <a id="prev" data-ajax="false"   href="#"  hidden>Previous</a>
 
                     <a id="next" data-ajax="false" href="#" hidden>Next</a>
                 </div>
@@ -131,15 +131,8 @@
                                     //alert(Sfcr)
 
                                     $('#fcr-menu').selectmenu('refresh');
-
-
-
-                                    var c = url.searchParams.get("d");
-                                    if (c === null || c === '') {
-                                        c = formatDate(new Date());
-                                    }
                                     //alert(fr);
-                                    SchedulerService.getAllSsns(formatDate(new Date()), c, 1, fr, replySSNList);
+                                    SchedulerService.getAllSsnsForAdmin( 1, fr, replySSNList);
 
                                 } else
                                     dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
@@ -177,41 +170,108 @@
                             dp.viewTypeCustomDateArray = []; // day/week/custom
                             dp.businessBeginsHour = 24;
                             dp.businessEndsHour = 0;
-
+                            
+                            function nextAvailableSsn(){
+                                var ret = 0;
+                                $.each(allSsns, function (i, v){
+                                   if( new Date(allSsns[i]) >= new Date()){
+                                       ret = i;
+                                      return false;
+                                   } 
+                                });
+                                
+                                return ret;
+                            }
+                            function findIndexSsn(fdate){
+                                var ret =0 ;
+                                $.each(allSsns, function (i, v){
+                                   if(allSsns[i] === fdate){
+                                       ret = i;
+                                      return false;
+                                   } 
+                                });
+                                
+                                return ret;
+                            }
+                            var startPoint = 0 ,endPoint = 0;
                             // functions of prev/ next button
                             function RefreshTheCalendar() {
                                 var url_string = window.location.href;
 
-                                var url = new URL(url_string);
-                                var c1 = url.searchParams.get("d");
-                                if (!(c1 === "" || c1 === null)) {
-                                    $('#prev').show();
-                                }
                                 var purl = new URL(url_string);
+                                var nurl = new URL(url_string);
+                                var p = purl.searchParams.get("p");
+                                var n = nurl.searchParams.get("n");
+                                if ((p === "" || p === null) && (n === "" || n === null)) {
+                                    startPoint = nextAvailableSsn(); // find next available
+                                    
+                                }else if(p === "" || p === null){ // next
+                                    startPoint = findIndexSsn(n);
+                                }else{ //prev
+                                    startPoint = findIndexSsn(p);
+                                }
+                                if (allSsns.length === 0){
+                                        endPoint = 0;
+                                    }
+                                    else if (allSsns.length < (startPoint + viewCount)){
+                                        endPoint = allSsns.length -1;
+                                        if ((startPoint +1) >= viewCount) {
+                                            $('#prev').show();
+                                            purl.searchParams.delete("n");
+                                            purl.searchParams.delete("p");
+                                            purl.searchParams.append("p", allSsns[startPoint - viewCount+1]);
+                                            $('#prev').attr('href', purl);
+                                        }
+                                        
+                                    }else{
+                                        endPoint = startPoint + viewCount -1;
+                                        if (startPoint > 0 && startPoint > viewCount) {
+                                            $('#prev').show();
+                                            purl.searchParams.delete("p");
+                                            purl.searchParams.delete("n");
+                                            purl.searchParams.append("p", allSsns[startPoint - viewCount]);
+                                            $('#prev').attr('href', purl);
+                                        }else if(startPoint > 0){
+                                            $('#prev').show();
+                                            purl.searchParams.delete("p");
+                                            purl.searchParams.delete("n");
+                                            purl.searchParams.append("p", allSsns[0]);
+                                            $('#prev').attr('href', purl);
+                                        }
+                                        if(endPoint !== (allSsns.length - 1)){
+                                            $('#next').show();
+                                            nurl.searchParams.delete("p");
+                                            nurl.searchParams.delete("n");
+                                            nurl.searchParams.append("n", allSsns[endPoint]);
+                                            $('#next').attr('href', nurl);
+                                        }
+                                        
+                                    }
 
                                 if (allSsns.length === 0) {
                                     dp.viewTypeCustomDateArray = [];
-                                } else if (allSsns.length < viewCount) {
-                                    dp.viewTypeCustomDateArray = allSsns.splice(0, allSsns.length);
-
-                                    SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0], dp.viewTypeCustomDateArray[dp.viewTypeCustomDateArray.length - 1], 1, $('#fcr-menu').val(), replyApmtList);
                                 } else {
-                                    if (allSsns.length > viewCount)
-                                        $('#next').show();
-                                    var nurl = new URL(url_string);
-                                    var c = nurl.searchParams.get("d");
-                                    if (c === "" || c === null) {
-                                        nurl.searchParams.append("d", allSsns[viewCount - 1]);
-                                    } else {
-                                        nurl.searchParams.delete("d");
-                                        nurl.searchParams.append("d", allSsns[viewCount - 1]);
-                                    }
+                                    dp.viewTypeCustomDateArray = allSsns.splice(startPoint, (endPoint- startPoint + 1 ) );
 
-                                    $('#next').attr('href', nurl);
-                                    dp.viewTypeCustomDateArray = allSsns.splice(0, viewCount);
-                                    SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0], dp.viewTypeCustomDateArray[viewCount - 1], 1, $('#fcr-menu').val(), replyApmtList);
-
-                                }
+                                    SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0], dp.viewTypeCustomDateArray[dp.viewTypeCustomDateArray.length-1], 1, $('#fcr-menu').val(), replyApmtList);
+                                } 
+//                                else {
+//                                    if (allSsns.length > viewCount)
+//                                        $('#next').show();
+//                                    var nurl = new URL(url_string);
+//                                    var c = nurl.searchParams.get("d");
+//                                    if (c === "" || c === null) {
+//                                        nurl.searchParams.append("d", allSsns[viewCount - 1]);
+//                                    } else {
+//                                        nurl.searchParams.delete("d");
+//                                        nurl.searchParams.append("d", allSsns[viewCount - 1]);
+//                                    }
+//
+//                                    $('#next').attr('href', nurl);
+//                                    dp.viewTypeCustomDateArray = allSsns.splice(0, viewCount);
+//                                    SchedulerService.getApmtList(dp.viewTypeCustomDateArray[0], dp.viewTypeCustomDateArray[viewCount - 1], 1, $('#fcr-menu').val(), replyApmtList);
+//
+//                                }
 
                             }
 
@@ -262,6 +322,8 @@
                                 } else
                                     dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
                             }
+                            
+                            
                             // calendar js
                             var replySSNList = function (data)
                             {

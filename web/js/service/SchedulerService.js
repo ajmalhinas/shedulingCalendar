@@ -12,7 +12,9 @@ else
     SchedulerService._path = 'http://mie.zapto.org:8080/qLabV2/dwr';
 
 
-
+SchedulerService.getAllSsnsForAdmin = function(p0, p1, callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getAllSsnsForAdmin', p0, p1, callback);
+}
 SchedulerService.getDate = function(p0, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'getDate', p0, callback);
 }

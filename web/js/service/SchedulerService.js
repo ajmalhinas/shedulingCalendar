@@ -75,3 +75,6 @@ SchedulerService.getAllSsns = function(p0, p1, p2, p3, callback) {
 SchedulerService.addAppointer = function(p0, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'addAppointer', p0, callback);
 }
+SchedulerService.walkBookApmt = function(p0, p1, p2, p3, p4, callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'walkBookApmt', p0, p1, p2, p3, p4, callback);
+}

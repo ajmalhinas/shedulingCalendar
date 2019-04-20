@@ -127,40 +127,42 @@
 
             $(document).ready(function () {
                 $('#cnf_btn').click(function () {
-                    if($('#form1').valid()){
-                         $(this).attr('disabled','disabled');
-                        var user= { name: $('#uname').val(), phone: $('#umobile').val(), email: $('#uemail').val(), nic : $('#uqid').val()};
+                    if ($('#form1').valid()) {
+                        $(this).attr('disabled', 'disabled');
+                        var user = {name: $('#uname').val(), phone: $('#umobile').val(), email: $('#uemail').val(), nic: $('#uqid').val()};
                         setUserDetails(user);
                         //$('#form1').submit();
-                        
-                         var apmt = {"amt": "100", "ssn_id": "'31'", "ref": "'abc'", "Appointer_id": "'1'"};
-            //date time values cannot be directly passed from string
-            var start = new Date(events[0].start);
-            var end = new Date(events[0].end);
-            apmt.start=start;
-            apmt.end=end;
-            var strDate = events[0].start.substring(0, 10).replace(/-/gi, "/");
-            //var apntr = {"name": "gfd fs", "phone": "0763138791", "email": "abc@gmail.com", "qid": ""};
-                        
+
+                        var apmt = {"amt": "100", "ssn_id": "'31'", "ref": "'abc'", "Appointer_id": "'1'"};
+                        //date time values cannot be directly passed from string
+                        var start = new Date(events[0].start);
+                        var end = new Date(events[0].end);
+                        apmt.start = start;
+                        apmt.end = end;
+                        var strDate = events[0].start.substring(0, 10).replace(/-/gi, "/");
+                        //var apntr = {"name": "gfd fs", "phone": "0763138791", "email": "abc@gmail.com", "qid": ""};
+
                         SchedulerService.lockApmt2(strDate, apmt, fcyid, fcrid, user, AfterLockApmt);
-                        
-                        setTimeout(function(){  $('#cnf_btn').attr('disabled',false); }, 3000);
-                        
+
+                        setTimeout(function () {
+                            $('#cnf_btn').attr('disabled', false);
+                        }, 3000);
+
                     }
                 });
-                
-                  var AfterLockApmt = function (data)
-                            {
-                                console.log(data);
-                                   // alert(data)
-                                   setApmtDetails(data);
-                                if (data !== null) {
-                                    window.location.href='/shedulingCalendar/step4.html';
-                            }
-                           
-                        }
-                
-                
+
+                var AfterLockApmt = function (data)
+                {
+                    console.log(data);
+                    // alert(data)
+                    setApmtDetails(data);
+                    if (data !== null) {
+                        window.location.href = '/shedulingCalendar/step4.html';
+                    }
+
+                }
+
+
                 var sumtxt = [];
                 var fcrid = 0;
                 var fcyid = 0;
@@ -169,9 +171,11 @@
                 var srchObj = getSrchItems();
                 var fcrObj = getFacrDetails();
                 var usrObj = getUserDetails();
-                if (usrObj !==  null && usrObj !== '') {
-                      $('#uname').val(usrObj.name);$('#umobile').val(usrObj.phone);
-                      $('#uemail').val(usrObj.email);$('#uqid').val(usrObj.nic);
+                if (usrObj !== null && usrObj !== '') {
+                    $('#uname').val(usrObj.name);
+                    $('#umobile').val(usrObj.phone);
+                    $('#uemail').val(usrObj.email);
+                    $('#uqid').val(usrObj.nic);
                 }
                 if (fcrObj !== '') {
                     sumtxt.push(fcrObj.name);
@@ -179,7 +183,7 @@
                 }
                 if (srchObj.spc !== '') {
                     sumtxt.push(srchObj.spc);
-                    
+
                 }
                 if (srchObj.fcy !== '') {
                     sumtxt.push(srchObj.fcy);
@@ -189,7 +193,7 @@
                     sumtxt.push(srchObj.loc);
                 }
 
-                
+
 
                 $.each(events, function (i, ele) {
                     var stdate = new Date(ele.start);

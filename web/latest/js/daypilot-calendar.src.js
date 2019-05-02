@@ -317,7 +317,7 @@ if (typeof DayPilot.Global === 'undefined') {
         this.timeRangeSelectedHandling = 'Enabled';
         this.eventClickHandling = 'Enabled';
         this.eventResizeHandling = 'Enabled';
-        this.eventMoveHandling = 'Update';
+        this.eventMoveHandling = 'CallBack';
         this.eventDeleteHandling = "Enabled";
 
         this.onBeforeEventRender = null;

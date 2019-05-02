@@ -87,8 +87,24 @@
                 <div id="dp"></div>
                 <label id="error-text" class=""></div>
 
-
-            <a style="display:none" id="newSsnbtn" href="#popupNewSsn" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
+            <a style="display:none" id="updateSsnbtn" href="#popupUpdSsn" data-rel="popup" data-position-to="window" data-transition="pop"></a>
+<div style="width:400px" data-role="popup" id="popupUpdSsn" data-theme="a" class="ui-corner-all">
+                <form id="formUpdateSsn">
+                    <div style="padding:10px 20px;">
+                        <h3>Update Booking</h3>
+                        <label>Do you want to update the Time Slot to <b><span id="selUpdSlot"></span></b></label>
+                        
+                        <input type="hidden" id="UpdStart"/> 
+                        <input type="hidden" id="UpdEnd"/>
+                        <input type="hidden" id="selUpdSlotId"/>
+                       
+                       
+                        <button id="saveUpdSsn" type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b ui-btn-icon-left ui-icon-check">Update</button>
+                        <a id="cancelUpdSsn" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
+                    </div>
+                </form>
+            </div>
+            <a style="display:none" id="newSsnbtn" href="#popupNewSsn" data-rel="popup" data-position-to="window" data-transition="pop"></a>
             <div style="width:400px" data-role="popup" id="popupNewSsn" data-theme="a" class="ui-corner-all">
                 <form id="formNewSsn">
                     <div style="padding:10px 20px;">
@@ -402,9 +418,20 @@
                         dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
                 }
 
-                $('#cancelNewSsn').click(function () {
+                $('#cancelNewSsn, #cancelUpdSsn').click(function () {
 
                     dp.clearSelection();
+                });
+                $('#saveUpdSsn').click(function(){
+                    if ($('#formUpdateSsn').valid()){
+                        $(this).attr('disabled', 'disabled');
+                          updatedEvent = args;
+                          dp.events.update(updatedEvent.e);
+                          
+                          setTimeout(function () {
+                            $('#saveUpdSsn').attr('disabled', false);
+                        }, 3000);
+                    }
                 });
                 $('#saveNewSsn').click(function () {
                     if ($('#formNewSsn').valid()) {
@@ -456,6 +483,7 @@
                         dp.events.add(e);
 
                         dp.clearSelection();
+                        $("#popupNewSsn").popup("close");
                     }
 
                 }
@@ -498,6 +526,23 @@
                             return false;
                         }
                     }
+                    
+                    dp.onEventMove = function(args){
+                        console.log(args);
+                        $('#updateSsnbtn').trigger('click');
+                        var tPeriod = args.newStart.toString("hh:mm tt") + '-' + args.newEnd.toString("hh:mm tt");
+
+                        $('#selUpdSlot').text(args.newStart.toString("dd/MM/yyyy") + ' (' + tPeriod + ')');
+                        $('#selUpdSlotId').val(args.e.id());
+                        $('#UpdStart').val(args.newStart);
+                        $('#UpdEnd').val(args.newEnd);
+                        
+                        $('#updateSsnbtn').trigger('click');
+                        updatedEvent = args;
+//                        args.e.start(args.newStart);
+//                        args.e.end(args.newEnd);
+//                        dp.events.update(args.e);
+                    };
                     // event creating
                     //dp.timeRangeSelectedHandling = 'JavaScript';
                     dp.onTimeRangeSelected = function (args) {

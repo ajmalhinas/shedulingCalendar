@@ -42,8 +42,8 @@ SchedulerService.lockApmt2 = function(p0, p1, p2, p3, p4, callback) {
 SchedulerService.confirmApmt = function(p0, p1, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'confirmApmt', p0, p1, callback);
 }
-SchedulerService.updateApmt = function(p0, p1, callback) {
-  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'updateApmt', p0, p1, callback);
+SchedulerService.updateApmt = function(p0, p1, p2, callback) {
+  dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'updateApmt', p0, p1, p2, callback);
 }
 SchedulerService.updateApmt2 = function(p0, callback) {
   dwr.engine._execute(SchedulerService._path, 'SchedulerService', 'updateApmt2', p0, callback);

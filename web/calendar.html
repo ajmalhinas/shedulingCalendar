@@ -310,7 +310,7 @@
                                     start: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.start)),
                                     end: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.end)),
                                     id: v.ref,
-                                    text: v.appointer.name + "&nbsp;" + v.appointer.phone + "<br>" + formatDate(v.ssn.dat) + " (" + formatAMPM(v.start) + "-" + formatAMPM(v.end) + ")",
+                                    text: v.appointer.name + "&nbsp;" + v.appointer.phone + "<br>" ,//+ formatDate(v.ssn.dat) + " (" + formatAMPM(v.start) + "-" + formatAMPM(v.end) + ")",
                                     cssClass: 'booked',
                                     resizeDisabled: true,
                                     //   moveDisabled: true,
@@ -328,7 +328,7 @@
                                     start: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.start)),
                                     end: new DayPilot.Date(formatDate(v.ssn.dat) + "T" + formatTime(v.end)),
                                     id: v.ref,
-                                    text: v.appointer.name + "&nbsp;" + v.appointer.phone + "<br>" + formatDate(v.ssn.dat) + " (" + formatAMPM(v.start) + "-" + formatAMPM(v.end) + ")",
+                                    text: v.appointer.name + "&nbsp;" + v.appointer.phone + "<br>" ,//+ formatDate(v.ssn.dat) + " (" + formatAMPM(v.start) + "-" + formatAMPM(v.end) + ")",
                                     cssClass: 'booked',
                                     resizeDisabled: true,
                                     // moveDisabled: true,
@@ -425,8 +425,16 @@
                 $('#saveUpdSsn').click(function(){
                     if ($('#formUpdateSsn').valid()){
                         $(this).attr('disabled', 'disabled');
-                          updatedEvent = args;
-                          dp.events.update(updatedEvent.e);
+                          //updatedEvent = args;
+                          var apmt = {"amt": "", "ssn_id": "", "ref": updatedEvent.e.data.id , "Appointer_id": ""};
+                        //date time values cannot be directly passed from string
+                        var start = new Date($('#UpdStart').val());
+                        var end = new Date($('#UpdEnd').val());
+                        apmt.start = start;
+                        apmt.end = end;
+                          var strDate = $('#UpdEnd').val().substring(0, 10).replace(/-/gi, "/");
+                          SchedulerService.updateApmt(updatedEvent.e.data.id, apmt, strDate, AfterUpdApmt);
+                          
                           
                           setTimeout(function () {
                             $('#saveUpdSsn').attr('disabled', false);
@@ -451,17 +459,24 @@
 
                         SchedulerService.walkBookApmt(strDate, apmt, 1, $('#fcr-menu').val(), user, AfterBookApmt);
 
+                        
                         setTimeout(function () {
                             $('#saveNewSsn').attr('disabled', false);
                         }, 3000);
 
                     }
                 });
+                
+                var AfterUpdApmt = function(data){
+                    //updatedEvent.e.text(v.appointer.name + "&nbsp;" + v.appointer.phone + "<br>" + formatDate(v.ssn.dat) + " (" + formatAMPM(v.start) + "-" + formatAMPM(v.end) + ")");
+                    dp.events.update(updatedEvent.e);
+                          $("#popupUpdSsn").popup("close");
+                }
 
                 var AfterBookApmt = function (data)
                 {
                     console.log(data);
-                    alert(data);
+                    //alert(data);
 
                     //setApmtDetails(data);
                     if (data !== null) {
@@ -469,9 +484,10 @@
                             start: new DayPilot.Date(formatDate(data.ssn.dat) + "T" + formatTime(data.start)),
                             end: new DayPilot.Date(formatDate(data.ssn.dat) + "T" + formatTime(data.end)),
                             id: data.ref,
-                            text: data.appointer.name + "&nbsp;" + data.appointer.phone + "<br>" + formatDate(data.ssn.dat) + " (" + formatAMPM(data.start) + "-" + formatAMPM(data.end) + ")",
+                            text: data.appointer.name + "&nbsp;" + data.appointer.phone + "<br>", //+ formatDate(data.ssn.dat) + " (" + formatAMPM(data.start) + "-" + formatAMPM(data.end) + ")",
                             borderColor: "#CC0000",
                             backColor: "#E06666",
+                            fontColor: "#fff",
                             resizeDisabled: true,
                             //  moveDisabled: true,
                             "tags": {
@@ -538,6 +554,8 @@
                         $('#UpdEnd').val(args.newEnd);
                         
                         $('#updateSsnbtn').trigger('click');
+                        args.e.start(args.newStart);
+                        args.e.end(args.newEnd);
                         updatedEvent = args;
 //                        args.e.start(args.newStart);
 //                        args.e.end(args.newEnd);

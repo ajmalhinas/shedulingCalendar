@@ -148,6 +148,7 @@
 
 
                             var fcls = [];
+                            var srchObj = getSrchItems();
                             var replyFac = function (data)
                             {
                                 if (data != null && typeof data == 'object') {
@@ -176,13 +177,16 @@
                                     $('#fcr-menu').selectmenu('refresh');
                                     
                                     
-                            
-                            var c = url.searchParams.get("d");
-                            if (c === null || c === '') {
-                                c = formatDate(new Date());
-                            }
-                            //alert(fr);
-                            SchedulerService.getAllSsns(formatDate(new Date()), c, 1, fr , replySSNList);
+                                    var c = url.searchParams.get("to-date");
+                                    if (c === null || c === '') {
+                                        c = formatDate(new Date());
+                                    }
+                                    var fromDate = url.searchParams.get("fm-date");
+                                    if (fromDate === null || fromDate === '') {
+                                        fromDate = formatDate(new Date());
+                                    }
+                                    //alert(fr);
+                                    SchedulerService.getAllSsns(fromDate, c, srchObj.fcy.id, fr , replySSNList);
                                     
                                 } else
                                     dwr.util.setValue('d12', dwr.util.toDescriptiveString(data, 1));
@@ -194,23 +198,22 @@
                                 url.searchParams.delete("fr");
                                 url.searchParams.append("fr", valu);
                                 window.location.href = url;
-                            })
-                            SchedulerService.getAllFacilitators(replyFac)
+                            });
+                            SchedulerService.getAllFacilitators(srchObj.loc.id, srchObj.fcy.id, srchObj.spc.name, replyFac)
                             
 
                             var sumtxt = [];
-                            var srchObj = getSrchItems();
 //        if (srchObj.fcr !== '') {
 //            sumtxt.push(srchObj.fcr);
 //        }
                             if (srchObj.loc !== '') {
-                                sumtxt.push(srchObj.loc);
+                                sumtxt.push(srchObj.loc.name);
                             }
                             if (srchObj.spc !== '') {
-                                sumtxt.push(srchObj.spc);
+                                sumtxt.push(srchObj.spc.name);
                             }
                             if (srchObj.fcy !== '') {
-                                sumtxt.push(srchObj.fcy);
+                                sumtxt.push(srchObj.fcy.name);
                             }
 
 

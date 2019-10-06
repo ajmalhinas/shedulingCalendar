@@ -161,15 +161,15 @@
 
                 if (srchObj.spc !== '') {
 
-                    $('#specty').text(srchObj.spc);
+                    $('#specty').text(srchObj.spc.name);
                 }
                 if (srchObj.fcy !== '') {
 
-                    $('#fcy').text(srchObj.fcy)
+                    $('#fcy').text(srchObj.fcy.name)
                 }
                 if (srchObj.loc !== '') {
 
-                    $('#loc').text(srchObj.loc)
+                    $('#loc').text(srchObj.loc.name)
                 }
                 var eve_text = [];
                 var events = getSelEvents();
